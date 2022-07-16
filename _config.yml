@@ -22,9 +22,9 @@ title: SRVRLSS.DEV
 description: >- # this means to ignore newlines until "baseurl:"
  This is a place for me to gather my thoughts
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://www.srvrlss.dev" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://srvrlss.dev" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  AlexandreBrisebois
-minimal_mistakes_skin: dark
+minimal_mistakes_skin: dirt
 search: true
 
 # Build settings
