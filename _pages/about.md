@@ -7,4 +7,4 @@ title: "About"
 
 > I am intentionally staying away from topics that do not age well and focus on principles, practices, and experiences.
 
-My name is [Alexandre Brisebois](https://www.linkedin.com/in/alexandrebrisebois/) and I'm and developer.
+My name is [Alexandre Brisebois](https://www.linkedin.com/in/alexandrebrisebois/), father of two and a tech enthusiast. Working at Microsoft, I empower others to accelerate time-to-value, innovate and shape the world of tomorrow!
