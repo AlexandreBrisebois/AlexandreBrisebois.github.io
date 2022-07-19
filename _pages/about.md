@@ -1,7 +1,6 @@
 ---
 permalink: /about/
 title: "About"
-author: alex-min
 ---
 
 [srvrlss.dev](https://srvrlss.dev) is a place for me to experiment and collect my thoughts. Years ago, I decided that I was not interested writing and maintaining what we could consider as "missing" documentation. As such, posts and content on this blog are *as-is* and benefit those who are curious, question and build on the work of others.
