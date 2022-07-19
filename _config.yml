@@ -91,7 +91,10 @@ defaults:
       author: alex
       layout: single
       author_profile: true
-
+      header:
+       overlay_image: /assets/images/pexels-adrien-olichon-3137068.jpg
+       overlay_filter: linear-gradient(rgba(0, 0, 255, 0.7), rgba(0, 127, 255,0.7))
+        
 category_archive:
   type: liquid
   path: /categories/
