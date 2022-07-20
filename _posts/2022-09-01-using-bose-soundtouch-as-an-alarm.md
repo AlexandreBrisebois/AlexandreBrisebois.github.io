@@ -1,5 +1,5 @@
 ---
-title:  "Using Bose SountTouch as an Alarm!"
+title:  "Using Bose SoundTouch as an Alarm!"
 excerpt: "The best way to wake the family in the morning."
 date:   2022-07-18 00:00:00 +0000
 categories: Serverless
