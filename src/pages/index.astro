@@ -1,0 +1,44 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Home">
+	<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+		<div class="text-center space-y-8">
+			<h1 class="text-6xl md:text-8xl font-black tracking-tighter">
+				TECHNICAL <span class="text-gradient">OUTCOME</span> LEADER
+			</h1>
+			<p class="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
+				Empowering others to accelerate time-to-value, innovate, and shape the world of tomorrow.
+			</p>
+			<div class="flex flex-col sm:flex-row gap-4 justify-center pt-8">
+				<a href="/blog" class="btn-solar">Explore Insights</a>
+				<a href="/about" class="px-6 py-2 glass rounded-lg hover:bg-white/10 transition-colors">The Strategist</a>
+			</div>
+		</div>
+
+		<section class="mt-32 grid grid-cols-1 md:grid-cols-3 gap-8">
+			<div class="glass p-8 rounded-2xl space-y-4 group">
+				<div class="w-12 h-12 bg-solar-orange/20 rounded-lg flex items-center justify-center text-solar-orange group-hover:scale-110 transition-transform">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap"><path d="M4 14.71 12 3.5l2 7.29L20 9.29 12 20.5l-2-7.29L4 14.71Z"/></svg>
+				</div>
+				<h3 class="text-2xl font-bold">High Speed</h3>
+				<p class="text-gray-400">Rapid experimentation and serverless outcomes that drive real-world value.</p>
+			</div>
+			<div class="glass p-8 rounded-2xl space-y-4 group">
+				<div class="w-12 h-12 bg-cyber-cyan/20 rounded-lg flex items-center justify-center text-cyber-cyan group-hover:scale-110 transition-transform">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cpu"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
+				</div>
+				<h3 class="text-2xl font-bold">Deep Tech</h3>
+				<p class="text-gray-400">Bridging the gap between hardware maker culture and enterprise cloud scale.</p>
+			</div>
+			<div class="glass p-8 rounded-2xl space-y-4 group">
+				<div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shredder"><path d="M10 2v2"/><path d="M14 2v2"/><path d="M18 2v2"/><path d="M22 17h-20"/><path d="M2 10h20"/><path d="M2 13h20"/><path d="M2 16h20"/><path d="M3 10V4h18v6"/><path d="M4 18v2"/><path d="M8 18v2"/><path d="M12 18v2"/><path d="M16 18v2"/><path d="M20 18v2"/></svg>
+				</div>
+				<h3 class="text-2xl font-bold">Zero Friction</h3>
+				<p class="text-gray-400">Focused narratives designed to respect the reader's time and attention.</p>
+			</div>
+		</section>
+	</main>
+</Layout>
