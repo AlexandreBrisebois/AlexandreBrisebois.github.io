@@ -11,9 +11,11 @@ def main():
     
     # Debug: List available models
     print("Listing available models...")
+    available_models = []
     try:
         for m in client.models.list():
             print(f"- {m.name}")
+            available_models.append(m.name)
     except Exception as e:
         print(f"Error listing models: {e}")
 
@@ -40,17 +42,20 @@ def main():
     4. Two prompts for nanobananav2 (one for the blog hero, one for social).
     """
     
-    # Attempt with 1.5 Pro, fallback to 2.0 Flash or 1.5 Flash
-    selected_model = "gemini-1.5-pro"
+    # User's preferred cutting-edge model
+    target_model = "gemini-3.1-flash-lite-preview"
     
-    print(f"Using model: {selected_model}")
+    print(f"Targeting model: {target_model}")
+    
     try:
         response = client.models.generate_content(
-            model=selected_model,
+            model=target_model,
             contents=prompt
         )
+        selected_model = target_model
     except Exception as e:
-        print(f"Error with {selected_model}: {e}")
+        print(f"Error with {target_model}: {e}")
+        # Universal fallback to ensure build success
         selected_model = "gemini-1.5-flash"
         print(f"Falling back to: {selected_model}")
         response = client.models.generate_content(
