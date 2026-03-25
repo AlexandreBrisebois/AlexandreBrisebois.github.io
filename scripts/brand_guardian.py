@@ -9,6 +9,14 @@ def main():
 
     client = genai.Client(api_key=api_key)
     
+    # Debug: List available models
+    print("Listing available models...")
+    try:
+        for m in client.models.list():
+            print(f"- {m.name}")
+    except Exception as e:
+        print(f"Error listing models: {e}")
+
     branding_rules = open("branding/system.md", "r").read()
     
     blog_dir = "src/content/blog"
@@ -32,13 +40,26 @@ def main():
     4. Two prompts for nanobananav2 (one for the blog hero, one for social).
     """
     
-    response = client.models.generate_content(
-        model="gemini-1.5-pro",
-        contents=prompt
-    )
+    # Attempt with 1.5 Pro, fallback to 2.0 Flash or 1.5 Flash
+    selected_model = "gemini-1.5-pro"
+    
+    print(f"Using model: {selected_model}")
+    try:
+        response = client.models.generate_content(
+            model=selected_model,
+            contents=prompt
+        )
+    except Exception as e:
+        print(f"Error with {selected_model}: {e}")
+        selected_model = "gemini-1.5-flash"
+        print(f"Falling back to: {selected_model}")
+        response = client.models.generate_content(
+            model=selected_model,
+            contents=prompt
+        )
     
     with open("social_drafts.md", "w") as f:
-        f.write("# 🛡️ Brand Guardian Report (Gemini 1.5 Pro)\n\n")
+        f.write(f"# 🛡️ Brand Guardian Report ({selected_model})\n\n")
         f.write(response.text)
 
 if __name__ == "__main__":
