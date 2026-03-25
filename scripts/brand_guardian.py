@@ -1,5 +1,5 @@
 import os
-import google.generativeai as genai
+from google import genai
 
 def main():
     api_key = os.environ.get("GEMINI_API_KEY")
@@ -7,8 +7,7 @@ def main():
         print("GEMINI_API_KEY not found")
         return
 
-    genai.configure(api_key=api_key)
-    model = genai.GenerativeModel('gemini-1.5-pro')
+    client = genai.Client(api_key=api_key)
     
     branding_rules = open("branding/system.md", "r").read()
     
@@ -33,10 +32,13 @@ def main():
     4. Two prompts for nanobananav2 (one for the blog hero, one for social).
     """
     
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(
+        model="gemini-1.5-pro",
+        contents=prompt
+    )
     
     with open("social_drafts.md", "w") as f:
-        f.write("# 🛡️ Brand Guardian Report (Gemini)\n\n")
+        f.write("# 🛡️ Brand Guardian Report (Gemini 1.5 Pro)\n\n")
         f.write(response.text)
 
 if __name__ == "__main__":
