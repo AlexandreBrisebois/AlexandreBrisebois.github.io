@@ -1,18 +1,30 @@
 ---
-title: "Lessons Learned: A Project That Went Sideways"
-date: 2026-03-15T09:00:00+00:00
-description: "A cloud migration that looked clean on the architecture diagram and fell apart in production. What happened, what we changed, and what I carry forward."
-tags: [retrospective, cloud, engineering, lessons-learned]
+title: 'Lessons Learned: A Project That Went Sideways'
+date: 2026-03-15 09:00:00+00:00
+description: A cloud migration that looked clean on the architecture diagram and fell
+  apart in production. What happened, what we changed, and what I carry forward.
+tags:
+- retrospective
+- cloud
+- engineering
+- lessons-learned
 draft: false
-slug: "lessons-learned-project-went-sideways"
-tldr: "Clean diagrams don't survive contact with production traffic. The pivots that saved us weren't technical — they were decisions about what to stop defending."
+slug: lessons-learned-project-went-sideways
+tldr: Clean diagrams don't survive contact with production traffic. The pivots that
+  saved us weren't technical — they were decisions about what to stop defending.
 social_posts:
-  linkedin: ""
-  x: ""
-  bluesky: ""
-related_posts: []
-mentioned_in: []
-image_prompt: ""
+  linkedin: ''
+  x: ''
+  bluesky: ''
+related_posts:
+- About
+mentioned_in:
+- About
+image_prompt: 'Minimalist abstract architectural diagram or serverless event flow,
+  high-contrast textures, "Calm Signal" aesthetic. Muted earth tones: warm off-white,
+  deep forest green, and a subtle coral accent. Geometric shapes with a single, subtly
+  misaligned or unexpectedly branching connection, hinting at a deviation in an otherwise
+  clean design. No human figures or logos.'
 ---
 
 The architecture diagram looked clean. Three services, two queues, one database. We had reviewed it in five separate meetings and everyone agreed it was the right call.
