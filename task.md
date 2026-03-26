@@ -1,0 +1,37 @@
+# Project Task List: Hugo Blog Build (v2)
+
+- [x] Phase 0: Discovery, Safety, and Roadmap
+    - [x] Environment check: `hugo v0.159.1+extended`, `git 2.50.1`, `python3.14.3`.
+    - [x] Repository-safe bootstrap detection: found branch `new-blog`.
+    - [x] Cloudflare Analytics token verified: `c4d654ab4e2542b2a78b1de0562111ad`.
+    - [x] Secrets readiness confirmation (`GEMINI_API_KEY`, `NTFY_TOPIC`) — confirmed in prior session.
+    - [x] All 4 specs loaded: architecture.md, design.md, automation.md, content.md.
+- [x] Phase 1: Scaffolding & Core Architecture
+    - [x] Scaffold standard Hugo directories and config.yaml.
+    - [x] Core layouts: baseof.html, list.html, single.html, single.md (Markdown output).
+    - [x] All partials: head, header, footer, analytics, social-share, post-meta.
+    - [x] Shortcodes: callout.html, video.html.
+    - [x] LLMS templates: index.llms.txt, index.llmsfull.txt.
+    - [x] Content: about.md, hello-world.md, first-retrospective.md.
+    - [x] CSS: variables, layout, typography, callout, social-share, mobile breakpoints.
+    - [x] `hugo --minify` builds clean: 29 pages, 0 errors.
+    - [x] `hugo server -D` running: homepage, posts, about all return 200.
+    - [x] llms.txt generating correctly with post data.
+    - [x] Git checkpoint committed.
+    - [x] **USER APPROVED** — waiting to proceed with Phase 2.
+- [ ] Phase 2: Design "Calm Signal" & CSS
+    - [ ] Apply full typography (Instrument Serif, Source Serif 4, JetBrains Mono).
+    - [ ] Glassmorphism on callouts and code blocks (backdrop-filter: blur(8px)).
+    - [ ] Light/dark mode system-aware transitions.
+    - [ ] Responsive/mobile checks at 375px.
+    - [ ] WCAG 2.1 AA contrast verification.
+- [ ] Phase 3: SEO, Agent Accessibility, and Structured Output
+    - [ ] Verify llms.txt and llms-full.txt are valid.
+    - [ ] Verify Markdown output at /posts/[slug]/index.md.
+    - [ ] Verify JSON-LD schemas (Article, Person, BreadcrumbList).
+    - [ ] Verify Speculation Rules API in <head>.
+    - [ ] Accessibility: skip-to-content + loading="lazy" on all images.
+- [ ] Phase 4: CI/CD & AI Automation
+    - [ ] Configure GitHub Actions deployment workflow.
+    - [ ] Implement content automation Python 3.14 script.
+    - [ ] Verify resilience: graceful failure, dry-run local mode.

@@ -87,7 +87,13 @@ Implement the following in `layouts/partials/head.html`:
 - **Twitter Card**: `twitter:card: "summary_large_image"`.
 - **Canonical URL**: Dynamic canonical link.
 - **Speculation Rules API**: `script type="speculationrules"` for pre-rendering.
-- **Analytics**: Cloudflare Web Analytics beacon (`layouts/partials/analytics.html`). Only render if `cloudflare_token` is present.
+- **Analytics**: Cloudflare Web Analytics beacon (`layouts/partials/analytics.html`).
+  - **Token**: `c4d654ab4e2542b2a78b1de0562111ad`
+  - **Snippet**:
+    ```html
+    <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "c4d654ab4e2542b2a78b1de0562111ad"}'></script><!-- End Cloudflare Web Analytics -->
+    ```
+  - **Rule**: Only render if `cloudflare_token` is present in the configuration.
 - **Accessibility**: "Skip to Content" link present.
 - **Asset Optimization**: Ensure all images have **`loading="lazy"`** and **`decoding="async"`** attributes.
 

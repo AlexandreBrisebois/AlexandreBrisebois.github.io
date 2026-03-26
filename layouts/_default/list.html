@@ -2,11 +2,15 @@
 <section class="post-list">
   {{ range .Pages }}
   <article class="post-card">
+    {{ $isRetro := or (in (default slice .Params.tags) "retrospective") (in .Title "Retrospective") }}
     {{ $title := .Title }}
-    {{ if or (in (default slice .Params.tags) "retrospective") (in .Title "Retrospective") }}
+    {{ if $isRetro }}
       {{ $title = replace .Title "Retrospective" "Lessons Learned" }}
     {{ end }}
-    <h2><a href="{{ .RelPermalink }}">{{ $title }}</a></h2>
+    <h2>
+      {{ if $isRetro }}<span class="lessons-badge">Lessons Learned</span>{{ end }}
+      <a href="{{ .RelPermalink }}">{{ $title }}</a>
+    </h2>
     <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
     {{ with .Description }}<p>{{ . }}</p>{{ end }}
     {{ with .Params.tags }}
