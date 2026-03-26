@@ -58,6 +58,8 @@ GEMINI_MODEL_PREFERENCE = [
 
 # Ordered preference list for image generation — first match wins.
 GEMINI_IMAGE_MODEL_PREFERENCE = [
+    "imagen-4.0-generate-001",
+    "imagen-4.0-fast-generate-001",
     "imagen-3.0-generate-002",
     "imagen-3.0-generate-001",
     "imagen-3.0-fast-generate-001",
