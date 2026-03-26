@@ -333,6 +333,20 @@ body {
    Post Body — Typography
    ============================================================ */
 
+.post-cover {
+  margin-bottom: 2rem;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.post-cover img {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-height: 480px;
+  object-fit: cover;
+}
+
 .post-body {
   font-size: 1.05rem;
   line-height: 1.8;

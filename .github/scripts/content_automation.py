@@ -719,6 +719,8 @@ def run_pr_automation() -> None:
             img_bytes = generate_image_via_api(image_prompt)
             if img_bytes:
                 img_path.write_bytes(img_bytes)
+                fm["image"] = f"/images/posts/{slug}.webp"
+                fm_updated = True
                 comment_sections.append(f"✅ **Image generated:** `{img_path}`\n\n")
                 subprocess.run(["git", "add", str(img_path)], check=False)
             else:
