@@ -10,6 +10,7 @@ tags:
 - lessons-learned
 draft: false
 slug: lessons-learned-project-went-sideways
+image: /images/posts/lessons-learned-project-went-sideways.webp
 tldr: Clean diagrams don't survive contact with production traffic. The pivots that
   saved us weren't technical — they were decisions about what to stop defending.
 social_posts:

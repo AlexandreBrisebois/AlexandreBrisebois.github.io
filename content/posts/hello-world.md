@@ -9,6 +9,7 @@ tags:
 - writing
 draft: false
 slug: why-i-built-this-blog
+image: /images/posts/why-i-built-this-blog.webp
 tldr: A static site generator and a text editor are all you need. Everything else
   is someone else's product decision making itself your problem.
 social_posts:
