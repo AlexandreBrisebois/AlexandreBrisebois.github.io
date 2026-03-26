@@ -17,13 +17,16 @@ social_posts:
   bluesky: ''
 related_posts:
 - About
+- 'Lessons Learned: A Project That Went Sideways'
 mentioned_in:
 - About
-image_prompt: Minimalist abstract architectural diagram, a serverless event flow.
-  Crisp, high-contrast lines and geometric nodes illustrating data transformation
-  from a Git repository to static HTML deployment. Calm Signal aesthetic. Warm off-white
-  background with subtle texture. Deep green shapes and connections, accented with
-  delicate coral highlights. Landscape.
+- 'Lessons Learned: A Project That Went Sideways'
+image_prompt: 'Minimalist abstract architectural diagram of a Git-based static site
+  workflow. Thin, precise vector lines and geometric nodes representing serverless
+  event flows. High-contrast grainy paper texture, "Calm Signal" aesthetic. Color
+  palette: warm off-white background, deep forest green lines, and subtle coral accents.
+  Clean, wide composition, landscape orientation, technical yet organic, no humans,
+  no logos.'
 ---
 
 The previous version of this blog lived on WordPress. That sentence alone should explain the impulse to start over.
