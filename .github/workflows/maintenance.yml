@@ -4,8 +4,8 @@ on:
   schedule:
     # Social Discussion Loop: every Friday at 15:00 UTC
     - cron: '0 15 * * 5'
-    # Content Freshness Audit: every 3 weeks (Sunday 08:00 UTC, ~21-day cycle)
-    - cron: '0 8 1,22 * 0'
+    # Content Freshness Audit: every 3 weeks (1st and 22nd of each month, 08:00 UTC)
+    - cron: '0 8 1,22 * *'
   workflow_dispatch:
     inputs:
       mode:
@@ -34,7 +34,7 @@ jobs:
           python-version: '3.14'
 
       - name: Install dependencies
-        run: pip install google-generativeai==0.8.6 pyyaml==6.0.3
+        run: pip install pyyaml==6.0.3
 
       - name: Determine mode
         id: mode

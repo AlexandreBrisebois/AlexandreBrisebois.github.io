@@ -38,7 +38,7 @@ jobs:
           python-version: '3.14'
 
       - name: Install dependencies
-        run: pip install google-generativeai==0.8.6 pyyaml==6.0.3
+        run: pip install pyyaml==6.0.3
 
       - name: Run content automation
         env:
