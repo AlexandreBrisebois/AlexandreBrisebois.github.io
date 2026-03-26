@@ -22,6 +22,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import time
 import traceback
 import urllib.error
 import urllib.request
@@ -102,15 +103,28 @@ Brand voice rules (srvrlss.dev by Alexandre Brisebois):
 # HTTP helpers
 # ---------------------------------------------------------------------------
 
-def _http_json(url: str, payload: dict, token: str = "") -> dict:
-    """POST JSON payload, return parsed response dict."""
+_RETRYABLE_CODES = {429, 500, 502, 503, 504}
+
+def _http_json(url: str, payload: dict, token: str = "", retries: int = 3) -> dict:
+    """POST JSON payload, return parsed response dict. Retries on transient errors."""
     data = json.dumps(payload).encode("utf-8")
     headers = {"Content-Type": "application/json", "Accept": "application/json"}
     if token:
         headers["Authorization"] = f"Bearer {token}"
-    req = urllib.request.Request(url, data=data, headers=headers)
-    with urllib.request.urlopen(req, timeout=45) as r:
-        return json.loads(r.read())
+    last_exc: Exception | None = None
+    for attempt in range(retries):
+        try:
+            req = urllib.request.Request(url, data=data, headers=headers)
+            with urllib.request.urlopen(req, timeout=45) as r:
+                return json.loads(r.read())
+        except urllib.error.HTTPError as e:
+            if e.code not in _RETRYABLE_CODES:
+                raise
+            last_exc = e
+            wait = 2 ** attempt
+            print(f"[WARN] HTTP {e.code} on attempt {attempt + 1}/{retries}, retrying in {wait}s…", file=sys.stderr)
+            time.sleep(wait)
+    raise last_exc  # type: ignore
 
 
 def _http_get(url: str, timeout: int = 15) -> str:
