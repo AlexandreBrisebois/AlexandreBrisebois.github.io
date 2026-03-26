@@ -1,18 +1,30 @@
 ---
-title: "Why I Built This Blog"
-date: 2026-03-01T09:00:00+00:00
-description: "Plain Markdown. Git commits. No CMS, no vendor lock-in, no plugin ecosystem to baby-sit. This is why."
-tags: [engineering, gitops, writing]
+title: Why I Built This Blog
+date: 2026-03-01 09:00:00+00:00
+description: Plain Markdown. Git commits. No CMS, no vendor lock-in, no plugin ecosystem
+  to baby-sit. This is why.
+tags:
+- engineering
+- gitops
+- writing
 draft: false
-slug: "why-i-built-this-blog"
-tldr: "A static site generator and a text editor are all you need. Everything else is someone else's product decision making itself your problem."
+slug: why-i-built-this-blog
+tldr: A static site generator and a text editor are all you need. Everything else
+  is someone else's product decision making itself your problem.
 social_posts:
-  linkedin: ""
-  x: ""
-  bluesky: ""
-related_posts: []
-mentioned_in: []
-image_prompt: ""
+  linkedin: ''
+  x: ''
+  bluesky: ''
+related_posts:
+- About
+- 'Lessons Learned: A Project That Went Sideways'
+mentioned_in:
+- About
+image_prompt: Minimalist abstract architectural diagram, envisioning serverless event
+  flows or static site architecture. Clean lines, interconnected nodes, and subtle
+  grid elements. High-contrast composition with delicate textures. Dominant warm off-white,
+  deep forest green for structure, and coral accents for emphasis. "Calm Signal" aesthetic.
+  No humans, faces, or logos. Landscape orientation.
 ---
 
 The previous version of this blog lived on WordPress. That sentence alone should explain the impulse to start over.
