@@ -1,0 +1,14 @@
+<div class="post-meta">
+  <h1 class="post-title">{{ .Title }}</h1>
+  <div class="post-info">
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+    {{ with .Params.tags }}
+    <ul class="post-tags" aria-label="Post tags">
+      {{ range . }}<li class="tag">#{{ . }}</li>{{ end }}
+    </ul>
+    {{ end }}
+  </div>
+  {{ with .Params.tldr }}
+  <blockquote class="tldr">{{ . }}</blockquote>
+  {{ end }}
+</div>

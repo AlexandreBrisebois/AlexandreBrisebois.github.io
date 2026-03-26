@@ -1,0 +1,14 @@
+{{ define "main" }}
+<article class="post">
+  {{ partial "post-meta.html" . }}
+  <div class="post-body">
+    {{ .Content }}
+  </div>
+  {{ with .Params.social_posts.linkedin }}
+  <div class="linkedin-cta">
+    <p>Continue the discussion on <a href="{{ . }}" rel="noopener noreferrer">LinkedIn</a>.</p>
+  </div>
+  {{ end }}
+  {{ partial "social-share.html" . }}
+</article>
+{{ end }}

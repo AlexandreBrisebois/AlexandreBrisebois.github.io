@@ -1,0 +1,20 @@
+{{ define "main" }}
+<section class="post-list">
+  {{ range .Pages }}
+  <article class="post-card">
+    {{ $title := .Title }}
+    {{ if or (in (default slice .Params.tags) "retrospective") (in .Title "Retrospective") }}
+      {{ $title = replace .Title "Retrospective" "Lessons Learned" }}
+    {{ end }}
+    <h2><a href="{{ .RelPermalink }}">{{ $title }}</a></h2>
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+    {{ with .Description }}<p>{{ . }}</p>{{ end }}
+    {{ with .Params.tags }}
+    <ul class="post-tags" aria-label="Post tags">
+      {{ range . }}<li class="tag">#{{ . }}</li>{{ end }}
+    </ul>
+    {{ end }}
+  </article>
+  {{ end }}
+</section>
+{{ end }}

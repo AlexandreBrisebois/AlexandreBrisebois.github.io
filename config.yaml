@@ -1,0 +1,50 @@
+baseURL: "https://srvrlss.dev/"
+languageCode: "en-us"
+title: "srvrlss.dev"
+params:
+  author: "Alexandre Brisebois"
+  cloudflare_token: "c4d654ab4e2542b2a78b1de0562111ad"
+  description: "A thinking space for technical outcomes at the intersection of cloud engineering, AI agents, and serverless patterns."
+  github: "https://github.com/AlexandreBrisebois"
+  linkedin: "https://www.linkedin.com/in/alexandrebrisebois/"
+  bluesky: "https://bsky.app/profile/alexandrebrisebois.bsky.social"
+permalinks:
+  posts: /posts/:slug/
+mediaTypes:
+  text/markdown:
+    suffixes:
+      - md
+outputFormats:
+  llms:
+    baseName: "llms"
+    isPlainText: true
+    mediaType: "text/plain"
+    rel: "alternate"
+    root: true
+  llmsfull:
+    baseName: "llms-full"
+    isPlainText: true
+    mediaType: "text/plain"
+    rel: "alternate"
+    root: true
+  markdown:
+    baseName: "index"
+    isPlainText: true
+    mediaType: "text/markdown"
+    rel: "alternate"
+outputs:
+  home: [HTML, RSS, llms, llmsfull]
+  page: [HTML, markdown]
+  section: [HTML, RSS]
+markup:
+  highlight:
+    style: "github-dark"
+    lineNos: false
+    codeFences: true
+related:
+  threshold: 80
+  indices:
+    - name: tags
+      weight: 100
+    - name: date
+      weight: 10
