@@ -1,6 +1,5 @@
-# Astro standard gitignore
-node_modules
-dist
-.astro
 .DS_Store
-social_drafts.md
+/public/
+/resources/
+**/__pycache__/
+.hugo_build.lock

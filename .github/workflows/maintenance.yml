@@ -1,0 +1,56 @@
+name: Maintenance
+
+on:
+  schedule:
+    # Social Discussion Loop: every Friday at 15:00 UTC
+    - cron: '0 15 * * 5'
+    # Content Freshness Audit: every 3 weeks (Sunday 08:00 UTC, ~21-day cycle)
+    - cron: '0 8 1,22 * 0'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Maintenance mode to run'
+        required: true
+        type: choice
+        options:
+          - social-loop
+          - freshness-audit
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  maintain:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.14
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+
+      - name: Install dependencies
+        run: pip install google-generativeai pyyaml
+
+      - name: Determine mode
+        id: mode
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "mode=${{ github.event.inputs.mode }}" >> $GITHUB_OUTPUT
+          elif [ "$(date +%u)" = "5" ]; then
+            echo "mode=social-loop" >> $GITHUB_OUTPUT
+          else
+            echo "mode=freshness-audit" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run maintenance
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          MAINTENANCE_MODE: ${{ steps.mode.outputs.mode }}
+        run: python3 .github/scripts/content_automation.py --mode ${{ steps.mode.outputs.mode }}

@@ -1,0 +1,16 @@
+# srvrlss.dev — LLM-Optimized Index
+# Author: Alexandre Brisebois
+# Website: https://srvrlss.dev/
+# Updated: {{ now.Format "2006-01-02" }}
+# Description: Technical outcomes at the intersection of cloud engineering, AI agents, and serverless patterns.
+# Full content available at: https://srvrlss.dev/llms-full.txt
+
+{{ range .Site.RegularPages.ByDate.Reverse }}
+## {{ .Title }}
+URL: {{ .Permalink }}
+Date: {{ .Date.Format "2006-01-02" }}
+{{ with .Description }}Description: {{ . }}
+{{ end }}{{ with .Params.tldr }}TLDR: {{ . }}
+{{ end }}{{ with .Params.tags }}Tags: {{ delimit . ", " }}
+{{ end }}
+{{ end }}

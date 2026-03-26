@@ -1,47 +1,46 @@
-name: Deploy to GitHub Pages
+name: Deploy Hugo to GitHub Pages
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
-      - name: Setup Node
-        uses: actions/setup-node@v4
         with:
-          node-version: '22'
-          cache: 'npm'
-      
-      - name: Install dependencies
-        run: npm install --legacy-peer-deps
-      
-      - name: Build with Astro
-        run: npm run build
-      
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./dist
+          fetch-depth: 0
 
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Build
+        run: hugo --minify
+
+      - name: Append to Site Evolution Meta-Log
+        run: |
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          COMMIT_SHA=$(git rev-parse --short HEAD)
+          COMMIT_MSG=$(git log -1 --pretty=%s)
+          ENTRY="- \`${COMMIT_SHA}\` \`${TIMESTAMP}\` — ${COMMIT_MSG}"
+          echo "$ENTRY" >> public/changelog.txt
+
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          cname: srvrlss.dev

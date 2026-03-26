@@ -1,0 +1,18 @@
+# srvrlss.dev — Full Content for LLM Consumption
+# Author: Alexandre Brisebois
+# Website: https://srvrlss.dev/
+# Updated: {{ now.Format "2006-01-02" }}
+# Description: Technical outcomes at the intersection of cloud engineering, AI agents, and serverless patterns.
+
+{{ range .Site.RegularPages.ByDate.Reverse }}
+---
+# {{ .Title }}
+URL: {{ .Permalink }}
+Date: {{ .Date.Format "2006-01-02" }}
+{{ with .Description }}Description: {{ . }}
+{{ end }}{{ with .Params.tldr }}TLDR: {{ . }}
+{{ end }}{{ with .Params.tags }}Tags: {{ delimit . ", " }}
+{{ end }}
+{{ .RawContent }}
+
+{{ end }}
