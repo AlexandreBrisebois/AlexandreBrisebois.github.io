@@ -42,8 +42,21 @@ REPO: str = os.getenv("REPO", "")
 BASE_BRANCH: str = os.getenv("BASE_BRANCH", "main")
 
 PRODUCTION_LLMS_URL = "https://srvrlss.dev/llms-full.txt"
-GEMINI_TEXT_MODEL = "gemini-3.1-flash"
 IMAGE_MODEL = "nanobananav2"
+
+# Ordered preference list — first model found in the API will be used.
+GEMINI_MODEL_PREFERENCE = [
+    "gemini-3.1-flash",
+    "gemini-2.5-flash",
+    "gemini-2.5-flash-lite",
+    "gemini-2.0-flash",
+    "gemini-2.0-flash-lite",
+    "gemini-1.5-flash",
+    "gemini-1.5-flash-8b",
+    "gemini-1.5-pro",
+]
+
+_resolved_gemini_model: str | None = None
 
 BANNED_WORDS = [
     "utilize", "deep-dive", "game-changing", "synergy",
@@ -90,13 +103,61 @@ def _http_get(url: str, timeout: int = 15) -> str:
 # Gemini API
 # ---------------------------------------------------------------------------
 
+def discover_gemini_model() -> str:
+    """
+    Query the Gemini models list and return the best available text model.
+    Walks GEMINI_MODEL_PREFERENCE in order; falls back to the first
+    generateContent-capable model if none match.
+    """
+    global _resolved_gemini_model
+    if _resolved_gemini_model:
+        return _resolved_gemini_model
+
+    if not GEMINI_API_KEY:
+        raise ValueError("GEMINI_API_KEY is not set")
+
+    url = f"https://generativelanguage.googleapis.com/v1beta/models?key={GEMINI_API_KEY}"
+    try:
+        data = json.loads(_http_get(url, timeout=15))
+    except Exception as e:
+        raise RuntimeError(f"Could not list Gemini models: {e}") from e
+
+    available = {
+        m["name"].split("/")[-1]
+        for m in data.get("models", [])
+        if "generateContent" in m.get("supportedGenerationMethods", [])
+    }
+
+    for preferred in GEMINI_MODEL_PREFERENCE:
+        if preferred in available:
+            print(f"[INFO] Using Gemini model: {preferred}")
+            _resolved_gemini_model = preferred
+            return preferred
+
+    # Nothing matched the preference list — pick any flash, then any available
+    for candidate in sorted(available):
+        if "flash" in candidate:
+            print(f"[WARN] Preferred models unavailable; falling back to: {candidate}")
+            _resolved_gemini_model = candidate
+            return candidate
+
+    if available:
+        fallback = sorted(available)[0]
+        print(f"[WARN] No flash model found; falling back to: {fallback}")
+        _resolved_gemini_model = fallback
+        return fallback
+
+    raise RuntimeError(f"No generateContent-capable Gemini models found. Available: {available}")
+
+
 def call_gemini(prompt: str, temperature: float = 0.7) -> str:
     """Generate text via Gemini REST API."""
     if not GEMINI_API_KEY:
         raise ValueError("GEMINI_API_KEY is not set")
+    model = discover_gemini_model()
     url = (
         f"https://generativelanguage.googleapis.com/v1beta/models/"
-        f"{GEMINI_TEXT_MODEL}:generateContent?key={GEMINI_API_KEY}"
+        f"{model}:generateContent?key={GEMINI_API_KEY}"
     )
     payload = {
         "contents": [{"parts": [{"text": prompt}]}],
