@@ -1,6 +1,11 @@
 {{ define "main" }}
 <article class="post">
   {{ partial "post-meta.html" . }}
+  {{ with .Params.image }}
+  <div class="post-cover">
+    <img src="{{ . | absURL }}" alt="{{ $.Title }}" loading="eager" decoding="async">
+  </div>
+  {{ end }}
   <div class="post-body">
     {{ .Content }}
   </div>
