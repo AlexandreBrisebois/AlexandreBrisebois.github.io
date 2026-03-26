@@ -40,11 +40,11 @@ GITHUB_TOKEN: str = os.getenv("GITHUB_TOKEN", "")
 PR_NUMBER: str = os.getenv("PR_NUMBER", "")
 REPO: str = os.getenv("REPO", "")
 BASE_BRANCH: str = os.getenv("BASE_BRANCH", "main")
+FORCE_POSTS: str = os.getenv("FORCE_POSTS", "")
 
 PRODUCTION_LLMS_URL = "https://srvrlss.dev/llms-full.txt"
-IMAGE_MODEL = "nanobananav2"
 
-# Ordered preference list — first model found in the API will be used.
+# Ordered preference list for text generation — first match wins.
 GEMINI_MODEL_PREFERENCE = [
     "gemini-3.1-flash",
     "gemini-2.5-flash",
@@ -56,7 +56,16 @@ GEMINI_MODEL_PREFERENCE = [
     "gemini-1.5-pro",
 ]
 
+# Ordered preference list for image generation — first match wins.
+GEMINI_IMAGE_MODEL_PREFERENCE = [
+    "imagen-3.0-generate-002",
+    "imagen-3.0-generate-001",
+    "imagen-3.0-fast-generate-001",
+    "imagegeneration@006",
+]
+
 _resolved_gemini_model: str | None = None
+_resolved_image_model: str | None = None
 
 BANNED_WORDS = [
     "utilize", "deep-dive", "game-changing", "synergy",
@@ -167,27 +176,83 @@ def call_gemini(prompt: str, temperature: float = 0.7) -> str:
     return result["candidates"][0]["content"]["parts"][0]["text"]
 
 
+def discover_image_model() -> str | None:
+    """
+    Query the Gemini models list and return the best available image generation model.
+    Returns None if no image model is available.
+    """
+    global _resolved_image_model
+    if _resolved_image_model is not None:
+        return _resolved_image_model if _resolved_image_model else None
+
+    if not GEMINI_API_KEY:
+        return None
+
+    url = f"https://generativelanguage.googleapis.com/v1beta/models?key={GEMINI_API_KEY}"
+    try:
+        data = json.loads(_http_get(url, timeout=15))
+    except Exception as e:
+        print(f"[WARN] Could not list models for image discovery: {e}", file=sys.stderr)
+        _resolved_image_model = ""
+        return None
+
+    available = {
+        m["name"].split("/")[-1]
+        for m in data.get("models", [])
+        if any(method in m.get("supportedGenerationMethods", [])
+               for method in ("generateImages", "predict"))
+    }
+
+    for preferred in GEMINI_IMAGE_MODEL_PREFERENCE:
+        if preferred in available:
+            print(f"[INFO] Using image model: {preferred}")
+            _resolved_image_model = preferred
+            return preferred
+
+    # Fall back to any imagen model
+    for candidate in sorted(available):
+        if "imagen" in candidate or "imagegeneration" in candidate:
+            print(f"[WARN] Falling back to image model: {candidate}")
+            _resolved_image_model = candidate
+            return candidate
+
+    print("[WARN] No image generation model found in available Gemini models.")
+    _resolved_image_model = ""
+    return None
+
+
 def generate_image_via_api(prompt: str) -> bytes | None:
     """
-    Attempt image generation via nanobananav2.
+    Generate a WebP image using the best available Imagen model.
     Returns raw bytes on success, None on failure.
-    The API endpoint mirrors Gemini's experimental image generation format.
     """
     if not GEMINI_API_KEY:
         return None
+
+    model = discover_image_model()
+    if not model:
+        return None
+
     url = (
         f"https://generativelanguage.googleapis.com/v1beta/models/"
-        f"{IMAGE_MODEL}:generateImage?key={GEMINI_API_KEY}"
+        f"{model}:generateImages?key={GEMINI_API_KEY}"
     )
-    payload = {"prompt": prompt, "responseFormat": "webp"}
+    payload = {
+        "prompt": prompt,
+        "number_of_images": 1,
+        "output_options": {"mime_type": "image/webp"},
+    }
     try:
-        result = _http_json(url, payload)
         import base64
-        raw = result.get("image", {}).get("data", "")
-        return base64.b64decode(raw) if raw else None
+        result = _http_json(url, payload)
+        # Imagen API response shape
+        images = result.get("generatedImages") or result.get("images") or []
+        if images:
+            raw = images[0].get("image", {}).get("imageBytes") or images[0].get("data", "")
+            return base64.b64decode(raw) if raw else None
     except Exception as e:
-        print(f"[WARN] Image generation via {IMAGE_MODEL} failed: {e}", file=sys.stderr)
-        return None
+        print(f"[WARN] Image generation via {model} failed: {e}", file=sys.stderr)
+    return None
 
 
 # ---------------------------------------------------------------------------
@@ -224,7 +289,24 @@ def write_frontmatter_atomic(filepath: pathlib.Path, fm: dict, body: str) -> Non
 # ---------------------------------------------------------------------------
 
 def get_changed_posts() -> list[pathlib.Path]:
-    """Return new/modified content/posts/*.md files vs the base branch."""
+    """
+    Return posts to process. Checks FORCE_POSTS first (manual override),
+    then falls back to git diff vs the base branch.
+    """
+    if FORCE_POSTS:
+        paths = []
+        for name in FORCE_POSTS.split(","):
+            name = name.strip()
+            if not name:
+                continue
+            p = pathlib.Path("content/posts") / name
+            if p.exists():
+                paths.append(p)
+            else:
+                print(f"[WARN] FORCE_POSTS: {p} does not exist, skipping.", file=sys.stderr)
+        print(f"[INFO] FORCE_POSTS override: {[str(p) for p in paths]}")
+        return paths
+
     try:
         result = subprocess.run(
             ["git", "diff", "--name-only", f"origin/{BASE_BRANCH}...HEAD"],
