@@ -1,4 +1,5 @@
 .DS_Store
 /public/
 /resources/
-__pycache__/
+**/__pycache__/
+.hugo_build.lock
