@@ -1,1 +1,1 @@
-- `ff1c5c2` `2026-03-26T21:38:12Z` — Merge pull request #13 from AlexandreBrisebois/new-blog
+- `fa32c71` `2026-03-26T21:50:32Z` — Merge pull request #14 from AlexandreBrisebois/new-blog
