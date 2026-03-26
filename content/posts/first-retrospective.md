@@ -20,12 +20,12 @@ related_posts:
 - About
 mentioned_in:
 - About
-image_prompt: Minimalist abstract architectural diagram of a serverless event flow,
-  high-contrast textured paper aesthetic. Clean geometric nodes and thin connecting
-  lines in deep forest green on a warm off-white background. Subtle coral accents
-  highlighting a fragmented, skewed section where the flow breaks and shifts "sideways."
-  Calm Signal minimal baseline, sophisticated geometric composition, no text, no humans.
-  Muted earth tones, matte finish, landscape orientation, 16:9 aspect ratio.
+image_prompt: 'Minimalist abstract architectural diagram of a serverless event flow.
+  Geometric composition showing three nodes and connecting paths where one path subtly
+  drifts off-axis. High-contrast tactile paper texture. "Calm Signal" aesthetic with
+  clean lines and wide whitespace. Color palette: warm off-white background, deep
+  forest green elements, and a singular muted coral accent. No humans, no faces, no
+  logos, no text. Professional, sophisticated, landscape orientation.'
 ---
 
 The architecture diagram looked clean. Three services, two queues, one database. We had reviewed it in five separate meetings and everyone agreed it was the right call.
