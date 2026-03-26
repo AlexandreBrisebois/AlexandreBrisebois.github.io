@@ -200,6 +200,29 @@ def call_gemini(prompt: str, temperature: float = 0.7) -> str:
     return result["candidates"][0]["content"]["parts"][0]["text"]
 
 
+def call_gemini_vision(img_bytes: bytes, mime_type: str, prompt: str, temperature: float = 0.4) -> str:
+    """Generate text from an image + text prompt via Gemini multimodal REST API."""
+    import base64
+    if not GEMINI_API_KEY:
+        raise ValueError("GEMINI_API_KEY is not set")
+    model = discover_gemini_model()
+    url = (
+        f"https://generativelanguage.googleapis.com/v1beta/models/"
+        f"{model}:generateContent?key={GEMINI_API_KEY}"
+    )
+    payload = {
+        "contents": [{
+            "parts": [
+                {"text": prompt},
+                {"inlineData": {"mimeType": mime_type, "data": base64.b64encode(img_bytes).decode()}},
+            ]
+        }],
+        "generationConfig": {"temperature": temperature, "maxOutputTokens": 1024},
+    }
+    result = _http_json(url, payload)
+    return result["candidates"][0]["content"]["parts"][0]["text"]
+
+
 def discover_image_model() -> tuple[str, str] | None:
     """
     Query the Gemini models list and return (model_name, method) for the best
@@ -571,6 +594,62 @@ Return JSON only:
     return {"related_posts": [], "mentioned_in": []}
 
 
+def critique_image(img_bytes: bytes, title: str, body: str, image_prompt: str) -> dict:
+    """
+    Ask Gemini to evaluate the generated image against the post content and style rules.
+    Returns {"keep": bool, "feedback": str}.
+    """
+    prompt = f"""You are a design critic reviewing a blog header image for a technical blog.
+
+Post title: {title}
+Post excerpt: {body[:800]}
+Image generation prompt used: {image_prompt}
+
+Evaluate this image against these criteria:
+1. Does it visually represent the post's core concept or theme?
+2. Does it match the required style: minimalist, abstract or architectural, no humans, no faces, no logos?
+3. Is the composition suitable as a landscape blog header?
+4. Does the color palette feel appropriate (muted earth tones, high contrast)?
+
+Return JSON only:
+{{"keep": true or false, "feedback": "One or two sentences. If keep is false, describe specifically what is wrong and what the next image should do differently."}}
+
+Be decisive. Only keep if the image genuinely reflects the post theme and meets all style requirements."""
+
+    raw = call_gemini_vision(img_bytes, "image/webp", prompt)
+    match = re.search(r"\{[\s\S]*?\}", raw)
+    if match:
+        try:
+            result = json.loads(match.group())
+            if "keep" in result and "feedback" in result:
+                return result
+        except json.JSONDecodeError:
+            pass
+    return {"keep": False, "feedback": raw.strip()[:300]}
+
+
+def gen_refined_image_prompt(original_prompt: str, critique: str, title: str, body: str) -> str:
+    prompt = f"""You are refining an image generation prompt for a blog header image based on critic feedback.
+
+Original prompt: {original_prompt}
+
+Critic feedback: {critique}
+
+Post title: {title}
+Post excerpt: {body[:500]}
+
+Style requirements (non-negotiable):
+- Abstract architectural diagrams or serverless event flows
+- High-contrast textures, "Calm Signal" minimal baseline
+- Muted earth tones (warm off-white, deep green, coral accent)
+- NO stock-photo humans, NO faces, NO logos
+- WebP format, landscape orientation
+
+Write a refined image generation prompt that directly addresses the critic's feedback while maintaining all style requirements.
+Return only the prompt (under 120 words). No labels, no explanation."""
+    return call_gemini(prompt, temperature=0.7).strip()
+
+
 def gen_image_prompt(title: str, body: str) -> str:
     prompt = f"""Generate a concise image generation prompt for a minimalist blog header image.
 
@@ -712,17 +791,49 @@ def run_pr_automation() -> None:
                 f"```\n{image_prompt}\n```\n\n"
             )
 
-            # --- Image generation ---
-            img_dir = pathlib.Path(f"static/images/posts")
+            # --- Image generation (2-shot with critique) ---
+            img_dir = pathlib.Path("static/images/posts")
             img_dir.mkdir(parents=True, exist_ok=True)
             img_path = img_dir / f"{slug}.webp"
+            img_initial_path = img_dir / f"{slug}-initial.webp"
+
             img_bytes = generate_image_via_api(image_prompt)
             if img_bytes:
-                img_path.write_bytes(img_bytes)
-                fm["image"] = f"/images/posts/{slug}.webp"
-                fm_updated = True
-                comment_sections.append(f"✅ **Image generated:** `{img_path}`\n\n")
-                subprocess.run(["git", "add", str(img_path)], check=False)
+                critique = critique_image(img_bytes, title, body, image_prompt)
+                comment_sections.append(
+                    f"**Image Critique (shot 1):** {critique['feedback']}\n\n"
+                )
+                if critique["keep"]:
+                    img_path.write_bytes(img_bytes)
+                    fm["image"] = f"/images/posts/{slug}.webp"
+                    fm_updated = True
+                    comment_sections.append(f"✅ **Image accepted (shot 1):** `{img_path}`\n\n")
+                    subprocess.run(["git", "add", str(img_path)], check=False)
+                else:
+                    img_initial_path.write_bytes(img_bytes)
+                    subprocess.run(["git", "add", str(img_initial_path)], check=False)
+
+                    refined_prompt = gen_refined_image_prompt(image_prompt, critique["feedback"], title, body)
+                    fm["image_prompt"] = refined_prompt
+                    comment_sections.append(
+                        f"**Refined Image Prompt (shot 2):**\n```\n{refined_prompt}\n```\n\n"
+                    )
+
+                    img_bytes_2 = generate_image_via_api(refined_prompt)
+                    if img_bytes_2:
+                        img_path.write_bytes(img_bytes_2)
+                        fm["image"] = f"/images/posts/{slug}.webp"
+                        fm_updated = True
+                        comment_sections.append(f"✅ **Image accepted (shot 2):** `{img_path}`\n\n")
+                        subprocess.run(["git", "add", str(img_path)], check=False)
+                    else:
+                        img_path.write_bytes(img_bytes)
+                        fm["image"] = f"/images/posts/{slug}.webp"
+                        fm_updated = True
+                        comment_sections.append(
+                            "⚠️ **Shot 2 generation failed — using shot 1 as fallback.**\n\n"
+                        )
+                        subprocess.run(["git", "add", str(img_path)], check=False)
             else:
                 comment_sections.append(
                     "ℹ️ **Image:** Use the prompt above with your preferred image generator. "
