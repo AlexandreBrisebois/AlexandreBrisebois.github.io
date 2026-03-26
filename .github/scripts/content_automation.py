@@ -46,7 +46,8 @@ PRODUCTION_LLMS_URL = "https://srvrlss.dev/llms-full.txt"
 
 # Ordered preference list for text generation — first match wins.
 GEMINI_MODEL_PREFERENCE = [
-    "gemini-3.1-flash",
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite-preview",
     "gemini-2.5-flash",
     "gemini-2.5-flash-lite",
     "gemini-2.0-flash",
@@ -57,12 +58,21 @@ GEMINI_MODEL_PREFERENCE = [
 ]
 
 # Ordered preference list for image generation — first match wins.
+# Models using generateContent (Gemini native image) come first.
 GEMINI_IMAGE_MODEL_PREFERENCE = [
+    "gemini-3-pro-image-preview",   # nanobananav2 — generateContent + responseModalities
+    "imagen-4.0-generate-001",
+    "imagen-4.0-fast-generate-001",
     "imagen-3.0-generate-002",
     "imagen-3.0-generate-001",
     "imagen-3.0-fast-generate-001",
     "imagegeneration@006",
 ]
+
+# Models that use generateContent + responseModalities instead of generateImages/predict
+GEMINI_NATIVE_IMAGE_MODELS = {
+    "gemini-3-pro-image-preview",
+}
 
 _resolved_gemini_model: str | None = None
 _resolved_image_model: str | None = None
@@ -176,14 +186,15 @@ def call_gemini(prompt: str, temperature: float = 0.7) -> str:
     return result["candidates"][0]["content"]["parts"][0]["text"]
 
 
-def discover_image_model() -> str | None:
+def discover_image_model() -> tuple[str, str] | None:
     """
-    Query the Gemini models list and return the best available image generation model.
-    Returns None if no image model is available.
+    Query the Gemini models list and return (model_name, method) for the best
+    available image generation model, where method is the API endpoint suffix
+    ('generateImages' or 'predict'). Returns None if nothing is available.
     """
     global _resolved_image_model
     if _resolved_image_model is not None:
-        return _resolved_image_model if _resolved_image_model else None
+        return tuple(_resolved_image_model.split("|", 1)) if _resolved_image_model else None  # type: ignore
 
     if not GEMINI_API_KEY:
         return None
@@ -196,60 +207,113 @@ def discover_image_model() -> str | None:
         _resolved_image_model = ""
         return None
 
-    available = {
-        m["name"].split("/")[-1]
-        for m in data.get("models", [])
-        if any(method in m.get("supportedGenerationMethods", [])
-               for method in ("generateImages", "predict"))
-    }
+    # Build map of model_id -> supported image method
+    model_methods: dict[str, str] = {}
+    for m in data.get("models", []):
+        name = m["name"].split("/")[-1]
+        methods = m.get("supportedGenerationMethods", [])
+        if name in GEMINI_NATIVE_IMAGE_MODELS and "generateContent" in methods:
+            model_methods[name] = "generateContent"
+        elif "generateImages" in methods:
+            model_methods[name] = "generateImages"
+        elif "predict" in methods and ("imagen" in name or "imagegeneration" in name):
+            model_methods[name] = "predict"
 
     for preferred in GEMINI_IMAGE_MODEL_PREFERENCE:
-        if preferred in available:
-            print(f"[INFO] Using image model: {preferred}")
-            _resolved_image_model = preferred
-            return preferred
+        if preferred in model_methods:
+            method = model_methods[preferred]
+            print(f"[INFO] Using image model: {preferred} (method: {method})")
+            _resolved_image_model = f"{preferred}|{method}"
+            return preferred, method
 
-    # Fall back to any imagen model
-    for candidate in sorted(available):
+    # Fall back to any discovered imagen model
+    for candidate in sorted(model_methods.keys()):
         if "imagen" in candidate or "imagegeneration" in candidate:
-            print(f"[WARN] Falling back to image model: {candidate}")
-            _resolved_image_model = candidate
-            return candidate
+            method = model_methods[candidate]
+            print(f"[WARN] Falling back to image model: {candidate} (method: {method})")
+            _resolved_image_model = f"{candidate}|{method}"
+            return candidate, method
 
     print("[WARN] No image generation model found in available Gemini models.")
     _resolved_image_model = ""
     return None
 
 
+def _extract_image_bytes(result: dict) -> bytes | None:
+    """Extract base64-encoded image bytes from generateImages, predict, or generateContent response."""
+    import base64
+    # generateContent response: candidates[0].content.parts[].inlineData.data
+    for candidate in result.get("candidates", []):
+        for part in candidate.get("content", {}).get("parts", []):
+            inline = part.get("inlineData", {})
+            raw = inline.get("data", "")
+            if raw:
+                return base64.b64decode(raw)
+    # generateImages response: {"generatedImages": [{"image": {"imageBytes": "..."}}]}
+    for images_key in ("generatedImages", "images"):
+        images = result.get(images_key, [])
+        if images:
+            for key in ("imageBytes", "data"):
+                raw = images[0].get("image", {}).get(key) or images[0].get(key, "")
+                if raw:
+                    return base64.b64decode(raw)
+    # predict response: {"predictions": [{"bytesBase64Encoded": "..."}]}
+    for pred in result.get("predictions", []):
+        raw = pred.get("bytesBase64Encoded") or pred.get("imageBytes", "")
+        if raw:
+            return base64.b64decode(raw)
+    return None
+
+
 def generate_image_via_api(prompt: str) -> bytes | None:
     """
     Generate a WebP image using the best available Imagen model.
+    Tries generateImages payload first, then predict payload on 404.
     Returns raw bytes on success, None on failure.
     """
     if not GEMINI_API_KEY:
         return None
 
-    model = discover_image_model()
-    if not model:
+    result = discover_image_model()
+    if not result:
         return None
+    model, method = result
 
-    url = (
+    base_url = (
         f"https://generativelanguage.googleapis.com/v1beta/models/"
-        f"{model}:generateImages?key={GEMINI_API_KEY}"
+        f"{model}:{method}?key={GEMINI_API_KEY}"
     )
-    payload = {
-        "prompt": prompt,
-        "number_of_images": 1,
-        "output_options": {"mime_type": "image/webp"},
-    }
+
+    # Payload varies by method
+    if method == "generateContent":
+        payload = {
+            "contents": [{"parts": [{"text": prompt}]}],
+            "generationConfig": {"responseModalities": ["TEXT", "IMAGE"]},
+        }
+    elif method == "generateImages":
+        payload = {"prompt": prompt, "number_of_images": 1}
+    else:  # predict
+        payload = {
+            "instances": [{"prompt": prompt}],
+            "parameters": {"sampleCount": 1},
+        }
+
     try:
-        import base64
-        result = _http_json(url, payload)
-        # Imagen API response shape
-        images = result.get("generatedImages") or result.get("images") or []
-        if images:
-            raw = images[0].get("image", {}).get("imageBytes") or images[0].get("data", "")
-            return base64.b64decode(raw) if raw else None
+        data = _http_json(base_url, payload)
+        img = _extract_image_bytes(data)
+        if img:
+            return img
+        print(f"[WARN] Image model {model} returned no image bytes.", file=sys.stderr)
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            # Model listed but endpoint unavailable — likely permissions/billing
+            print(
+                f"[WARN] {model}:{method} returned 404. "
+                "Image generation may require billing or API enablement.",
+                file=sys.stderr,
+            )
+        else:
+            print(f"[WARN] Image generation via {model} failed: {e}", file=sys.stderr)
     except Exception as e:
         print(f"[WARN] Image generation via {model} failed: {e}", file=sys.stderr)
     return None
