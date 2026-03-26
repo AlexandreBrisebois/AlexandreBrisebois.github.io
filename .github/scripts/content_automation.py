@@ -378,7 +378,7 @@ def write_frontmatter_atomic(filepath: pathlib.Path, fm: dict, body: str) -> Non
     buf = io.StringIO()
     buf.write("---\n")
     yaml.dump(fm, buf, default_flow_style=False, allow_unicode=True, sort_keys=False)
-    buf.write("---")
+    buf.write("---\n")
     buf.write(body)
     tmp = filepath.with_suffix(".tmp")
     tmp.write_text(buf.getvalue(), encoding="utf-8")
