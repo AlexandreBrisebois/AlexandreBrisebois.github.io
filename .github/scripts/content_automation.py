@@ -46,7 +46,8 @@ PRODUCTION_LLMS_URL = "https://srvrlss.dev/llms-full.txt"
 
 # Ordered preference list for text generation — first match wins.
 GEMINI_MODEL_PREFERENCE = [
-    "gemini-3.1-flash",
+    "gemini-3-flash-preview",
+    "gemini-3.1-flash-lite-preview",
     "gemini-2.5-flash",
     "gemini-2.5-flash-lite",
     "gemini-2.0-flash",
@@ -57,7 +58,9 @@ GEMINI_MODEL_PREFERENCE = [
 ]
 
 # Ordered preference list for image generation — first match wins.
+# Models using generateContent (Gemini native image) come first.
 GEMINI_IMAGE_MODEL_PREFERENCE = [
+    "gemini-3-pro-image-preview",   # nanobananav2 — generateContent + responseModalities
     "imagen-4.0-generate-001",
     "imagen-4.0-fast-generate-001",
     "imagen-3.0-generate-002",
@@ -65,6 +68,11 @@ GEMINI_IMAGE_MODEL_PREFERENCE = [
     "imagen-3.0-fast-generate-001",
     "imagegeneration@006",
 ]
+
+# Models that use generateContent + responseModalities instead of generateImages/predict
+GEMINI_NATIVE_IMAGE_MODELS = {
+    "gemini-3-pro-image-preview",
+}
 
 _resolved_gemini_model: str | None = None
 _resolved_image_model: str | None = None
@@ -204,7 +212,9 @@ def discover_image_model() -> tuple[str, str] | None:
     for m in data.get("models", []):
         name = m["name"].split("/")[-1]
         methods = m.get("supportedGenerationMethods", [])
-        if "generateImages" in methods:
+        if name in GEMINI_NATIVE_IMAGE_MODELS and "generateContent" in methods:
+            model_methods[name] = "generateContent"
+        elif "generateImages" in methods:
             model_methods[name] = "generateImages"
         elif "predict" in methods and ("imagen" in name or "imagegeneration" in name):
             model_methods[name] = "predict"
@@ -230,8 +240,15 @@ def discover_image_model() -> tuple[str, str] | None:
 
 
 def _extract_image_bytes(result: dict) -> bytes | None:
-    """Extract base64-encoded image bytes from either generateImages or predict response."""
+    """Extract base64-encoded image bytes from generateImages, predict, or generateContent response."""
     import base64
+    # generateContent response: candidates[0].content.parts[].inlineData.data
+    for candidate in result.get("candidates", []):
+        for part in candidate.get("content", {}).get("parts", []):
+            inline = part.get("inlineData", {})
+            raw = inline.get("data", "")
+            if raw:
+                return base64.b64decode(raw)
     # generateImages response: {"generatedImages": [{"image": {"imageBytes": "..."}}]}
     for images_key in ("generatedImages", "images"):
         images = result.get(images_key, [])
@@ -268,7 +285,12 @@ def generate_image_via_api(prompt: str) -> bytes | None:
     )
 
     # Payload varies by method
-    if method == "generateImages":
+    if method == "generateContent":
+        payload = {
+            "contents": [{"parts": [{"text": prompt}]}],
+            "generationConfig": {"responseModalities": ["TEXT", "IMAGE"]},
+        }
+    elif method == "generateImages":
         payload = {"prompt": prompt, "number_of_images": 1}
     else:  # predict
         payload = {
