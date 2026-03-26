@@ -5,6 +5,12 @@ on:
     branches:
       - main
     types: [opened, synchronize]
+  workflow_dispatch:
+    inputs:
+      force_posts:
+        description: 'Comma-separated post filenames to process (e.g. hello-world.md,first-retrospective.md). Leave empty to use git diff.'
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -16,10 +22,10 @@ jobs:
     runs-on: ubuntu-latest
     if: github.actor != 'github-actions[bot]'
     steps:
-      - name: Checkout PR branch
+      - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.head_ref }}
+          ref: ${{ github.head_ref || github.ref }}
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -38,5 +44,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.number }}
           REPO: ${{ github.repository }}
-          BASE_BRANCH: ${{ github.base_ref }}
+          BASE_BRANCH: ${{ github.base_ref || 'main' }}
+          FORCE_POSTS: ${{ github.event.inputs.force_posts }}
         run: python3 .github/scripts/content_automation.py
