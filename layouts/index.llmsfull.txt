@@ -13,6 +13,6 @@ Date: {{ .Date.Format "2006-01-02" }}
 {{ end }}{{ with .Params.tldr }}TLDR: {{ . }}
 {{ end }}{{ with .Params.tags }}Tags: {{ delimit . ", " }}
 {{ end }}
-{{ .Plain }}
+{{ .RawContent }}
 
 {{ end }}

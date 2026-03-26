@@ -37,7 +37,7 @@
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": {{ .Title | jsonify }},
+  "headline": "{{ .Title }}",
   "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
   "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",
   "author": {
@@ -46,7 +46,7 @@
     "url": "{{ .Site.BaseURL }}"
   },
   "url": "{{ .Permalink }}",
-  "description": {{ with .Description }}{{ . | jsonify }}{{ else }}""{{ end }}
+  "description": "{{ with .Description }}{{ . }}{{ end }}"
 }
 </script>
 {{ end }}
@@ -67,7 +67,7 @@
     {
       "@type": "ListItem",
       "position": 2,
-      "name": {{ .Title | jsonify }},
+      "name": "{{ .Title }}",
       "item": "{{ .Permalink }}"
     }{{ end }}
   ]
