@@ -1,6 +1,1 @@
-# Astro standard gitignore
-node_modules
-dist
-.astro
 .DS_Store
-social_drafts.md
