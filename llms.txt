@@ -1,7 +1,7 @@
 # srvrlss.dev — LLM-Optimized Index
 # Author: Alexandre Brisebois
 # Website: https://srvrlss.dev/
-# Updated: 2026-03-26
+# Updated: 2026-03-27
 # Description: Technical outcomes at the intersection of cloud engineering, AI agents, and serverless patterns.
 # Full content available at: https://srvrlss.dev/llms-full.txt
 
@@ -9,22 +9,6 @@
 ## About
 URL: https://srvrlss.dev/about/
 Date: 2026-03-26
-Description: Alexandre Brisebois — Technical Outcome Leader at the intersection of multi-cloud engineering, AI agents, and serverless patterns.
-
-
-## Lessons Learned: A Project That Went Sideways
-URL: https://srvrlss.dev/posts/lessons-learned-project-went-sideways/
-Date: 2026-03-15
-Description: A cloud migration that looked clean on the architecture diagram and fell apart in production. What happened, what we changed, and what I carry forward.
-TLDR: Clean diagrams don't survive contact with production traffic. The pivots that saved us weren't technical — they were decisions about what to stop defending.
-Tags: retrospective, cloud, engineering, lessons-learned
-
-
-## Why I Built This Blog
-URL: https://srvrlss.dev/posts/why-i-built-this-blog/
-Date: 2026-03-01
-Description: Plain Markdown. Git commits. No CMS, no vendor lock-in, no plugin ecosystem to baby-sit. This is why.
-TLDR: A static site generator and a text editor are all you need. Everything else is someone else's product decision making itself your problem.
-Tags: engineering, gitops, writing
+Description: Alexandre Brisebois — at the intersection of multi-cloud engineering, AI agents, and serverless patterns.
 
 
