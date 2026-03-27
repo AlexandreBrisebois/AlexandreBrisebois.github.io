@@ -1,19 +1,35 @@
 ---
-title: "The Greenfield to Brownfield Transition"
+title: The Greenfield to Brownfield Transition
 date: 2026-03-01 09:00:00+00:00
-description: ""
-tags: []
+description: ''
+tags:
+- greenfield-development
+- brownfield-development
+- microsoft-azure
+- exploratory-testing
 draft: false
-slug: "the-greenfield-to-brownfield-transition"
-tldr: ""
+slug: the-greenfield-to-brownfield-transition
+tldr: I’ve watched projects turn legacy the moment that second release hits production.
+  We win by obsessing over the observation phase and pivoting our strategy as fast
+  as the cloud providers evolve.
 social_posts:
-  linkedin: ""
-  x: ""
-  bluesky: ""
-related_posts: []
-mentioned_in: []
-image_prompt: ""
+  linkedin: ''
+  x: ''
+  bluesky: ''
+related_posts:
+- About
+mentioned_in:
+- About
+image_prompt: Abstract architectural diagram illustrating the transition from Greenfield
+  to Brownfield. The left side features fluid, organic serverless event flows with
+  loose deep forest green lines. This evolves into a rigid, structured geometric grid
+  on the right, representing technical blueprint architecture. High-contrast grainy
+  texture with a "Calm Signal" minimalist aesthetic. Warm off-white background with
+  subtle coral accent nodes at the intersection of organic and rigid forms. Sophisticated,
+  clean composition. No humans, no faces, no text, no logos. Landscape orientation.
+image: /images/posts/the-greenfield-to-brownfield-transition.webp
 ---
+
 
 There’s a special moment in every project where it transitions from a Greenfield (new) project to a Brownfield (legacy) project. This moment usually occurs close to the second release.
 
