@@ -9,6 +9,13 @@
 ## About
 URL: https://srvrlss.dev/about/
 Date: 2026-03-26
-Description: Alexandre Brisebois — at the intersection of multi-cloud engineering, AI agents, and serverless patterns.
+Description: Alexandre Brisebois — Cutting through the noise
+
+
+## The Greenfield to Brownfield Transition
+URL: https://srvrlss.dev/posts/the-greenfield-to-brownfield-transition/
+Date: 2026-03-01
+TLDR: I’ve watched projects turn legacy the moment that second release hits production. We win by obsessing over the observation phase and pivoting our strategy as fast as the cloud providers evolve.
+Tags: greenfield-development, brownfield-development, microsoft-azure, exploratory-testing
 
 
