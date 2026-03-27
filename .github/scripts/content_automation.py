@@ -511,6 +511,22 @@ Return exactly 2 sentences separated by a space."""
     return call_gemini(prompt, temperature=0.5).strip()
 
 
+def gen_description(title: str, body: str) -> str:
+    prompt = f"""Write a single-sentence meta description for this blog post.
+Purpose: appear in search results and social previews to convince someone to click.
+Rules:
+- Under 155 characters.
+- Lead with the concrete benefit or surprising insight — not the topic.
+- No brand voice flair needed; clarity and specificity win here.
+- No banned words: utilize, deep-dive, game-changing, synergy, very, extremely, robust.
+- Do NOT start with the title or "This post...".
+- Return only the sentence, no labels, no quotes.
+
+Title: {title}
+Content (first 1000 chars): {body[:1000]}"""
+    return call_gemini(prompt, temperature=0.3).strip()
+
+
 def gen_social_hooks(title: str, body: str, context: str) -> dict:
     prompt = f"""{BRAND_VOICE_RULES}
 
@@ -728,6 +744,13 @@ def run_pr_automation() -> None:
                 fm["tldr"] = tldr
                 fm_updated = True
                 comment_sections.append(f"**Generated TLDR:**\n> {tldr}\n\n")
+
+            # --- Description ---
+            if not fm.get("description"):
+                description = gen_description(title, body)
+                fm["description"] = description
+                fm_updated = True
+                comment_sections.append(f"**Generated Description:**\n> {description}\n\n")
 
             # --- Tags ---
             if not fm.get("tags"):
