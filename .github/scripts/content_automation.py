@@ -61,7 +61,7 @@ GEMINI_MODEL_PREFERENCE = [
 # Ordered preference list for image generation — first match wins.
 # Models using generateContent (Gemini native image) come first.
 GEMINI_IMAGE_MODEL_PREFERENCE = [
-    "gemini-3-pro-image-preview",   # generateContent + responseModalities
+    "gemini-3-pro-image-preview",   # nanobananav2 — generateContent + responseModalities
     "imagen-4.0-generate-001",
     "imagen-4.0-fast-generate-001",
     "imagen-3.0-generate-002",
