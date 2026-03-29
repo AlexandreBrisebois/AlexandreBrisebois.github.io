@@ -61,8 +61,7 @@ GEMINI_MODEL_PREFERENCE = [
 # Ordered preference list for image generation — first match wins.
 # Models using generateContent (Gemini native image) come first.
 GEMINI_IMAGE_MODEL_PREFERENCE = [
-    "gemini-3.1-pro-image",          # preferred — generateContent + responseModalities
-    "gemini-3-pro-image-preview",
+    "gemini-3-pro-image-preview",   # generateContent + responseModalities
     "imagen-4.0-generate-001",
     "imagen-4.0-fast-generate-001",
     "imagen-3.0-generate-002",
@@ -73,12 +72,8 @@ GEMINI_IMAGE_MODEL_PREFERENCE = [
 
 # Models that use generateContent + responseModalities instead of generateImages/predict
 GEMINI_NATIVE_IMAGE_MODELS = {
-    "gemini-3.1-pro-image",
     "gemini-3-pro-image-preview",
 }
-
-# Model used for image critique (vision + text)
-GEMINI_CRITIQUE_MODEL = "gemini-3.1-flash"
 
 _resolved_gemini_model: str | None = None
 _resolved_image_model: str | None = None
@@ -206,12 +201,12 @@ def call_gemini(prompt: str, temperature: float = 0.7, max_tokens: int = 2048) -
     return result["candidates"][0]["content"]["parts"][0]["text"]
 
 
-def call_gemini_vision(img_bytes: bytes, mime_type: str, prompt: str, temperature: float = 0.4, model: str | None = None) -> str:
+def call_gemini_vision(img_bytes: bytes, mime_type: str, prompt: str, temperature: float = 0.4) -> str:
     """Generate text from an image + text prompt via Gemini multimodal REST API."""
     import base64
     if not GEMINI_API_KEY:
         raise ValueError("GEMINI_API_KEY is not set")
-    model = model or discover_gemini_model()
+    model = discover_gemini_model()
     url = (
         f"https://generativelanguage.googleapis.com/v1beta/models/"
         f"{model}:generateContent?key={GEMINI_API_KEY}"
@@ -537,7 +532,7 @@ def critique_image(img_bytes: bytes, image_prompt: str) -> dict:
 Reply JSON only: {{"keep": true or false, "feedback": "2-3 sentences: what is wrong and specifically what the next image must do differently to match the description."}}
 Only keep if the image clearly matches the description."""
 
-    raw = call_gemini_vision(img_bytes, "image/webp", prompt, model=GEMINI_CRITIQUE_MODEL)
+    raw = call_gemini_vision(img_bytes, "image/webp", prompt)
     match = re.search(r"\{[\s\S]*?\}", raw)
     if match:
         try:
