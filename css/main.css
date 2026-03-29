@@ -668,3 +668,59 @@ body {
     font-size: 0.82rem;
   }
 }
+
+/* ============================================================
+   Hero Image
+   ============================================================ */
+
+.hero-image {
+  max-width: var(--max-width-list);
+  margin: 0 auto 2rem;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+}
+
+.hero-image img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+}
+
+/* ============================================================
+   Tag Strip
+   ============================================================ */
+
+.tag-strip {
+  max-width: var(--max-width-list);
+  margin: 0 auto 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag-chip {
+  border: 1px solid var(--color-accent);
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.8rem;
+  font-family: var(--font-body);
+  color: var(--color-accent);
+  text-decoration: none;
+  background: transparent;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.tag-chip:hover {
+  background: rgba(45, 106, 79, 0.1);
+}
+
+/* ============================================================
+   Latest Post Card Marker
+   ============================================================ */
+
+.post-card--latest {
+  border-left: 3px solid var(--color-accent-2);
+  padding-left: 0.75rem;
+}
