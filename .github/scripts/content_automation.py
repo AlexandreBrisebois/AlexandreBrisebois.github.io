@@ -61,7 +61,8 @@ GEMINI_MODEL_PREFERENCE = [
 # Ordered preference list for image generation — first match wins.
 # Models using generateContent (Gemini native image) come first.
 GEMINI_IMAGE_MODEL_PREFERENCE = [
-    "gemini-3-pro-image-preview",   # nanobananav2 — generateContent + responseModalities
+    "gemini-3.1-pro-image",          # preferred — generateContent + responseModalities
+    "gemini-3-pro-image-preview",
     "imagen-4.0-generate-001",
     "imagen-4.0-fast-generate-001",
     "imagen-3.0-generate-002",
@@ -72,8 +73,12 @@ GEMINI_IMAGE_MODEL_PREFERENCE = [
 
 # Models that use generateContent + responseModalities instead of generateImages/predict
 GEMINI_NATIVE_IMAGE_MODELS = {
+    "gemini-3.1-pro-image",
     "gemini-3-pro-image-preview",
 }
+
+# Model used for image critique (vision + text)
+GEMINI_CRITIQUE_MODEL = "gemini-3.1-flash"
 
 _resolved_gemini_model: str | None = None
 _resolved_image_model: str | None = None
@@ -183,7 +188,7 @@ def discover_gemini_model() -> str:
     raise RuntimeError(f"No generateContent-capable Gemini models found. Available: {available}")
 
 
-def call_gemini(prompt: str, temperature: float = 0.7) -> str:
+def call_gemini(prompt: str, temperature: float = 0.7, max_tokens: int = 2048) -> str:
     """Generate text via Gemini REST API."""
     if not GEMINI_API_KEY:
         raise ValueError("GEMINI_API_KEY is not set")
@@ -194,18 +199,18 @@ def call_gemini(prompt: str, temperature: float = 0.7) -> str:
     )
     payload = {
         "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"temperature": temperature, "maxOutputTokens": 2048},
+        "generationConfig": {"temperature": temperature, "maxOutputTokens": max_tokens},
     }
     result = _http_json(url, payload)
     return result["candidates"][0]["content"]["parts"][0]["text"]
 
 
-def call_gemini_vision(img_bytes: bytes, mime_type: str, prompt: str, temperature: float = 0.4) -> str:
+def call_gemini_vision(img_bytes: bytes, mime_type: str, prompt: str, temperature: float = 0.4, model: str | None = None) -> str:
     """Generate text from an image + text prompt via Gemini multimodal REST API."""
     import base64
     if not GEMINI_API_KEY:
         raise ValueError("GEMINI_API_KEY is not set")
-    model = discover_gemini_model()
+    model = model or discover_gemini_model()
     url = (
         f"https://generativelanguage.googleapis.com/v1beta/models/"
         f"{model}:generateContent?key={GEMINI_API_KEY}"
@@ -217,7 +222,7 @@ def call_gemini_vision(img_bytes: bytes, mime_type: str, prompt: str, temperatur
                 {"inlineData": {"mimeType": mime_type, "data": base64.b64encode(img_bytes).decode()}},
             ]
         }],
-        "generationConfig": {"temperature": temperature, "maxOutputTokens": 1024},
+        "generationConfig": {"temperature": temperature, "maxOutputTokens": 256},
     }
     result = _http_json(url, payload)
     return result["candidates"][0]["content"]["parts"][0]["text"]
@@ -493,81 +498,6 @@ def send_ntfy(message: str, title: str = "srvrlss.dev") -> None:
 # AI generation functions
 # ---------------------------------------------------------------------------
 
-def check_banned_words(text: str) -> list[str]:
-    lower = text.lower()
-    return [w for w in BANNED_WORDS if re.search(r"\b" + re.escape(w) + r"\b", lower)]
-
-
-def gen_tldr(title: str, body: str) -> str:
-    prompt = f"""{BRAND_VOICE_RULES}
-
-Write a 2-sentence TLDR for this blog post. Be direct and punchy. No filler.
-The TLDR should capture the core insight and the "so what." No labels.
-
-Title: {title}
-Content (first 1500 chars): {body[:1500]}
-
-Return exactly 2 sentences separated by a space."""
-    return call_gemini(prompt, temperature=0.5).strip()
-
-
-def gen_social_hooks(title: str, body: str, context: str) -> dict:
-    prompt = f"""{BRAND_VOICE_RULES}
-
-Generate social media content for a new post on srvrlss.dev.
-
-Post title: {title}
-Post content (first 2000 chars): {body[:2000]}
-Existing blog context (for awareness, not copying): {context[:1500]}
-
-Generate in JSON format:
-{{
-  "linkedin": [
-    "Variation 1 (story arc: hook → tension → insight → CTA, 3-5 sentences)",
-    "Variation 2 (lead with a question or surprising observation)",
-    "Variation 3 (lead with a strong opinion or counterintuitive claim)"
-  ],
-  "x_thread": [
-    "Tweet 1/3 (hook, under 280 chars)",
-    "Tweet 2/3 (core insight, under 280 chars)",
-    "Tweet 3/3 (takeaway or CTA, under 280 chars)"
-  ],
-  "bluesky_thread": [
-    "Post 1/3 (hook with technical depth, under 300 chars)",
-    "Post 2/3 (specifics and nuance, under 300 chars)",
-    "Post 3/3 (practical takeaway, under 300 chars)"
-  ]
-}}
-
-Return only the JSON object."""
-    raw = call_gemini(prompt)
-    match = re.search(r"\{[\s\S]*\}", raw)
-    if match:
-        try:
-            return json.loads(match.group())
-        except json.JSONDecodeError:
-            pass
-    return {"linkedin": [], "x_thread": [], "bluesky_thread": []}
-
-
-def gen_tags(title: str, body: str) -> list[str]:
-    prompt = f"""Extract 3-5 specific technical tags from this blog post.
-Lowercase, hyphenated where needed (e.g., "serverless", "cloud-native", "ai-agents").
-Focus on concrete technical topics, not abstract themes.
-Return only a JSON array, e.g.: ["serverless", "event-driven", "cloud-native"]
-
-Title: {title}
-Content: {body[:1000]}"""
-    raw = call_gemini(prompt, temperature=0.3)
-    match = re.search(r"\[.*?\]", raw, re.DOTALL)
-    if match:
-        try:
-            return json.loads(match.group())
-        except json.JSONDecodeError:
-            pass
-    return []
-
-
 def gen_semantic_links(title: str, body: str, context: str) -> dict:
     prompt = f"""Given existing blog content and a new post, identify:
 1. "related_posts": 2-3 existing post titles most thematically related to the new post.
@@ -594,29 +524,19 @@ Return JSON only:
     return {"related_posts": [], "mentioned_in": []}
 
 
-def critique_image(img_bytes: bytes, title: str, body: str, image_prompt: str) -> dict:
+def critique_image(img_bytes: bytes, image_prompt: str) -> dict:
     """
-    Ask Gemini to evaluate the generated image against the post content and style rules.
+    Ask Gemini to evaluate the generated image against the image prompt.
     Returns {"keep": bool, "feedback": str}.
     """
-    prompt = f"""You are a design critic reviewing a blog header image for a technical blog.
+    prompt = f"""Does this image match the following description?
 
-Post title: {title}
-Post excerpt: {body[:800]}
-Image generation prompt used: {image_prompt}
+{image_prompt}
 
-Evaluate this image against these criteria:
-1. Does it visually represent the post's core concept or theme?
-2. Does it match the required style: minimalist, abstract or architectural, no humans, no faces, no logos?
-3. Is the composition suitable as a landscape blog header?
-4. Does the color palette feel appropriate (muted earth tones, high contrast)?
+Reply JSON only: {{"keep": true or false, "feedback": "2-3 sentences: what is wrong and specifically what the next image must do differently to match the description."}}
+Only keep if the image clearly matches the description."""
 
-Return JSON only:
-{{"keep": true or false, "feedback": "One or two sentences. If keep is false, describe specifically what is wrong and what the next image should do differently."}}
-
-Be decisive. Only keep if the image genuinely reflects the post theme and meets all style requirements."""
-
-    raw = call_gemini_vision(img_bytes, "image/webp", prompt)
+    raw = call_gemini_vision(img_bytes, "image/webp", prompt, model=GEMINI_CRITIQUE_MODEL)
     match = re.search(r"\{[\s\S]*?\}", raw)
     if match:
         try:
@@ -626,45 +546,6 @@ Be decisive. Only keep if the image genuinely reflects the post theme and meets 
         except json.JSONDecodeError:
             pass
     return {"keep": False, "feedback": raw.strip()[:300]}
-
-
-def gen_refined_image_prompt(original_prompt: str, critique: str, title: str, body: str) -> str:
-    prompt = f"""You are refining an image generation prompt for a blog header image based on critic feedback.
-
-Original prompt: {original_prompt}
-
-Critic feedback: {critique}
-
-Post title: {title}
-Post excerpt: {body[:500]}
-
-Style requirements (non-negotiable):
-- Abstract architectural diagrams or serverless event flows
-- High-contrast textures, "Calm Signal" minimal baseline
-- Muted earth tones (warm off-white, deep green, coral accent)
-- NO stock-photo humans, NO faces, NO logos
-- WebP format, landscape orientation
-
-Write a refined image generation prompt that directly addresses the critic's feedback while maintaining all style requirements.
-Return only the prompt (under 120 words). No labels, no explanation."""
-    return call_gemini(prompt, temperature=0.7).strip()
-
-
-def gen_image_prompt(title: str, body: str) -> str:
-    prompt = f"""Generate a concise image generation prompt for a minimalist blog header image.
-
-Style requirements:
-- Abstract architectural diagrams or serverless event flows
-- High-contrast textures, "Calm Signal" minimal baseline
-- Muted earth tones (warm off-white, deep green, coral accent)
-- NO stock-photo humans, NO faces, NO logos
-- WebP format, landscape orientation
-
-Post title: {title}
-Post excerpt: {body[:500]}
-
-Return only the image prompt (under 120 words). No labels, no explanation."""
-    return call_gemini(prompt, temperature=0.8).strip()
 
 
 # ---------------------------------------------------------------------------
@@ -722,23 +603,6 @@ def run_pr_automation() -> None:
 
             comment_sections.append(f"### {title}\n")
 
-            # --- TLDR ---
-            if not fm.get("tldr"):
-                tldr = gen_tldr(title, body)
-                fm["tldr"] = tldr
-                fm_updated = True
-                comment_sections.append(f"**Generated TLDR:**\n> {tldr}\n\n")
-
-            # --- Tags ---
-            if not fm.get("tags"):
-                tags = gen_tags(title, body)
-                if tags:
-                    fm["tags"] = tags
-                    fm_updated = True
-                    comment_sections.append(
-                        f"**Generated Tags:** {' '.join(f'`#{t}`' for t in tags)}\n\n"
-                    )
-
             # --- Semantic links ---
             links = gen_semantic_links(title, body, context)
             if links.get("related_posts"):
@@ -755,90 +619,63 @@ def run_pr_automation() -> None:
                 f"- Add backlinks in: {', '.join(links.get('mentioned_in', ['none found']))}\n\n"
             )
 
-            # --- Social hooks ---
-            hooks = gen_social_hooks(title, body, context)
-            banned_found = check_banned_words(
-                " ".join(
-                    hooks.get("linkedin", [])
-                    + hooks.get("x_thread", [])
-                    + hooks.get("bluesky_thread", [])
-                )
-            )
-            if banned_found:
-                comment_sections.append(
-                    f"⚠️ **Brand voice warning — banned words detected:** "
-                    f"{', '.join(f'`{w}`' for w in banned_found)}\n\n"
-                )
-
-            comment_sections.append("**LinkedIn Hooks:**\n")
-            for i, hook in enumerate(hooks.get("linkedin", []), 1):
-                comment_sections.append(f"<details><summary>Variation {i}</summary>\n\n{hook}\n\n</details>\n\n")
-
-            comment_sections.append("**X Thread:**\n")
-            for tweet in hooks.get("x_thread", []):
-                comment_sections.append(f"> {tweet}\n\n")
-
-            comment_sections.append("**Bluesky Thread:**\n")
-            for post in hooks.get("bluesky_thread", []):
-                comment_sections.append(f"> {post}\n\n")
-
             # --- Image prompt ---
-            image_prompt = gen_image_prompt(title, body)
-            fm["image_prompt"] = image_prompt
-            fm_updated = True
-            comment_sections.append(
-                f"**Image Prompt** (for `static/images/posts/{slug}.webp`):\n"
-                f"```\n{image_prompt}\n```\n\n"
-            )
+            prompt_file = post_path.parent / f"{slug}-image-prompt.md"
+            if not prompt_file.exists():
+                comment_sections.append(
+                    f"⚠️ **No image prompt file found:** `{prompt_file}` — skipping image.\n\n"
+                )
+                image_prompt = None
+            else:
+                image_prompt = prompt_file.read_text(encoding="utf-8").strip()
+                comment_sections.append(
+                    f"**Image Prompt** (from `{prompt_file.name}`):\n"
+                    f"```\n{image_prompt}\n```\n\n"
+                )
 
             # --- Image generation (2-shot with critique) ---
-            img_dir = pathlib.Path("static/images/posts")
-            img_dir.mkdir(parents=True, exist_ok=True)
-            img_path = img_dir / f"{slug}.webp"
-            img_initial_path = img_dir / f"{slug}-initial.webp"
+            if image_prompt:
+                img_dir = pathlib.Path("static/images/posts")
+                img_dir.mkdir(parents=True, exist_ok=True)
+                img_path = img_dir / f"{slug}.webp"
+                img_initial_path = img_dir / f"{slug}-initial.webp"
 
-            img_bytes = generate_image_via_api(image_prompt)
-            if img_bytes:
-                critique = critique_image(img_bytes, title, body, image_prompt)
-                comment_sections.append(
-                    f"**Image Critique (shot 1):** {critique['feedback']}\n\n"
-                )
-                if critique["keep"]:
-                    img_path.write_bytes(img_bytes)
-                    fm["image"] = f"/images/posts/{slug}.webp"
-                    fm_updated = True
-                    comment_sections.append(f"✅ **Image accepted (shot 1):** `{img_path}`\n\n")
-                    subprocess.run(["git", "add", str(img_path)], check=False)
-                else:
-                    img_initial_path.write_bytes(img_bytes)
-                    subprocess.run(["git", "add", str(img_initial_path)], check=False)
-
-                    refined_prompt = gen_refined_image_prompt(image_prompt, critique["feedback"], title, body)
-                    fm["image_prompt"] = refined_prompt
+                img_bytes = generate_image_via_api(image_prompt)
+                if img_bytes:
+                    critique = critique_image(img_bytes, image_prompt)
                     comment_sections.append(
-                        f"**Refined Image Prompt (shot 2):**\n```\n{refined_prompt}\n```\n\n"
+                        f"**Image Critique (shot 1):** {critique['feedback']}\n\n"
                     )
-
-                    img_bytes_2 = generate_image_via_api(refined_prompt)
-                    if img_bytes_2:
-                        img_path.write_bytes(img_bytes_2)
-                        fm["image"] = f"/images/posts/{slug}.webp"
-                        fm_updated = True
-                        comment_sections.append(f"✅ **Image accepted (shot 2):** `{img_path}`\n\n")
-                        subprocess.run(["git", "add", str(img_path)], check=False)
-                    else:
+                    if critique["keep"]:
                         img_path.write_bytes(img_bytes)
                         fm["image"] = f"/images/posts/{slug}.webp"
                         fm_updated = True
-                        comment_sections.append(
-                            "⚠️ **Shot 2 generation failed — using shot 1 as fallback.**\n\n"
-                        )
+                        comment_sections.append(f"✅ **Image accepted (shot 1):** `{img_path}`\n\n")
                         subprocess.run(["git", "add", str(img_path)], check=False)
-            else:
-                comment_sections.append(
-                    "ℹ️ **Image:** Use the prompt above with your preferred image generator. "
-                    f"Save the result to `{img_path}`.\n\n"
-                )
+                    else:
+                        img_initial_path.write_bytes(img_bytes)
+                        subprocess.run(["git", "add", str(img_initial_path)], check=False)
+
+                        retry_prompt = f"{image_prompt}\n\nRevision: {critique['feedback']}"
+                        img_bytes_2 = generate_image_via_api(retry_prompt)
+                        if img_bytes_2:
+                            img_path.write_bytes(img_bytes_2)
+                            fm["image"] = f"/images/posts/{slug}.webp"
+                            fm_updated = True
+                            comment_sections.append(f"✅ **Image accepted (shot 2):** `{img_path}`\n\n")
+                            subprocess.run(["git", "add", str(img_path)], check=False)
+                        else:
+                            img_path.write_bytes(img_bytes)
+                            fm["image"] = f"/images/posts/{slug}.webp"
+                            fm_updated = True
+                            comment_sections.append(
+                                "⚠️ **Shot 2 generation failed — using shot 1 as fallback.**\n\n"
+                            )
+                            subprocess.run(["git", "add", str(img_path)], check=False)
+                else:
+                    comment_sections.append(
+                        f"ℹ️ **Image generation failed.** Save an image manually to `{img_path}`.\n\n"
+                    )
 
             # --- Commit frontmatter back to PR ---
             if fm_updated:
@@ -960,33 +797,20 @@ def run_freshness_audit() -> None:
             f"  Excerpt: {body[:200].strip()}"
         )
 
-    prompt = f"""{BRAND_VOICE_RULES}
+    prompt = f"""Today is {today.strftime('%Y-%m-%d')}. Flag blog posts with outdated content.
 
-Today is {today.strftime('%Y-%m-%d')}. Review these blog posts for content freshness issues.
-
-Identify posts with:
-1. **AI/Cloud Drift** — technical claims about AI or cloud services that may be outdated
-   (e.g., model names, service pricing, API shapes that evolve rapidly)
-2. **Technical Decay** — code examples, tooling references, or best practices that
-   the ecosystem has moved past
+Look for:
+- AI/Cloud Drift: stale model names, service APIs, pricing
+- Technical Decay: outdated code, tooling, or best practices
 
 Posts:
 {chr(10).join(post_summaries)}
 
-For each issue found, return a JSON array:
-[
-  {{
-    "title": "Post title",
-    "issue_type": "AI/Cloud Drift" | "Technical Decay",
-    "priority": "high" | "medium" | "low",
-    "description": "Specific concern in 1-2 sentences"
-  }}
-]
+Return JSON array only:
+[{{"title":"...","issue_type":"AI/Cloud Drift"|"Technical Decay","priority":"high"|"medium"|"low","description":"1 sentence"}}]
+If none, return []."""
 
-Return only the JSON array. If no issues, return [].
-"""
-
-    raw = call_gemini(prompt, temperature=0.3)
+    raw = call_gemini(prompt, temperature=0.3, max_tokens=1024)
     match = re.search(r"\[[\s\S]*?\]", raw)
     if not match:
         print("[INFO] Freshness audit: no issues detected.")
@@ -1038,15 +862,14 @@ def run_dry_run() -> None:
     posts = get_changed_posts()
     print(f"[DRY RUN] Changed posts vs origin/{BASE_BRANCH}: {len(posts)}")
     for p in posts:
-        fm, body = parse_frontmatter(p.read_text(encoding="utf-8"))
-        tldr_status = "present" if fm.get("tldr") else "MISSING (would generate)"
-        tags_status = str(fm.get("tags", [])) if fm.get("tags") else "MISSING (would generate)"
+        fm, _ = parse_frontmatter(p.read_text(encoding="utf-8"))
+        slug = fm.get("slug") or p.stem
+        prompt_file = p.parent / f"{slug}-image-prompt.md"
         print(
             f"  - {p.name}\n"
-            f"    title:  {fm.get('title', '?')!r}\n"
-            f"    tldr:   {tldr_status}\n"
-            f"    tags:   {tags_status}\n"
-            f"    image:  {'set' if fm.get('image_prompt') else 'MISSING (would generate)'}"
+            f"    title:        {fm.get('title', '?')!r}\n"
+            f"    image prompt: {'found' if prompt_file.exists() else 'MISSING'} ({prompt_file.name})\n"
+            f"    image:        {'set' if fm.get('image') else 'not yet set'}"
         )
 
     print("\n[DRY RUN] Complete. Set GITHUB_ACTIONS=true to run in full mode.")
