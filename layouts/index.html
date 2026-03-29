@@ -1,9 +1,29 @@
 {{ define "main" }}
 <div class="home">
   <p class="anchor-statement">A thinking space for outcomes — where cloud engineering, AI agents, and systems thinking meet.</p>
+
+  {{ if fileExists "static/images/hero.webp" }}
+  <div class="hero-image">
+    <img src="/images/hero.webp" alt="Visual synthesis of recent thinking" loading="eager" decoding="async">
+  </div>
+  {{ end }}
+
+  {{ $tags := slice }}
+  {{ range .Site.Taxonomies.tags.ByCount }}
+    {{ if lt (len $tags) 7 }}{{ $tags = $tags | append .Page.Title }}{{ end }}
+  {{ end }}
+  {{ if $tags }}
+  <nav class="tag-strip">
+    {{ range $tags }}
+    <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}/" class="tag-chip">{{ . }}</a>
+    {{ end }}
+  </nav>
+  {{ end }}
+
   <section class="post-list">
-    {{ range .Site.RegularPages.ByDate.Reverse }}
-    <article class="post-card">
+    {{ $pages := (where .Site.RegularPages "Section" "posts").ByDate.Reverse }}
+    {{ range $i, $p := $pages }}
+    <article class="post-card{{ if eq $i 0 }} post-card--latest{{ end }}">
       {{ $isRetro := or (in (default slice .Params.tags) "retrospective") (in .Title "Retrospective") }}
       {{ $title := .Title }}
       {{ if $isRetro }}

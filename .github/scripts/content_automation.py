@@ -101,6 +101,7 @@ Brand voice rules (srvrlss.dev by Alexandre Brisebois):
 - NEVER use consulting-deck tone. NEVER fake enthusiasm.
 - Multi-cloud by default: GCP, AWS, Azure as peers.
 - Microsoft is origin story, not current identity.
+- Current pivot: AI enthusiast and builder. Lead with AI-native perspective, cloud is the substrate.
 """
 
 
@@ -561,6 +562,140 @@ def load_production_context() -> str:
 
 
 # ---------------------------------------------------------------------------
+# Hero image generation helpers
+# ---------------------------------------------------------------------------
+
+def get_recent_posts(n: int = 10) -> list[dict]:
+    """
+    Read the n most recent non-draft posts from content/posts/*.md.
+    Sorted by date frontmatter descending.
+    Returns list of {title, description, tldr, tags}.
+    Uses tldr as the primary signal — it's a Gemini-curated 2-sentence summary
+    of the full post, far denser per token than a raw body excerpt.
+    Falls back to description when tldr is absent.
+    """
+    posts_dir = pathlib.Path("content/posts")
+    entries = []
+    for md in posts_dir.glob("*.md"):
+        fm, _ = parse_frontmatter(md.read_text(encoding="utf-8"))
+        if fm.get("draft"):
+            continue
+        date_val = fm.get("date")
+        entries.append((date_val, {
+            "title": fm.get("title", md.stem),
+            "description": fm.get("description", ""),
+            "tldr": fm.get("tldr", ""),
+            "tags": fm.get("tags") or [],
+        }))
+    entries.sort(key=lambda x: str(x[0] or ""), reverse=True)
+    return [e[1] for e in entries[:n]]
+
+
+def gen_hero_context(posts: list[dict]) -> dict:
+    """
+    Single Gemini call returning both the image prompt and the current_focus line.
+    One call avoids serializing the same post context twice.
+    Returns {"image_prompt": str, "current_focus": str}.
+    """
+    lines = []
+    for p in posts:
+        summary = p.get("tldr") or p.get("description") or ""
+        tags = ", ".join(p["tags"]) if p["tags"] else "untagged"
+        lines.append(f"- {p['title']} [{tags}]: {summary}")
+    context_block = "\n".join(lines)
+
+    prompt = f"""You are generating metadata for the landing page of srvrlss.dev, a blog by Alexandre Brisebois.
+
+{BRAND_VOICE_RULES}
+
+Recent posts (most recent first):
+{context_block}
+
+Return JSON only with two fields:
+{{
+  "image_prompt": "<under 120 words. Abstract architectural / AI-flow diagram. Calm Signal aesthetic: muted earth tones, warm off-white, deep green, coral accent. NO humans, faces, logos. Landscape orientation. Synthesizes the dominant themes across these posts.>",
+  "current_focus": "<one sentence, ≤20 words, brand voice: what this blog is actively exploring right now>"
+}}"""
+    raw = call_gemini(prompt, temperature=0.8, max_tokens=400)
+    match = re.search(r"\{[\s\S]*?\}", raw)
+    if match:
+        try:
+            result = json.loads(match.group())
+            if "image_prompt" in result and "current_focus" in result:
+                return result
+        except json.JSONDecodeError:
+            pass
+    # Fallback: treat raw output as just the image prompt
+    return {"image_prompt": raw.strip()[:500], "current_focus": ""}
+
+
+def run_hero_image_generation() -> None:
+    """
+    Generate a landing-page hero image synthesized from the 10 most recent posts.
+    Outputs: static/images/hero.webp, static/images/hero-image-prompt.md, data/hero.yaml
+    All three are committed to the current branch in a single commit.
+    """
+    if not GEMINI_API_KEY:
+        print("[WARN] GEMINI_API_KEY not set — skipping hero image generation.", file=sys.stderr)
+        return
+
+    posts = get_recent_posts(10)
+    if not posts:
+        print("[WARN] No published posts found — skipping hero generation.", file=sys.stderr)
+        return
+
+    print(f"[INFO] Generating hero image from {len(posts)} post(s).")
+    context = gen_hero_context(posts)
+    image_prompt = context["image_prompt"]
+    current_focus = context.get("current_focus", "")
+
+    img_dir = pathlib.Path("static/images")
+    img_dir.mkdir(parents=True, exist_ok=True)
+    hero_path = img_dir / "hero.webp"
+    prompt_path = img_dir / "hero-image-prompt.md"
+    data_dir = pathlib.Path("data")
+    data_dir.mkdir(parents=True, exist_ok=True)
+    hero_yaml_path = data_dir / "hero.yaml"
+
+    img_bytes = generate_image_via_api(image_prompt)
+    if img_bytes:
+        critique = critique_image(img_bytes, image_prompt)
+        print(f"[INFO] Image critique: {critique['feedback']}")
+        if not critique["keep"]:
+            retry_prompt = f"{image_prompt}\n\nRevision: {critique['feedback']}"
+            img_bytes_2 = generate_image_via_api(retry_prompt)
+            if img_bytes_2:
+                img_bytes = img_bytes_2
+        hero_path.write_bytes(img_bytes)
+        print(f"[INFO] Hero image written to {hero_path}")
+    else:
+        print("[WARN] Image generation failed — hero.webp not updated.", file=sys.stderr)
+        return
+
+    prompt_path.write_text(image_prompt, encoding="utf-8")
+    hero_yaml_path.write_text(
+        f"current_focus: {yaml.dump(current_focus).strip()}\n", encoding="utf-8"
+    )
+
+    subprocess.run(["git", "config", "user.name", "github-actions[bot]"], check=True)
+    subprocess.run(
+        ["git", "config", "user.email", "github-actions[bot]@users.noreply.github.com"],
+        check=True,
+    )
+    for path in [hero_path, prompt_path, hero_yaml_path]:
+        subprocess.run(["git", "add", str(path)], check=False)
+    status = subprocess.run(["git", "diff", "--cached", "--quiet"], capture_output=True)
+    if status.returncode == 0:
+        print("[INFO] No changes to commit for hero image.")
+        return
+    subprocess.run(
+        ["git", "commit", "-m", "[automation] Regenerate landing page hero image"], check=True
+    )
+    subprocess.run(["git", "push"], check=True)
+    send_ntfy("Hero image regenerated and pushed.", title="srvrlss.dev Hero")
+
+
+# ---------------------------------------------------------------------------
 # Mode: PR automation
 # ---------------------------------------------------------------------------
 
@@ -906,7 +1041,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="srvrlss.dev content automation")
     parser.add_argument(
         "--mode",
-        choices=["pr", "social-loop", "freshness-audit"],
+        choices=["pr", "social-loop", "freshness-audit", "hero-image"],
         default="pr",
         help="Execution mode (default: pr)",
     )
@@ -922,6 +1057,8 @@ def main() -> None:
         _safe_run(run_social_loop)
     elif args.mode == "freshness-audit":
         _safe_run(run_freshness_audit)
+    elif args.mode == "hero-image":
+        _safe_run(run_hero_image_generation)
 
 
 if __name__ == "__main__":
