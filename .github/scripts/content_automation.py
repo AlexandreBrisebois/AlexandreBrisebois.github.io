@@ -684,7 +684,7 @@ def run_hero_image_generation() -> None:
         print("[INFO] No changes to commit for hero image.")
         return
     subprocess.run(
-        ["git", "commit", "-m", "[automation] Regenerate landing page hero image"], check=True
+        ["git", "commit", "-m", "[automation] Regenerate landing page hero image [skip ci]"], check=True
     )
     subprocess.run(["git", "push"], check=True)
     send_ntfy("Hero image regenerated and pushed.", title="srvrlss.dev Hero")
