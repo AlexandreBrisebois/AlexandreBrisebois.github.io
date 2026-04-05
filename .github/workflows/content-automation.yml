@@ -14,7 +14,6 @@ on:
         type: choice
         options:
           - pr
-          - hero-image
       force_posts:
         description: 'Comma-separated post filenames to process'
         required: false
@@ -59,8 +58,4 @@ jobs:
           MODE="${{ github.event.inputs.mode || 'pr' }}"
           python3 .github/scripts/content_automation.py --mode $MODE
 
-          # Also update landing page hero image if in PR mode
-          if [ "$MODE" = "pr" ]; then
-            echo "[INFO] Running hero-image update for PR..."
-            python3 .github/scripts/content_automation.py --mode hero-image
-          fi
+

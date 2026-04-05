@@ -1,6 +1,6 @@
 # srvrlss.dev
 
-Personal blog of Alexandre Brisebois — Technical Outcome Leader at the intersection of multi-cloud engineering, AI agents, and serverless patterns.
+Personal blog of Alexandre Brisebois
 
 **Site**: [srvrlss.dev](https://srvrlss.dev/)
 **Author**: [Alexandre Brisebois](https://github.com/AlexandreBrisebois)

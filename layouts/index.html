@@ -1,21 +1,22 @@
 {{ define "main" }}
 <div class="home">
-  <p class="anchor-statement">A thinking space for outcomes — where cloud engineering, AI agents, and systems thinking meet.</p>
 
   {{ if fileExists "static/images/hero.webp" }}
   <div class="hero-image">
-    <img src="/images/hero.webp" alt="Visual synthesis of recent thinking" loading="eager" decoding="async">
+    <img src="/images/hero.webp"
+      alt="srvrlss.dev &mdash; Alexandre Brisebois &mdash; Thinking out loud and building in public to empower the curious. &mdash; I am eager. I am overwhelmed. I am starting anyway!"
+      loading="eager" decoding="async">
   </div>
   {{ end }}
 
   {{ $tags := slice }}
   {{ range .Site.Taxonomies.tags.ByCount }}
-    {{ if lt (len $tags) 7 }}{{ $tags = $tags | append .Page.Title }}{{ end }}
+  {{ if lt (len $tags) 7 }}{{ $tags = $tags | append .Page.Title }}{{ end }}
   {{ end }}
   {{ if $tags }}
   <nav class="tag-strip">
     {{ range $tags }}
-    <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}/" class="tag-chip">{{ . }}</a>
+    <a href="{{ " /tags/" | relLangURL }}{{ . | urlize }}/" class="tag-chip">{{ . }}</a>
     {{ end }}
   </nav>
   {{ end }}
@@ -27,13 +28,13 @@
       {{ $isRetro := or (in (default slice .Params.tags) "retrospective") (in .Title "Retrospective") }}
       {{ $title := .Title }}
       {{ if $isRetro }}
-        {{ $title = replace .Title "Retrospective" "Lessons Learned" }}
+      {{ $title = replace .Title "Retrospective" "Lessons Learned" }}
       {{ end }}
       <h2>
         {{ if $isRetro }}<span class="lessons-badge">Lessons Learned</span>{{ end }}
         <a href="{{ .RelPermalink }}">{{ $title }}</a>
       </h2>
-      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+      <time datetime="{{ .Date.Format " 2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
       {{ with .Description }}<p>{{ . }}</p>{{ end }}
     </article>
     {{ end }}

@@ -29,13 +29,7 @@ jobs:
       - name: Install dependencies
         run: pip install pyyaml==6.0.3
 
-      - name: Generate landing page hero image
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: ${{ github.repository }}
-        run: python3 .github/scripts/content_automation.py --mode hero-image
+
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@75d2e84710de30f6ff7268e08f310b60ef14033f # v3

@@ -9,24 +9,24 @@
 
 :root {
   /* Color Palette — Light Mode */
-  --color-bg:        #F7F5F0;
-  --color-surface:   #EFECE5;
-  --color-ink:       #1A1A18;
-  --color-muted:     #6B6860;
-  --color-accent:    #2D6A4F;
-  --color-accent-2:  #E76F51;
-  --color-border:    #DDD9D0;
-  --color-code-bg:   #1E1E1C;
+  --color-bg: #F7F5F0;
+  --color-surface: #EFECE5;
+  --color-ink: #1A1A18;
+  --color-muted: #6B6860;
+  --color-accent: #2D6A4F;
+  --color-accent-2: #E76F51;
+  --color-border: #DDD9D0;
+  --color-code-bg: #1E1E1C;
 
   /* RGB triplets for rgba() usage */
   --color-surface-rgb: 239, 236, 229;
-  --color-border-rgb:  221, 217, 208;
-  --color-ink-rgb:     26, 26, 24;
+  --color-border-rgb: 221, 217, 208;
+  --color-ink-rgb: 26, 26, 24;
 
   /* Typography */
   --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
-  --font-body:    'Source Serif 4', Georgia, 'Times New Roman', serif;
-  --font-mono:    'JetBrains Mono', 'Courier New', Courier, monospace;
+  --font-body: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', Courier, monospace;
 
   /* Layout */
   --max-width-post: 680px;
@@ -34,22 +34,29 @@
 
   /* Transitions */
   --transition-color: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+
+  /* Shadows */
+  --shadow-low: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-high: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg:        #0D1117;
-    --color-surface:   #161B22;
-    --color-ink:       #C9D1D9;
-    --color-muted:     #8B949E;
-    --color-accent:    #4D9375;
-    --color-accent-2:  #E76F51;
-    --color-border:    #30363D;
-    --color-code-bg:   #0D1117;
+    --color-bg: #0D1117;
+    --color-surface: #161B22;
+    --color-ink: #C9D1D9;
+    --color-muted: #8B949E;
+    --color-accent: #4D9375;
+    --color-accent-2: #E76F51;
+    --color-border: #30363D;
+    --color-code-bg: #0D1117;
 
     --color-surface-rgb: 22, 27, 34;
-    --color-border-rgb:  48, 54, 61;
-    --color-ink-rgb:     201, 209, 217;
+    --color-border-rgb: 48, 54, 61;
+    --color-ink-rgb: 201, 209, 217;
+
+    --shadow-low: 0 2px 8px rgba(0, 0, 0, 0.35);
+    --shadow-high: 0 4px 16px rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -57,7 +64,9 @@
    Reset & Base
    ============================================================ */
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -127,7 +136,8 @@ body {
 .wordmark {
   font-family: var(--font-display);
   font-size: 1.25rem;
-  font-weight: 400;        /* Instrument Serif is display-weight at 400 */
+  font-weight: 400;
+  /* Instrument Serif is display-weight at 400 */
   letter-spacing: -0.025em;
   color: var(--color-ink);
   text-decoration: none;
@@ -352,7 +362,7 @@ body {
   line-height: 1.8;
 }
 
-.post-body > * + * {
+.post-body>*+* {
   margin-top: 1.25rem;
 }
 
@@ -411,7 +421,7 @@ body {
 }
 
 /* Inline code */
-.post-body :not(pre) > code {
+.post-body :not(pre)>code {
   font-family: var(--font-mono);
   font-size: 0.875em;
   background: var(--color-code-bg);
@@ -486,7 +496,7 @@ body {
   margin-bottom: 0;
 }
 
-.callout p + p {
+.callout p+p {
   margin-top: 0.75rem;
 }
 
@@ -496,7 +506,8 @@ body {
 
 .video-wrapper {
   position: relative;
-  padding-bottom: 56.25%; /* 16:9 */
+  padding-bottom: 56.25%;
+  /* 16:9 */
   height: 0;
   overflow: hidden;
   margin: 2rem auto;
@@ -678,7 +689,7 @@ body {
   margin: 0 auto 2rem;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-low);
 }
 
 .hero-image img {
