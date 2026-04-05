@@ -17,8 +17,8 @@ social_posts:
   linkedin: ''
   x: ''
   bluesky: ''
-related_posts: null
-mentioned_in: null
+related_posts: []
+mentioned_in: []
 image_prompt: 'Minimalist abstract architectural diagram of a serverless event flow,
   high-contrast textures, "Calm Signal" aesthetic with a clean horizontal baseline.
   Muted earth tones: warm off-white background, deep forest green geometric lines,
@@ -27,10 +27,6 @@ image_prompt: 'Minimalist abstract architectural diagram of a serverless event f
   blog header style.'
 image: /images/posts/why-ai-assistants-lose-context.webp
 ---
-
-
-
-> **TL;DR:** AI assistants like Claude, Copilot, and Gemini often lose the plot when long sessions, vague prompts, and bloated inputs push against finite context windows. This article explains why, shares real-world examples, and offers practical ways for users and vendors to reduce the drift.
 
 I hit the token wall with a thud. One minute, Claude was helping me untangle a gnarly codebase; the next, it was spitting out generic advice, as if it had forgotten everything we’d built up. I’d seen it before with Copilot and Gemini, too. Each time, the pattern was the same: a marathon session, vague prompts, too much pasted code, and a creeping sense of frustration as the model’s memory faded. If you’ve ever wondered why your AI assistant suddenly seems to lose the plot, you’re not alone—and you’re not the problem.
 

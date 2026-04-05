@@ -347,6 +347,7 @@ body {
   margin-bottom: 2rem;
   border-radius: 8px;
   overflow: hidden;
+  box-shadow: var(--shadow-low);
 }
 
 .post-cover img {
