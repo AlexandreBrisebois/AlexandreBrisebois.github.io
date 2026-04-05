@@ -1,1 +1,1 @@
-- `dda98ef` `2026-04-05T23:29:53Z` — feat: implement multi-shot image generation loop and update blog post metadata
+- `c0554f9` `2026-04-05T23:44:06Z` — refactor: update post metadata, simplify image rendering, and add shadow to post covers
