@@ -1,24 +1,39 @@
 ---
-title: "Why AI Assistants Lose Context, and How to Work Around It"
+title: Why AI Assistants Lose Context, and How to Work Around It
 date: 2026-04-03
-description: ""
+description: ''
 tags:
-  - AI engineering
-  - prompting
-  - context windows
-  - developer tools
-  - session management
+- AI engineering
+- prompting
+- context windows
+- developer tools
+- session management
 draft: false
-slug: "why-ai-assistants-lose-context"
-tldr: ""
+slug: why-ai-assistants-lose-context
+tldr: I hit the token wall and felt the sting of my AI forgetting our progress, proving
+  that context is a fragile, finite resource. We must master session hygiene to stop
+  the drift and keep our models sharp.
 social_posts:
-  linkedin: ""
-  x: ""
-  bluesky: ""
-related_posts: []
-mentioned_in: []
-image_prompt: "Abstract architectural fragment and composition: a single offset structural plane set within a wide, warm off-white (#F7F5F0) negative space. The structure is interrupted by a narrow, calm green (#2D6A4F) seam, suggesting a context boundary and a deliberate reset. Sparse asymmetrical layout featuring a blend of matte paper and concrete textures. Soft diffuse lighting creates minimal tonal variation with subtle, near-black architectural details. The aesthetic is calm, editorial, and minimalist, emphasizing system thinking and deliberate construction without people, literal metaphors, or digital interfaces."
+  linkedin: ''
+  x: ''
+  bluesky: ''
+related_posts:
+- About
+- The Greenfield to Brownfield Transition
+mentioned_in:
+- About
+- The Greenfield to Brownfield Transition
+image_prompt: 'Abstract architectural fragment and composition: a single offset structural
+  plane set within a wide, warm off-white (#F7F5F0) negative space. The structure
+  is interrupted by a narrow, calm green (#2D6A4F) seam, suggesting a context boundary
+  and a deliberate reset. Sparse asymmetrical layout featuring a blend of matte paper
+  and concrete textures. Soft diffuse lighting creates minimal tonal variation with
+  subtle, near-black architectural details. The aesthetic is calm, editorial, and
+  minimalist, emphasizing system thinking and deliberate construction without people,
+  literal metaphors, or digital interfaces.'
+image: /images/posts/why-ai-assistants-lose-context.webp
 ---
+
 
 > **TL;DR:** AI assistants like Claude, Copilot, and Gemini often lose the plot when long sessions, vague prompts, and bloated inputs push against finite context windows. This article explains why, shares real-world examples, and offers practical ways for users and vendors to reduce the drift.
 
