@@ -7,8 +7,16 @@ on:
     types: [opened, synchronize]
   workflow_dispatch:
     inputs:
+      mode:
+        description: 'Execution mode'
+        required: true
+        default: 'pr'
+        type: choice
+        options:
+          - pr
+          - hero-image
       force_posts:
-        description: 'Comma-separated post filenames to process (e.g. hello-world.md,first-retrospective.md). Leave empty to use git diff.'
+        description: 'Comma-separated post filenames to process'
         required: false
         default: ''
 
@@ -22,15 +30,12 @@ jobs:
     runs-on: ubuntu-latest
     if: github.actor != 'github-actions[bot]' && (github.event_name != 'workflow_dispatch' || github.actor == 'AlexandreBrisebois')
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           ref: ${{ github.head_ref || github.ref }}
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Restore automation script from main
-        run: git checkout origin/main -- .github/scripts/content_automation.py
 
       - name: Set up Python 3.14
         uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
@@ -49,4 +54,13 @@ jobs:
           REPO: ${{ github.repository }}
           BASE_BRANCH: ${{ github.base_ref || 'main' }}
           FORCE_POSTS: ${{ github.event.inputs.force_posts }}
-        run: python3 .github/scripts/content_automation.py
+        run: |
+          # Run PR automation (links, per-post images)
+          MODE="${{ github.event.inputs.mode || 'pr' }}"
+          python3 .github/scripts/content_automation.py --mode $MODE
+
+          # Also update landing page hero image if in PR mode
+          if [ "$MODE" = "pr" ]; then
+            echo "[INFO] Running hero-image update for PR..."
+            python3 .github/scripts/content_automation.py --mode hero-image
+          fi

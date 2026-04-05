@@ -9,7 +9,13 @@
 <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
 <meta property="og:url" content="{{ .Permalink }}">
 <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
-{{ with .Params.image }}<meta property="og:image" content="{{ . | absURL }}">{{ end }}
+{{ if .Params.image }}
+<meta property="og:image" content="{{ .Params.image | absURL }}">
+<meta name="twitter:image" content="{{ .Params.image | absURL }}">
+{{ else if and .IsHome (fileExists "static/images/hero.webp") }}
+<meta property="og:image" content="{{ "/images/hero.webp" | absURL }}">
+<meta name="twitter:image" content="{{ "/images/hero.webp" | absURL }}">
+{{ end }}
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
