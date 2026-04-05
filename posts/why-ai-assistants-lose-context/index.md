@@ -1,17 +1,3 @@
-# srvrlss.dev — Full Content for LLM Consumption
-# Author: Alexandre Brisebois
-# Website: https://srvrlss.dev/
-# Updated: 2026-04-05
-# Description: Technical outcomes at the intersection of cloud engineering, AI agents, and serverless patterns.
-
-
----
-# Why AI Assistants Lose Context, and How to Work Around It
-URL: https://srvrlss.dev/posts/why-ai-assistants-lose-context/
-Date: 2026-04-03
-TLDR: I hit the token wall and felt the sting of my AI forgetting our progress, proving that context is a fragile, finite resource. We must master session hygiene to stop the drift and keep our models sharp.
-Tags: AI engineering, prompting, context windows, developer tools, session management
-
 
 
 > **TL;DR:** AI assistants like Claude, Copilot, and Gemini often lose the plot when long sessions, vague prompts, and bloated inputs push against finite context windows. This article explains why, shares real-world examples, and offers practical ways for users and vendors to reduce the drift.
@@ -97,32 +83,3 @@ If you hit the wall, don’t blame yourself—or wait for vendors to fix everyth
 
 
 > **Prompting and session management are skills, not magic. Every reset, recap, and revision is a step forward. The next time you hit the token wall, remember: you have more control than you think. Keep learning, keep sharing, and you’ll keep getting better—one session at a time.**
-
-
----
-# Alexandre Brisebois — Cutting through the noise
-URL: https://srvrlss.dev/about/
-Date: 2026-03-26
-Description: Alexandre Brisebois — Cutting through the noise
-
-
-What if the real risk isn’t falling behind, but drowning in the noise?
-
-Every week, I watch another framework trend, another paradigm shift dressed up as a must-read. My curiosity is real, but so is the overwhelm. I know I can’t learn it all.
-
-Now I am exploring hyperscalers, AI-native companies, and open-source builders, not as a comparison exercise, but because the collisions between them are where the interesting questions live.
-
-The hard part isn’t finding what to learn. It’s knowing what to ignore. I don’t have a perfect filter—just the instinct to ask better questions, and the willingness to get lost on purpose.
-
-> Curiosity is a compass, not a map. The only way forward is to keep asking better questions.
-
-A cycle that used to take years now takes weeks. That pace would have terrified me five years ago. Now it energizes me.
-
-This blog is my workshop for that process. I’ll share what I’m learning, where I’m stuck, and the patterns I’m still trying to see. I hope you’ll challenge my thinking, share your own blind spots, and help me cut through the noise.
-
-**I am eager. I am overwhelmed. I am starting anyway!**
-
-Find me on [LinkedIn](https://www.linkedin.com/in/alexandrebrisebois/) for the conversation, and on [GitHub](https://github.com/AlexandreBrisebois) for the work.
-
-
-

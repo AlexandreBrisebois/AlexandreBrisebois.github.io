@@ -1,1 +1,1 @@
-- `a883b38` `2026-03-30T16:27:45Z` — refactor: consolidate hero image generation into content automation workflows and remove redundant generate-hero workflow
+- `aaf1042` `2026-04-05T23:11:55Z` — feat: add local automation tooling, update site branding, and refine CSS styling

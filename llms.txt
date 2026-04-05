@@ -1,21 +1,21 @@
 # srvrlss.dev — LLM-Optimized Index
 # Author: Alexandre Brisebois
 # Website: https://srvrlss.dev/
-# Updated: 2026-03-30
+# Updated: 2026-04-05
 # Description: Technical outcomes at the intersection of cloud engineering, AI agents, and serverless patterns.
 # Full content available at: https://srvrlss.dev/llms-full.txt
 
 
-## About
+## Why AI Assistants Lose Context, and How to Work Around It
+URL: https://srvrlss.dev/posts/why-ai-assistants-lose-context/
+Date: 2026-04-03
+TLDR: I hit the token wall and felt the sting of my AI forgetting our progress, proving that context is a fragile, finite resource. We must master session hygiene to stop the drift and keep our models sharp.
+Tags: AI engineering, prompting, context windows, developer tools, session management
+
+
+## Alexandre Brisebois — Cutting through the noise
 URL: https://srvrlss.dev/about/
 Date: 2026-03-26
 Description: Alexandre Brisebois — Cutting through the noise
-
-
-## The Greenfield to Brownfield Transition
-URL: https://srvrlss.dev/posts/the-greenfield-to-brownfield-transition/
-Date: 2026-03-01
-TLDR: I’ve watched projects turn legacy the moment that second release hits production. We win by obsessing over the observation phase and pivoting our strategy as fast as the cloud providers evolve.
-Tags: greenfield-development, brownfield-development, microsoft-azure, exploratory-testing
 
 
