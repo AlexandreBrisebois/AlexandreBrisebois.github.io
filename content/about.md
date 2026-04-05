@@ -1,6 +1,5 @@
 ---
 title: "Alexandre Brisebois — Cutting through the noise"
-date: 2026-03-26T00:00:00+00:00
 description: "Alexandre Brisebois — Cutting through the noise"
 draft: false
 image: "/images/about.webp"

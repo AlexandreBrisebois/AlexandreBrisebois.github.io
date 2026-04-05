@@ -17,22 +17,17 @@ social_posts:
   linkedin: ''
   x: ''
   bluesky: ''
-related_posts:
-- About
-- The Greenfield to Brownfield Transition
-mentioned_in:
-- About
-- The Greenfield to Brownfield Transition
-image_prompt: 'Abstract architectural fragment and composition: a single offset structural
-  plane set within a wide, warm off-white (#F7F5F0) negative space. The structure
-  is interrupted by a narrow, calm green (#2D6A4F) seam, suggesting a context boundary
-  and a deliberate reset. Sparse asymmetrical layout featuring a blend of matte paper
-  and concrete textures. Soft diffuse lighting creates minimal tonal variation with
-  subtle, near-black architectural details. The aesthetic is calm, editorial, and
-  minimalist, emphasizing system thinking and deliberate construction without people,
-  literal metaphors, or digital interfaces.'
+related_posts: null
+mentioned_in: null
+image_prompt: 'Minimalist abstract architectural diagram of a serverless event flow,
+  high-contrast textures, "Calm Signal" aesthetic with a clean horizontal baseline.
+  Muted earth tones: warm off-white background, deep forest green geometric lines,
+  and subtle coral accent nodes. Minimalist composition with fine linework and textured
+  gradients. No people, no faces, no logos. WebP format, landscape orientation, professional
+  blog header style.'
 image: /images/posts/why-ai-assistants-lose-context.webp
 ---
+
 
 
 > **TL;DR:** AI assistants like Claude, Copilot, and Gemini often lose the plot when long sessions, vague prompts, and bloated inputs push against finite context windows. This article explains why, shares real-world examples, and offers practical ways for users and vendors to reduce the drift.

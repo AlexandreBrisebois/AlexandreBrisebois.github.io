@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# test/dev.sh
-# srvrlss.dev local dev & test suite
+# local-loop/dev.sh
+# srvrlss.dev local dev & run suite
 
 # Ensure we're in the repository root
 cd "$(dirname "$0")/.." || exit
@@ -14,9 +14,9 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 # Load secrets from .env if it exists
-if [ -f "test/.env" ]; then
-    echo -e "${GREEN}✓ Loading secrets from test/.env${NC}"
-    export $(grep -v '^#' test/.env | xargs)
+if [ -f "local-loop/.env" ]; then
+    echo -e "${GREEN}✓ Loading secrets from local-loop/.env${NC}"
+    export $(grep -v '^#' local-loop/.env | xargs)
 fi
 
 # Detect Python environment
@@ -32,9 +32,8 @@ show_menu() {
     echo -e "\n${BLUE}--- srvrlss.dev Dev Suite ---${NC}"
     echo "1) Start Hugo Server (Drafts enabled)"
     echo "2) Run Automation: Dry Run (Safe local validation)"
-    echo "3) Run Automation: Full Test (Requires API Key, mocks CI)"
-    echo "4) Run Social Loop Summary"
-    echo "5) Run Freshness Audit"
+    echo "3) Run Automation: Full (Requires API Key)"
+    echo "4) Run Image Generation (Multi-shot)"
     echo "q) Quit"
     echo -n "Select option: "
 }
@@ -74,15 +73,15 @@ while true; do
             run_automation "pr" "false"
             ;;
         3)
-            echo -n "Enter post filename(s) to test (comma-separated, leave blank for git diff): "
+            echo -n "Enter post filename(s) to run (comma-separated, leave blank for git diff): "
             read -r posts
             run_automation "pr" "true" "$posts"
             ;;
         4)
-            run_automation "social-loop" "true"
-            ;;
-        5)
-            run_automation "freshness-audit" "true"
+            echo -n "Enter post filename(s) for image generation (comma-separated, leave blank for git diff): "
+            read -r posts
+            echo -e "${YELLOW}Running image generation...${NC}"
+            $PYTHON_CMD local-loop/image_generator.py --posts "$posts"
             ;;
         q)
             echo "Goodbye!"
