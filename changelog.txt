@@ -1,1 +1,1 @@
-- `09b045d` `2026-04-06T00:13:54Z` — feat: add clickable tag links to post metadata and update tag styling with hover effects
+- `b8559c0` `2026-04-06T05:37:19Z` — refactor: migrate local automation scripts and specifications to a centralized directory structure

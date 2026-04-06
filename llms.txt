@@ -13,7 +13,7 @@ TLDR: I hit the token wall and felt the sting of my AI forgetting our progress, 
 Tags: AI engineering, prompting, context windows, developer tools, session management
 
 
-## Alexandre Brisebois — Cutting through the noise
+## Cutting Through the Noise
 URL: https://srvrlss.dev/about/
 Date: 0001-01-01
 Description: Alexandre Brisebois — Cutting through the noise
