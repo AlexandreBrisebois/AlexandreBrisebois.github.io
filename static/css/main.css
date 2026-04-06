@@ -317,6 +317,7 @@ body {
 }
 
 .tag {
+  display: inline-block;
   font-size: 0.75rem;
   font-family: var(--font-mono);
   color: var(--color-accent);
@@ -325,6 +326,13 @@ body {
   padding: 0.1em 0.5em;
   border-radius: 3px;
   text-decoration: none;
+  transition: var(--transition-color);
+}
+
+.tag:hover {
+  background: rgba(var(--color-surface-rgb), 0.9);
+  color: var(--color-accent-2);
+  border-color: var(--color-accent-2);
 }
 
 /* TLDR blockquote in post-meta */

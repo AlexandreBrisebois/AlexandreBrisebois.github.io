@@ -15,7 +15,7 @@
     {{ with .Description }}<p>{{ . }}</p>{{ end }}
     {{ with .Params.tags }}
     <ul class="post-tags" aria-label="Post tags">
-      {{ range . }}<li class="tag">#{{ . }}</li>{{ end }}
+      {{ range . }}<li><a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}/" class="tag">#{{ . }}</a></li>{{ end }}
     </ul>
     {{ end }}
   </article>

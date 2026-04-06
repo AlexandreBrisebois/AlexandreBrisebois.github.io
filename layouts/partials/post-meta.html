@@ -4,7 +4,7 @@
     <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
     {{ with .Params.tags }}
     <ul class="post-tags" aria-label="Post tags">
-      {{ range . }}<li class="tag">#{{ . }}</li>{{ end }}
+      {{ range . }}<li><a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}/" class="tag">#{{ . }}</a></li>{{ end }}
     </ul>
     {{ end }}
   </div>
