@@ -1,14 +1,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} — {{ .Site.Title }}{{ end }}</title>
-<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+<title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} &mdash; {{ .Site.Title }}{{ end }}</title>
+
+{{ $description := .Site.Params.description }}
+{{ if .IsHome }}
+  {{ $description = "Thinking out loud and building in public to empower the curious - Alexandre Brisebois." }}
+{{ else if (and (isset .Params "tldr") (ne .Params.tldr "")) }}
+  {{ $description = .Params.tldr }}
+{{ else if eq .Data.Singular "tag" }}
+  {{ $description = printf "Articles tagged with %s on srvrlss.dev." .Title }}
+{{ else if eq .Title "Cutting Through the Noise" }}
+  {{ $description = "Cutting Through the Noise - Alexandre Brisebois" }}
+{{ end }}
+
+<meta name="description" content="{{ $description }}">
 <link rel="canonical" href="{{ .Permalink }}">
 
 <!-- Open Graph -->
-<meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}">
-<meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+<meta property="og:title" content="{{ .Title }}">
+<meta property="og:description" content="{{ $description }}">
 <meta property="og:url" content="{{ .Permalink }}">
 <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:site_name" content="srvrlss.dev">
+<meta property="og:locale" content="en_US">
 {{ if .Params.image }}
 <meta property="og:image" content="{{ .Params.image | absURL }}">
 <meta name="twitter:image" content="{{ .Params.image | absURL }}">
@@ -19,67 +33,11 @@
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}">
-<meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+<meta name="twitter:site" content="@brisebois">
+<meta name="twitter:title" content="{{ .Title }}">
+<meta name="twitter:description" content="{{ $description }}">
 
-<!-- JSON-LD: Person -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "{{ .Site.Params.author }}",
-  "url": "{{ .Site.BaseURL }}",
-  "sameAs": [
-    "{{ .Site.Params.github }}",
-    "{{ .Site.Params.linkedin }}",
-    "{{ .Site.Params.bluesky }}"
-  ]
-}
-</script>
-
-{{ if .IsPage }}
-<!-- JSON-LD: Article -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "{{ .Title }}",
-  "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
-  "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",
-  "author": {
-    "@type": "Person",
-    "name": "{{ .Site.Params.author }}",
-    "url": "{{ .Site.BaseURL }}"
-  },
-  "url": "{{ .Permalink }}",
-  "description": "{{ with .Description }}{{ . }}{{ end }}"
-}
-</script>
-{{ end }}
-
-{{ if not .IsHome }}
-<!-- JSON-LD: BreadcrumbList -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": "{{ .Site.BaseURL }}"
-    }{{ if .IsPage }},
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "{{ .Title }}",
-      "item": "{{ .Permalink }}"
-    }{{ end }}
-  ]
-}
-</script>
-{{ end }}
+{{ partial "schema.html" . }}
 
 <!-- Speculation Rules API -->
 <script type="speculationrules">

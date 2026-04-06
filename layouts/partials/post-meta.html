@@ -20,7 +20,7 @@
     {{ end }}
     {{ with .Params.tags }}
     <ul class="post-tags" aria-label="Post tags">
-      {{ range . }}<li><a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}/" class="tag">#{{ . }}</a></li>{{ end }}
+      {{ range . }}<li><a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}/" class="tag"><span aria-hidden="true">#</span>{{ . }}</a></li>{{ end }}
     </ul>
     {{ end }}
   </div>

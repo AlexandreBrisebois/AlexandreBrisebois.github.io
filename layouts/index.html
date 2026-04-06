@@ -4,8 +4,10 @@
   {{ if fileExists "static/images/hero.webp" }}
   <div class="hero-image">
     <img src="/images/hero.webp"
-      alt="srvrlss.dev &mdash; Alexandre Brisebois &mdash; Thinking out loud and building in public to empower the curious. &mdash; I am eager. I am overwhelmed. I am starting anyway!"
+      alt=""
+      aria-hidden="true"
       loading="eager" decoding="async">
+    <span class="sr-only">srvrlss.dev by Alexandre Brisebois &mdash; Agentic AI, AI Accelerated Learning, GenAI</span>
   </div>
   {{ end }}
 
@@ -47,7 +49,7 @@
       <time datetime="{{ .Date.Format " 2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
       {{ with .Params.tags }}
       <ul class="post-tags" aria-label="Post tags">
-        {{ range . }}<li><a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}/" class="tag">#{{ . }}</a></li>{{ end }}
+        {{ range . }}<li><a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}/" class="tag"><span aria-hidden="true">#</span>{{ . }}</a></li>{{ end }}
       </ul>
       {{ end }}
       {{ with .Description }}<p>{{ . }}</p>{{ end }}
