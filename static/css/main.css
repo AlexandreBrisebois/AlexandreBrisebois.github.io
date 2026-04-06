@@ -13,8 +13,28 @@
   --color-surface: #EFECE5;
   --color-ink: #1A1A18;
   --color-muted: #6B6860;
-  --color-accent: #2D6A4F;
-  --color-accent-2: #E76F51;
+  --color-forest: #2D6A4F; /* Restored Calm Green — WCAG AA (5.6:1) */
+  --color-coral: #C14D32; /* Calibrated Deep Coral — WCAG AA (5.2:1) */
+  --color-oceanic: #1E4D63; /* Oceanic Deep Blue — WCAG AA (7.7:1) */
+  --color-plum: #6B4E71; /* Shadow Plum — WCAG AA (7.0:1) */
+  --color-slate: #4A4A48; /* Ink Slate — WCAG AA (9.3:1) */
+  --color-gold: #916914; /* Harvest Gold — Quick Win — WCAG AA (5.1:1) */
+  --color-eucalyptus: #2A5F5F; /* Deep Eucalyptus — Experiment — WCAG AA (7.4:1) */
+  --color-sienna: #8E443D; /* Burnt Sienna — Lesson — WCAG AA (7.1:1) */
+  --color-mulberry: #7D4E5B; /* Muted Mulberry — Blueprint — WCAG AA (6.7:1) */
+  --color-bronze: #5A5E33; /* Antique Bronze — Deep Dive — WCAG AA (7.0:1) */
+
+  /* RGB triplets for rgba() usage */
+  --color-forest-rgb: 45, 106, 79;
+  --color-coral-rgb: 193, 77, 50;
+  --color-oceanic-rgb: 30, 77, 99;
+  --color-plum-rgb: 107, 78, 113;
+  --color-slate-rgb: 74, 74, 72;
+  --color-gold-rgb: 145, 105, 20;
+  --color-eucalyptus-rgb: 42, 95, 95;
+  --color-sienna-rgb: 142, 68, 61;
+  --color-mulberry-rgb: 125, 78, 91;
+  --color-bronze-rgb: 90, 94, 51;
   --color-border: #DDD9D0;
   --color-code-bg: #1E1E1C;
 
@@ -24,8 +44,8 @@
   --color-ink-rgb: 26, 26, 24;
 
   /* Typography */
-  --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
-  --font-body: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-body: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-mono: 'JetBrains Mono', 'Courier New', Courier, monospace;
 
   /* Layout */
@@ -46,8 +66,27 @@
     --color-surface: #161B22;
     --color-ink: #C9D1D9;
     --color-muted: #8B949E;
-    --color-accent: #4D9375;
-    --color-accent-2: #E76F51;
+    --color-forest: #5F9F83;
+    --color-coral: #DE8571;
+    --color-oceanic: #3E8EAF; /* Lighter Blue for Dark Mode — WCAG AA (4.9:1) */
+    --color-plum: #A07CA8;
+    --color-slate: #9B9B98;
+    --color-gold: #C5A059;
+    --color-eucalyptus: #69A393;
+    --color-sienna: #C57B73;
+    --color-mulberry: #AF818C;
+    --color-bronze: #9BA06B;
+
+    --color-forest-rgb: 95, 159, 131;
+    --color-coral-rgb: 222, 133, 113;
+    --color-oceanic-rgb: 62, 142, 175;
+    --color-plum-rgb: 160, 124, 168;
+    --color-slate-rgb: 155, 155, 152;
+    --color-gold-rgb: 197, 160, 89;
+    --color-eucalyptus-rgb: 105, 163, 147;
+    --color-sienna-rgb: 197, 123, 115;
+    --color-mulberry-rgb: 175, 129, 140;
+    --color-bronze-rgb: 155, 160, 107;
     --color-border: #30363D;
     --color-code-bg: #0D1117;
 
@@ -85,6 +124,8 @@ body {
   font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.75;
+  letter-spacing: 0.015em;
+  word-spacing: 0.025em;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -97,21 +138,26 @@ body {
 
 .skip-link {
   position: absolute;
-  top: -100%;
-  left: 1rem;
-  background: var(--color-accent);
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-forest);
   color: #fff;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.5rem;
   text-decoration: none;
-  border-radius: 0 0 4px 4px;
-  z-index: 1000;
+  font-weight: 600;
+  border-radius: 0 0 8px 8px;
+  z-index: 9999;
   font-family: var(--font-body);
-  font-size: 0.9rem;
-  transition: top 0.15s ease;
+  font-size: 1rem;
+  box-shadow: var(--shadow-high);
+  transition: top 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
 
 .skip-link:focus {
   top: 0;
+  outline: 3px solid var(--color-coral);
+  outline-offset: 2px;
 }
 
 /* ============================================================
@@ -136,16 +182,15 @@ body {
 .wordmark {
   font-family: var(--font-display);
   font-size: 1.25rem;
-  font-weight: 400;
-  /* Instrument Serif is display-weight at 400 */
-  letter-spacing: -0.025em;
+  font-weight: 700;
+  letter-spacing: 0.02em;
   color: var(--color-ink);
   text-decoration: none;
   transition: color 0.15s ease;
 }
 
 .wordmark:hover {
-  color: var(--color-accent);
+  color: var(--color-forest);
 }
 
 .site-nav {
@@ -163,16 +208,16 @@ body {
 }
 
 .site-nav a:hover {
-  color: var(--color-accent);
+  color: var(--color-forest);
 }
 
 /* ============================================================
    Main Content
    ============================================================ */
 
-#main-content {
+#content {
   flex: 1;
-  padding: 3rem 1.5rem;
+  padding: 1.5rem 1.5rem; /* Reduced from 3rem for a tighter top */
 }
 
 /* ============================================================
@@ -190,7 +235,7 @@ body {
   color: var(--color-muted);
   margin-bottom: 3rem;
   line-height: 1.45;
-  letter-spacing: -0.015em;
+  letter-spacing: 0.01em;
 }
 
 /* ============================================================
@@ -221,8 +266,8 @@ body {
 .post-card h2 {
   font-family: var(--font-display);
   font-size: 1.4rem;
-  font-weight: 400;
-  letter-spacing: -0.02em;
+  font-weight: 600;
+  letter-spacing: 0.01em;
   line-height: 1.3;
   margin-bottom: 0.35rem;
 }
@@ -234,7 +279,7 @@ body {
 }
 
 .post-card h2 a:hover {
-  color: var(--color-accent);
+  color: var(--color-forest);
 }
 
 .post-card time {
@@ -252,22 +297,83 @@ body {
   line-height: 1.6;
 }
 
-/* "Lessons Learned" visual badge */
-.lessons-badge {
+/* ============================================================
+   Pill Badges (Insight System)
+   ============================================================ */
+
+.pill-badge {
   display: inline-block;
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-family: var(--font-mono);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--color-accent);
-  background: rgba(var(--color-surface-rgb), 0.8);
-  border: 1px solid rgba(45, 106, 79, 0.35);
-  padding: 0.15em 0.55em;
+  letter-spacing: 0.1em;
+  padding: 0.2em 0.6em;
   border-radius: 3px;
-  margin-right: 0.5rem;
+  margin-right: 0.75rem;
   vertical-align: middle;
   position: relative;
   top: -1px;
+  font-weight: 600;
+}
+
+.pill-badge.lesson {
+  color: var(--color-forest);
+  background: rgba(var(--color-forest-rgb), 0.12);
+  border: 1px solid rgba(var(--color-forest-rgb), 0.5);
+}
+
+.pill-badge.experiment {
+  color: var(--color-gold);
+  background: rgba(var(--color-gold-rgb), 0.15);
+  border: 1px solid rgba(var(--color-gold-rgb), 0.45);
+}
+
+.pill-badge.quickwin {
+  color: var(--color-coral);
+  background: rgba(var(--color-coral-rgb), 0.12);
+  border: 1px solid rgba(var(--color-coral-rgb), 0.5);
+}
+
+.pill-badge.blueprint {
+  color: var(--color-mulberry);
+  background: rgba(var(--color-mulberry-rgb), 0.12);
+  border: 1px solid rgba(var(--color-mulberry-rgb), 0.5);
+}
+
+.pill-badge.deepdive {
+  color: var(--color-oceanic);
+  background: rgba(var(--color-oceanic-rgb), 0.12);
+  border: 1px solid rgba(var(--color-oceanic-rgb), 0.5);
+}
+
+.pill-badge.infrastructure {
+  color: var(--color-oceanic);
+  background: rgba(var(--color-oceanic-rgb), 0.12);
+  border: 1px solid rgba(var(--color-oceanic-rgb), 0.5);
+}
+
+.pill-badge.alert {
+  color: var(--color-coral);
+  background: rgba(var(--color-coral-rgb), 0.12);
+  border: 1px solid rgba(var(--color-coral-rgb), 0.5);
+}
+
+.pill-badge.archive {
+  color: var(--color-plum);
+  background: rgba(var(--color-plum-rgb), 0.12);
+  border: 1px solid rgba(var(--color-plum-rgb), 0.5);
+}
+
+.pill-badge.meta {
+  color: var(--color-slate);
+  background: rgba(var(--color-slate-rgb), 0.12);
+  border: 1px solid rgba(var(--color-slate-rgb), 0.5);
+}
+
+.pill-badge.featured {
+  color: var(--color-oceanic);
+  background: rgba(var(--color-oceanic-rgb), 0.12);
+  border: 1px solid rgba(var(--color-oceanic-rgb), 0.5);
 }
 
 /* ============================================================
@@ -280,16 +386,16 @@ body {
 }
 
 .post-meta {
-  margin-bottom: 2.5rem;
-  padding-bottom: 2rem;
+  margin-bottom: 1.5rem; /* Reduced from 2.5rem */
+  padding-bottom: 1rem; /* Reduced from 2rem */
   border-bottom: 1px solid var(--color-border);
 }
 
 .post-title {
   font-family: var(--font-display);
   font-size: 2.25rem;
-  font-weight: 400;
-  letter-spacing: -0.035em;
+  font-weight: 700;
+  letter-spacing: 0.01em;
   line-height: 1.2;
   margin-bottom: 0.85rem;
   color: var(--color-ink);
@@ -318,12 +424,12 @@ body {
 
 .tag {
   display: inline-block;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-family: var(--font-mono);
-  color: var(--color-accent);
-  background: rgba(var(--color-surface-rgb), 0.7);
+  color: var(--color-muted);
+  background: transparent;
   border: 1px solid var(--color-border);
-  padding: 0.1em 0.5em;
+  padding: 0.05em 0.4em;
   border-radius: 3px;
   text-decoration: none;
   transition: var(--transition-color);
@@ -331,18 +437,18 @@ body {
 
 .tag:hover {
   background: rgba(var(--color-surface-rgb), 0.9);
-  color: var(--color-accent-2);
-  border-color: var(--color-accent-2);
+  color: var(--color-forest);
+  border-color: var(--color-forest);
 }
 
 /* TLDR blockquote in post-meta */
 .tldr {
-  border-left: 3px solid var(--color-accent);
+  border-left: 3px solid var(--color-forest);
   padding: 0.75rem 1rem;
   margin-top: 1rem;
   color: var(--color-muted);
   font-size: 0.95rem;
-  font-style: italic;
+  font-weight: 700;
   background: rgba(var(--color-surface-rgb), 0.5);
   border-radius: 0 4px 4px 0;
 }
@@ -378,8 +484,8 @@ body {
 .post-body h2 {
   font-family: var(--font-display);
   font-size: 1.5rem;
-  font-weight: 400;
-  letter-spacing: -0.02em;
+  font-weight: 700;
+  letter-spacing: 0.01em;
   margin-top: 2.75rem;
   margin-bottom: 0.65rem;
   color: var(--color-ink);
@@ -400,7 +506,7 @@ body {
 }
 
 .post-body a {
-  color: var(--color-accent);
+  color: var(--color-forest);
   text-decoration: underline;
   text-underline-offset: 2px;
   text-decoration-thickness: 1px;
@@ -408,15 +514,16 @@ body {
 }
 
 .post-body a:hover {
-  color: var(--color-accent-2);
+  color: var(--color-coral);
 }
 
 .post-body blockquote {
-  border-left: 3px solid var(--color-accent);
-  padding: 0.75rem 1.25rem;
+  border-left: 3px solid var(--color-forest);
+  padding: 1rem 1.25rem;
   margin: 1.5rem 0;
-  color: var(--color-muted);
-  font-style: italic;
+  color: var(--color-ink);
+  font-weight: 500;
+  background: rgba(var(--color-surface-rgb), 0.3);
   border-radius: 0 4px 4px 0;
 }
 
@@ -486,15 +593,15 @@ body {
   -webkit-backdrop-filter: blur(8px) saturate(180%);
   backdrop-filter: blur(8px) saturate(180%);
   border: 1px solid rgba(var(--color-border-rgb), 0.3);
-  border-left: 3px solid var(--color-accent);
+  border-left: 3px solid var(--color-forest);
 }
 
 .callout-warning {
-  border-left-color: var(--color-accent-2);
+  border-left-color: var(--color-coral);
 }
 
 .callout-tip {
-  border-left-color: var(--color-accent);
+  border-left-color: var(--color-forest);
 }
 
 .callout-note {
@@ -558,7 +665,7 @@ body {
 
 .social-share a,
 .copy-link {
-  color: var(--color-accent);
+  color: var(--color-forest);
   text-decoration: none;
   font-size: 0.875rem;
   transition: color 0.15s ease;
@@ -572,7 +679,7 @@ body {
 
 .social-share a:hover,
 .copy-link:hover {
-  color: var(--color-accent-2);
+  color: var(--color-coral);
 }
 
 /* ============================================================
@@ -591,7 +698,7 @@ body {
 }
 
 .linkedin-cta a {
-  color: var(--color-accent);
+  color: var(--color-forest);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
@@ -632,7 +739,7 @@ body {
 }
 
 .footer-nav a:hover {
-  color: var(--color-accent);
+  color: var(--color-forest);
 }
 
 /* ============================================================
@@ -641,32 +748,39 @@ body {
 
 @media (max-width: 600px) {
   html {
-    font-size: 17px;
+    font-size: 18px; /* Increased for mobile legibility */
   }
 
   .site-header {
-    padding: 1rem;
+    padding: 1.25rem 1rem;
   }
 
-  #main-content {
-    padding: 2rem 1rem;
+  #content {
+    padding: 1.5rem 1.25rem; /* Corrected ID from #main-content */
   }
 
   .post-title {
-    font-size: 1.75rem;
+    font-size: 1.85rem;
+    font-weight: 700;
   }
 
   .anchor-statement {
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     margin-bottom: 2rem;
+    line-height: 1.6;
   }
 
   .site-nav {
-    gap: 1rem;
+    gap: 1.25rem;
   }
 
   .site-nav a {
-    font-size: 0.85rem;
+    font-size: 0.95rem;
+    padding: 0.5rem 0; /* Better touch target */
+  }
+
+  .post-body {
+    line-height: 1.85; /* Increased for tracking on narrow screens */
   }
 
   .footer-inner {
@@ -675,17 +789,17 @@ body {
   }
 
   .social-share {
-    gap: 0.75rem;
+    gap: 1rem;
   }
 
   .post-body pre {
-    padding: 1rem;
-    border-radius: 4px;
+    padding: 1.25rem;
+    border-radius: 6px;
   }
 
   /* Prevent horizontal scroll at 375px */
   .post-body pre {
-    font-size: 0.82rem;
+    font-size: 0.85rem;
   }
 }
 
@@ -721,26 +835,43 @@ body {
 }
 
 .tag-chip {
-  border: 1px solid var(--color-accent);
-  border-radius: 999px;
-  padding: 0.2rem 0.6rem;
-  font-size: 0.8rem;
-  font-family: var(--font-body);
-  color: var(--color-accent);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 0.4rem 0.8rem; /* Increased for mobile touch targets */
+  font-size: 0.85rem;
+  font-family: var(--font-mono); /* Switched to mono as confirmed easy-to-read */
+  color: var(--color-muted);
   text-decoration: none;
   background: transparent;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  margin-bottom: 0.25rem;
 }
 
 .tag-chip:hover {
-  background: rgba(45, 106, 79, 0.1);
+  border-color: var(--color-forest);
+  color: var(--color-forest);
+  background: rgba(var(--color-forest-rgb), 0.05);
 }
 
+
 /* ============================================================
-   Latest Post Card Marker
+   Featured Post Card Style
    ============================================================ */
 
-.post-card--latest {
-  border-left: 3px solid var(--color-accent-2);
-  padding-left: 0.75rem;
+.post-card--featured {
+  position: relative;
+  background: rgba(var(--color-surface-rgb), 0.4);
+  /* Expand slightly for a card effect without shifting content */
+  margin: 1rem -1.25rem;
+  padding: 2rem 1.25rem !important;
+  border-radius: 12px;
+  border: 1px solid rgba(var(--color-border-rgb), 0.6);
+  box-shadow: var(--shadow-low);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-card--featured:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-high);
+  background: rgba(var(--color-surface-rgb), 0.6);
 }

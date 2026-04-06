@@ -1,8 +1,9 @@
 ---
-title: "Alexandre Brisebois — Cutting through the noise"
+title: "Cutting Through the Noise"
 description: "Alexandre Brisebois — Cutting through the noise"
 draft: false
 image: "/images/about.webp"
+hide_date: true
 ---
 
 What if the real risk isn’t falling behind, but drowning in the noise?

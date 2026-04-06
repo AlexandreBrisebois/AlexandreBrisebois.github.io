@@ -2,13 +2,18 @@
 <section class="post-list">
   {{ range .Pages }}
   <article class="post-card">
-    {{ $isRetro := or (in (default slice .Params.tags) "retrospective") (in .Title "Retrospective") }}
+    {{ $isLesson := or (in (default slice .Params.tags) "lesson-learned") (in (default slice .Params.tags) "retrospective") }}
+    {{ $isExperiment := or (in (default slice .Params.tags) "experiment") (in .Title "Experiment") }}
+    {{ $isQuickWin := in (default slice .Params.tags) "quick-win" }}
+    {{ $isDeepDive := in (default slice .Params.tags) "deep-dive" }}
+    {{ $isBlueprint := in (default slice .Params.tags) "blueprint" }}
     {{ $title := .Title }}
-    {{ if $isRetro }}
-      {{ $title = replace .Title "Retrospective" "Lessons Learned" }}
-    {{ end }}
     <h2>
-      {{ if $isRetro }}<span class="lessons-badge">Lessons Learned</span>{{ end }}
+      {{ if $isLesson }}<span class="pill-badge lesson">Lesson Learned</span>{{ end }}
+      {{ if $isExperiment }}<span class="pill-badge experiment">Experiment</span>{{ end }}
+      {{ if $isQuickWin }}<span class="pill-badge quickwin">Quick Win</span>{{ end }}
+      {{ if $isDeepDive }}<span class="pill-badge deepdive">Deep Dive</span>{{ end }}
+      {{ if $isBlueprint }}<span class="pill-badge blueprint">Blueprint</span>{{ end }}
       <a href="{{ .RelPermalink }}">{{ $title }}</a>
     </h2>
     <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
