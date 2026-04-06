@@ -44,8 +44,8 @@
   --color-ink-rgb: 26, 26, 24;
 
   /* Typography */
-  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-body: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-display: 'Lexend', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-body: 'Lexend', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-mono: 'JetBrains Mono', 'Courier New', Courier, monospace;
 
   /* Layout */
@@ -123,9 +123,9 @@ body {
   color: var(--color-ink);
   font-family: var(--font-body);
   font-size: 1rem;
-  line-height: 1.75;
-  letter-spacing: 0.015em;
-  word-spacing: 0.025em;
+  line-height: 1.7; /* Optimized for Lexend */
+  letter-spacing: -0.01em; /* Lexend is naturally airy */
+  word-spacing: 0.02em;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -474,7 +474,7 @@ body {
 
 .post-body {
   font-size: 1.05rem;
-  line-height: 1.8;
+  line-height: 1.75; /* Slightly tighter for Lexend large text */
 }
 
 .post-body>*+* {
@@ -494,8 +494,8 @@ body {
 
 .post-body h3 {
   font-family: var(--font-display);
-  font-size: 1.2rem;
-  font-weight: 400;
+  font-size: 1.25rem;
+  font-weight: 500; /* Lexend Medium for hierarchy */
   margin-top: 2rem;
   margin-bottom: 0.5rem;
   line-height: 1.35;
