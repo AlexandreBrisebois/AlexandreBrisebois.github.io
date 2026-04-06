@@ -2,7 +2,7 @@
 # Author: Alexandre Brisebois
 # Website: https://srvrlss.dev/
 # Updated: 2026-04-06
-# Description: Technical outcomes at the intersection of cloud engineering, AI agents, and serverless patterns.
+# Description: Thinking out loud and building in public to empower the curious!
 
 
 ---
