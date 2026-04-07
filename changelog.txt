@@ -1,1 +1,1 @@
-- `18ed6d2` `2026-04-07T01:25:45Z` — fix: update URL encoding to urlquery and improve Open Graph and Twitter metadata generation
+- `21640ae` `2026-04-07T12:33:25Z` — feat: enhance OpenGraph and Twitter metadata with canonical URLs, article tags, and improved image handling
