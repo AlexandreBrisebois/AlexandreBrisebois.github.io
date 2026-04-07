@@ -1,1 +1,1 @@
-- `1c212d4` `2026-04-07T20:37:46Z` — refactor: rename social_posts to social_blurbs for consistency and update sharing links
+- `21b3acd` `2026-04-07T22:41:46Z` — fix: improve clarity in assumptions section by rephrasing a sentence

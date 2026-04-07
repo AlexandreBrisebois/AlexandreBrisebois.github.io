@@ -46,7 +46,7 @@ The release of Ollama 0.19 (March 30, 2026) marked a pivot from llama.cpp to App
 
 **Assumptions now age faster than code.**
 
-The technical error wasn’t using MLX-LM. For fine-tuning or Apple-first control, it’s still the right tool ([MLX-LM](https://github.com/ml-explore/mlx-lm)). My mistake was assuming Ollama hadn’t caught up. This time the cost of building was low, just a few hours and tokens. **And, the real cost of not checking first was the lost opportunity to focus on something new and exciting.**
+The technical error wasn’t using MLX-LM. For fine-tuning or Apple-first control, it’s still the right tool ([MLX-LM](https://github.com/ml-explore/mlx-lm)). My mistake was assuming Ollama hadn’t caught up. This time the cost of building was low, just a few hours and tokens. **The real cost of not checking first was the lost opportunity to focus on something new and exciting.**
 
 ## Workflow Discipline Over Heroic Builds
 
