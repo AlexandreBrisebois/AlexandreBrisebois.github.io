@@ -36,10 +36,15 @@
 
 {{ $socialImage := "" }}
 {{ $socialImageAlt := .Site.Title }}
+{{ $socialImageWidth := "" }}
+{{ $socialImageHeight := "" }}
 
 {{ if .IsPage }}
-  {{ if .Resources.GetMatch "social-image.webp" }}
-    {{ $socialImage = (.Resources.GetMatch "social-image.webp").Permalink }}
+  {{ $resource := .Resources.GetMatch "social-image.webp" }}
+  {{ if $resource }}
+    {{ $socialImage = $resource.Permalink }}
+    {{ $socialImageWidth = $resource.Width }}
+    {{ $socialImageHeight = $resource.Height }}
   {{ else if .Params.image }}
     {{ $socialImage = .Params.image | absURL }}
   {{ end }}
@@ -49,12 +54,16 @@
 {{ if not $socialImage }}
   {{ if fileExists "static/images/hero.webp" }}
     {{ $socialImage = "/images/hero.webp" | absURL }}
+    {{ $socialImageWidth = 2754 }}
+    {{ $socialImageHeight = 1536 }}
   {{ end }}
 {{ end }}
 
 {{ if $socialImage }}
 <meta property="og:image" content="{{ $socialImage }}">
 <meta property="og:image:alt" content="{{ $socialImageAlt }}">
+{{ with $socialImageWidth }}<meta property="og:image:width" content="{{ . }}">{{ end }}
+{{ with $socialImageHeight }}<meta property="og:image:height" content="{{ . }}">{{ end }}
 {{ end }}
 
 {{ if .IsPage }}

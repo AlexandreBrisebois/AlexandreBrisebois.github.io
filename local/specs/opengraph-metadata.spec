@@ -17,6 +17,8 @@ Ensure that all blog posts and pages have complete, valid, and high-quality Open
     - Home Priority: `/images/hero.webp`.
     - Recommended Size: 1200x630 (1.91:1) or 1200x675 (16:9).
 - **og:image:alt**: Must be provided for all images.
+- **og:image:width**: Automatically generated for resources or hardcoded for the default hero.
+- **og:image:height**: Automatically generated for resources or hardcoded for the default hero.
 
 ## Twitter Card Requirements
 - **twitter:card**: `summary_large_image`.
