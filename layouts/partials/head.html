@@ -5,26 +5,27 @@
 
 {{ $description := .Site.Params.description }}
 {{ if .IsHome }}
-  {{ $description = .Site.Params.description }}
+{{ $description = .Site.Params.description }}
 {{ else if (and (isset .Params "description") (ne .Params.description "")) }}
-  {{ $description = .Params.description }}
+{{ $description = .Params.description }}
 {{ else if (and (isset .Params "tldr") (ne .Params.tldr "")) }}
-  {{ $description = .Params.tldr }}
+{{ $description = .Params.tldr }}
 {{ else if .Summary }}
-  {{ $description = .Summary | plainify | truncate 160 }}
+{{ $description = .Summary | plainify | truncate 160 }}
 {{ else if eq .Data.Singular "tag" }}
-  {{ $description = printf "Articles tagged with %s on srvrlss.dev." .Title }}
+{{ $description = printf "Articles tagged with %s on srvrlss.dev." .Title }}
 {{ end }}
 
 <meta name="description" content="{{ $description }}">
+<meta name="author" content="{{ .Site.Params.author }}">
 {{ $canonicalURL := printf "%s/" (strings.TrimSuffix "/" .Permalink) }}
 <link rel="canonical" href="{{ $canonicalURL }}">
 
 <!-- Favicons -->
-<link rel="apple-touch-icon" sizes="180x180" href="{{ "apple-touch-icon.png" | relURL }}">
-<link rel="icon" type="image/png" sizes="32x32" href="{{ "favicon-32x32.png" | relURL }}">
-<link rel="icon" type="image/png" sizes="16x16" href="{{ "favicon-16x16.png" | relURL }}">
-<link rel="manifest" href="{{ "site.webmanifest" | relURL }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ " apple-touch-icon.png" | relURL }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ " favicon-32x32.png" | relURL }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ " favicon-16x16.png" | relURL }}">
+<link rel="manifest" href="{{ " site.webmanifest" | relURL }}">
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
@@ -40,36 +41,38 @@
 {{ $socialImageHeight := "" }}
 
 {{ if .IsPage }}
-  {{ $resource := .Resources.GetMatch "social-image.webp" }}
-  {{ if $resource }}
-    {{ $socialImage = $resource.Permalink }}
-    {{ $socialImageWidth = $resource.Width }}
-    {{ $socialImageHeight = $resource.Height }}
-  {{ else if .Params.image }}
-    {{ $socialImage = .Params.image | absURL }}
-  {{ end }}
-  {{ with .Title }}{{ $socialImageAlt = printf "Social sharing image for %s" . }}{{ end }}
+{{ $resource := .Resources.GetMatch "social-image.webp" }}
+{{ if $resource }}
+{{ $socialImage = $resource.Permalink }}
+{{ $socialImageWidth = $resource.Width }}
+{{ $socialImageHeight = $resource.Height }}
+{{ else if .Params.image }}
+{{ $socialImage = .Params.image | absURL }}
+{{ end }}
+{{ with .Title }}{{ $socialImageAlt = printf "Social sharing image for %s" . }}{{ end }}
 {{ end }}
 
 {{ if not $socialImage }}
-  {{ if fileExists "static/images/hero.webp" }}
-    {{ $socialImage = "/images/hero.webp" | absURL }}
-    {{ $socialImageWidth = 2754 }}
-    {{ $socialImageHeight = 1536 }}
-  {{ end }}
+{{ if fileExists "static/images/hero.webp" }}
+{{ $socialImage = "/images/hero.webp" | absURL }}
+{{ $socialImageWidth = 2754 }}
+{{ $socialImageHeight = 1536 }}
+{{ end }}
 {{ end }}
 
 {{ if $socialImage }}
 <meta property="og:image" content="{{ $socialImage }}">
 <meta property="og:image:alt" content="{{ $socialImageAlt }}">
-{{ with $socialImageWidth }}<meta property="og:image:width" content="{{ . }}">{{ end }}
-{{ with $socialImageHeight }}<meta property="og:image:height" content="{{ . }}">{{ end }}
+{{ with $socialImageWidth }}
+<meta property="og:image:width" content="{{ . }}">{{ end }}
+{{ with $socialImageHeight }}
+<meta property="og:image:height" content="{{ . }}">{{ end }}
 {{ end }}
 
 {{ if .IsPage }}
-<meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" | safeHTML }}">
-<meta property="article:modified_time" content="{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" | safeHTML }}">
-<meta property="article:author" content="{{ "about/" | absURL }}">
+<meta property="article:published_time" content="{{ .Date.Format " 2006-01-02T15:04:05Z07:00" | safeHTML }}">
+<meta property="article:modified_time" content="{{ .Lastmod.Format " 2006-01-02T15:04:05Z07:00" | safeHTML }}">
+<meta property="article:author" content="{{ " about/" | absURL }}">
 {{ range .Params.tags }}
 <meta property="article:tag" content="{{ . }}">
 {{ end }}
@@ -105,7 +108,9 @@
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+  rel="stylesheet">
 
-<link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
-<link rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" href="{{ "index.xml" | absURL }}">
+<link rel="stylesheet" href="{{ " css/main.css" | relURL }}">
+<link rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" href="{{ " index.xml" | absURL }}">
