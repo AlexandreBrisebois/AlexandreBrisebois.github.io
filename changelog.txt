@@ -1,1 +1,1 @@
-- `713d3ce` `2026-04-06T23:35:53Z` — feat: improve site accessibility, add JSON-LD schema, and introduce LLM usage rules
+- `a218988` `2026-04-07T00:37:47Z` — feat: add site favicons and web manifest configuration
