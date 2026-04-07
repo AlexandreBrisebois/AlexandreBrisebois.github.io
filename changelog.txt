@@ -1,1 +1,1 @@
-- `fc3439f` `2026-04-07T12:47:34Z` — feat: add og:image:width and og:image:height meta tags to OpenGraph metadata
+- `f3831dd` `2026-04-07T12:51:45Z` — feat: add author meta tag, fix asset URL formatting, and reformat head partial layout
