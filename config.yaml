@@ -8,6 +8,7 @@ params:
   description: "Thinking out loud and building in public to empower the curious. &mdash; I am eager. I am overwhelmed. I am starting anyway!"
   github: "https://github.com/AlexandreBrisebois"
   linkedin: "https://www.linkedin.com/in/alexandrebrisebois/"
+  twitter: "brisebois"
   bluesky: "https://bsky.app/profile/alexandrebrisebois.bsky.social"
 permalinks:
   posts: /posts/:slug/

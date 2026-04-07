@@ -14,7 +14,8 @@
 {{ end }}
 
 <meta name="description" content="{{ $description }}">
-<link rel="canonical" href="{{ .Permalink }}">
+{{ $canonicalURL := printf "%s/" (strings.TrimSuffix "/" .Permalink) }}
+<link rel="canonical" href="{{ $canonicalURL }}">
 
 <!-- Favicons -->
 <link rel="apple-touch-icon" sizes="180x180" href="{{ "apple-touch-icon.png" | relURL }}">
@@ -25,27 +26,49 @@
 <!-- Open Graph -->
 <meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}">
 <meta property="og:description" content="{{ $description }}">
-<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:url" content="{{ $canonicalURL }}">
 <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
 <meta property="og:site_name" content="{{ .Site.Title }}">
 <meta property="og:locale" content="en_US">
 
 {{ $socialImage := "" }}
-{{ if .Params.image }}
-  {{ $socialImage = .Params.image | absURL }}
-{{ else if fileExists "static/images/hero.webp" }}
-  {{ $socialImage = "/images/hero.webp" | absURL }}
+{{ $socialImageAlt := "srvrlss.dev - Alexandre Brisebois" }}
+
+{{ if .IsPage }}
+  {{ if .Resources.GetMatch "social-image.webp" }}
+    {{ $socialImage = (.Resources.GetMatch "social-image.webp").Permalink }}
+  {{ else if .Params.image }}
+    {{ $socialImage = .Params.image | absURL }}
+  {{ end }}
+  {{ with .Title }}{{ $socialImageAlt = printf "Social sharing image for %s" . }}{{ end }}
+{{ end }}
+
+{{ if not $socialImage }}
+  {{ if fileExists "static/images/hero.webp" }}
+    {{ $socialImage = "/images/hero.webp" | absURL }}
+  {{ end }}
 {{ end }}
 
 {{ if $socialImage }}
 <meta property="og:image" content="{{ $socialImage }}">
+<meta property="og:image:alt" content="{{ $socialImageAlt }}">
 <meta name="twitter:image" content="{{ $socialImage }}">
+<meta name="twitter:image:alt" content="{{ $socialImageAlt }}">
+{{ end }}
+
+{{ if .IsPage }}
+<meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" | safeHTML }}">
+<meta property="article:modified_time" content="{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" | safeHTML }}">
+<meta property="article:author" content="{{ "about/" | absURL }}">
+{{ range .Params.tags }}
+<meta property="article:tag" content="{{ . }}">
+{{ end }}
 {{ end }}
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@brisebois">
-<meta name="twitter:creator" content="@brisebois">
+<meta name="twitter:site" content="@{{ .Site.Params.twitter }}">
+<meta name="twitter:creator" content="@{{ .Site.Params.twitter }}">
 <meta name="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}">
 <meta name="twitter:description" content="{{ $description }}">
 
