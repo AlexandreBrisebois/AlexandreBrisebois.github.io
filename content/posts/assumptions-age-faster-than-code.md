@@ -9,8 +9,8 @@ image_prompt: A minimalist illustration of a clock with its hands spinning rapid
   mark hovers, symbolizing doubt and validation. The palette is soft blues, muted
   grays, and a single accent of brand orange. The style is flat, clean, and uncluttered,
   evoking clarity and calm.
-description: In AI engineering, assumptions now age faster than code. Learn why skipping
-  validation is the new technical debt and how to build smarter, not just faster.
+description: 'In AI, the real waste isn’t failed code: it’s acting on assumptions that
+  aged out overnight. Here’s what I changed in my approach before building.'
 tags:
 - lesson-learned
 - ai-engineering
