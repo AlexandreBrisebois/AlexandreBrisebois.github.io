@@ -1,1 +1,1 @@
-- `f3831dd` `2026-04-07T12:51:45Z` — feat: add author meta tag, fix asset URL formatting, and reformat head partial layout
+- `3c14062` `2026-04-07T12:58:34Z` — fix: remove extraneous spaces in template URL and date format strings
