@@ -9,7 +9,7 @@
 ## The New Waste in AI Engineering: When Assumptions Age Faster Than Code
 URL: https://srvrlss.dev/posts/assumptions-age-faster-than-code/
 Date: 2026-04-07
-Description: In AI engineering, assumptions now age faster than code. Learn why skipping validation is the new technical debt and how to build smarter, not just faster.
+Description: In AI, the real waste isn’t failed code: it’s acting on assumptions that aged out overnight. Here’s what I changed in my approach before building.
 TLDR: The costliest mistake in AI today is acting on stale assumptions. Validate before you build! Your workflow (and sanity) depend on it.
 Tags: lesson-learned, ai-engineering, assumptions, validation, technical-debt, ollama, mlx-lm
 
