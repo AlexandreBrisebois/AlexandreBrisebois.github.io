@@ -1,1 +1,1 @@
-- `a218988` `2026-04-07T00:37:47Z` — feat: add site favicons and web manifest configuration
+- `b92fed7` `2026-04-07T01:12:34Z` — feat: add favicon generation script and update site icons from master source
