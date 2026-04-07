@@ -4,8 +4,8 @@
 Ensure that all blog posts and pages have complete, valid, and high-quality OpenGraph and Twitter Card metadata to ensure premium social sharing experiences on LinkedIn, X (Twitter), and other platforms.
 
 ## Core Requirements
-- **og:title**: Must be provided. For home, use site title. For pages, use page title.
-- **og:description**: Must be provided. Prioritize `tldr` front-matter, fallback to `description`, then `summary`.
+- **og:title**: Must be provided. Home: Site Title. Pages: Post Title — Site Title.
+- **og:description**: Must be provided. Prioritize `description` front-matter, fallback to `tldr`, then Hugo `.Summary`.
 - **og:url**: Must be an absolute URL and MUST end with a trailing slash `/` for GitHub Pages consistency.
 - **og:type**: `article` for blog posts, `website` for all other pages.
 - **og:site_name**: Must be "srvrlss.dev".
@@ -20,8 +20,9 @@ Ensure that all blog posts and pages have complete, valid, and high-quality Open
 
 ## Twitter Card Requirements
 - **twitter:card**: `summary_large_image`.
-- **twitter:site**: `@brisebois`.
-- **twitter:creator**: `@brisebois`.
+- **twitter:site**: Handle from site params (e.g., `@brisebois`).
+- **twitter:creator**: Handle from site params (e.g., `@brisebois`).
+- **twitter:url**: Same as `og:url`.
 - **twitter:title**: Same as `og:title`.
 - **twitter:description**: Same as `og:description`.
 - **twitter:image**: Same as `og:image`.

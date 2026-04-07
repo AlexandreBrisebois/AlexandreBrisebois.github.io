@@ -1,16 +1,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} &mdash; {{ .Site.Title }}{{ end }}</title>
+{{ $title := cond .IsHome .Site.Title (printf "%s — %s" .Title .Site.Title) }}
+<title>{{ $title }}</title>
 
 {{ $description := .Site.Params.description }}
 {{ if .IsHome }}
-  {{ $description = "Thinking out loud and building in public to empower the curious - Alexandre Brisebois." }}
+  {{ $description = .Site.Params.description }}
+{{ else if (and (isset .Params "description") (ne .Params.description "")) }}
+  {{ $description = .Params.description }}
 {{ else if (and (isset .Params "tldr") (ne .Params.tldr "")) }}
   {{ $description = .Params.tldr }}
+{{ else if .Summary }}
+  {{ $description = .Summary | plainify | truncate 160 }}
 {{ else if eq .Data.Singular "tag" }}
   {{ $description = printf "Articles tagged with %s on srvrlss.dev." .Title }}
-{{ else if eq .Title "Cutting Through the Noise" }}
-  {{ $description = "Cutting Through the Noise - Alexandre Brisebois" }}
 {{ end }}
 
 <meta name="description" content="{{ $description }}">
@@ -23,16 +26,16 @@
 <link rel="icon" type="image/png" sizes="16x16" href="{{ "favicon-16x16.png" | relURL }}">
 <link rel="manifest" href="{{ "site.webmanifest" | relURL }}">
 
-<!-- Open Graph -->
-<meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}">
-<meta property="og:description" content="{{ $description }}">
-<meta property="og:url" content="{{ $canonicalURL }}">
+<!-- Open Graph / Facebook -->
 <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:url" content="{{ $canonicalURL }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $description }}">
 <meta property="og:site_name" content="{{ .Site.Title }}">
 <meta property="og:locale" content="en_US">
 
 {{ $socialImage := "" }}
-{{ $socialImageAlt := "srvrlss.dev - Alexandre Brisebois" }}
+{{ $socialImageAlt := .Site.Title }}
 
 {{ if .IsPage }}
   {{ if .Resources.GetMatch "social-image.webp" }}
@@ -52,8 +55,6 @@
 {{ if $socialImage }}
 <meta property="og:image" content="{{ $socialImage }}">
 <meta property="og:image:alt" content="{{ $socialImageAlt }}">
-<meta name="twitter:image" content="{{ $socialImage }}">
-<meta name="twitter:image:alt" content="{{ $socialImageAlt }}">
 {{ end }}
 
 {{ if .IsPage }}
@@ -65,12 +66,17 @@
 {{ end }}
 {{ end }}
 
-<!-- Twitter Card -->
+<!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@{{ .Site.Params.twitter }}">
 <meta name="twitter:creator" content="@{{ .Site.Params.twitter }}">
-<meta name="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}">
+<meta name="twitter:url" content="{{ $canonicalURL }}">
+<meta name="twitter:title" content="{{ $title }}">
 <meta name="twitter:description" content="{{ $description }}">
+{{ if $socialImage }}
+<meta name="twitter:image" content="{{ $socialImage }}">
+<meta name="twitter:image:alt" content="{{ $socialImageAlt }}">
+{{ end }}
 
 {{ partial "schema.html" . }}
 

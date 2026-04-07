@@ -24,8 +24,10 @@
   "name": "Alexandre Brisebois",
   "url": "{{ "about/" | absURL }}",
   "sameAs": [
-    "https://www.linkedin.com/in/alexandrebrisebois/",
-    "https://github.com/AlexandreBrisebois"
+    "{{ .Site.Params.linkedin }}",
+    "{{ .Site.Params.github }}",
+    "https://x.com/{{ .Site.Params.twitter }}",
+    "{{ .Site.Params.bluesky }}"
   ]
 }
 </script>
@@ -37,7 +39,7 @@
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": "{{ .Title }}",
-  "description": "{{ if (and (isset .Params "tldr") (ne .Params.tldr "")) }}{{ .Params.tldr }}{{ else }}{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 160 }}{{ end }}{{ end }}",
+  "description": "{{ if (and (isset .Params "description") (ne .Params.description "")) }}{{ .Params.description }}{{ else if (and (isset .Params "tldr") (ne .Params.tldr "")) }}{{ .Params.tldr }}{{ else }}{{ .Summary | plainify | truncate 160 }}{{ end }}",
   "url": "{{ .Permalink }}",
   "author": {
     "@type": "Person",
