@@ -16,7 +16,9 @@ NC='\033[0m' # No Color
 # Load secrets from .env if it exists
 if [ -f "local/.env" ]; then
     echo -e "${GREEN}✓ Loading secrets from local/.env${NC}"
-    export $(grep -v '^#' local/.env | xargs)
+    set -a
+    . "local/.env"
+    set +a
 fi
 
 # Detect Python environment
@@ -47,7 +49,7 @@ run_automation() {
     
     if [ "$mock_ci" == "true" ]; then
         if [ -z "$GEMINI_API_KEY" ]; then
-            echo -e "${RED}Error: GEMINI_API_KEY is not set in environment or test/.env${NC}"
+            echo -e "${RED}Error: GEMINI_API_KEY is not set in environment or local/.env${NC}"
             return
         fi
         export GITHUB_ACTIONS="true"

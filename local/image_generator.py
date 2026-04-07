@@ -8,6 +8,7 @@ Uses Google's Gemini / Imagen API.
 
 import argparse
 import base64
+import io
 import json
 import os
 import pathlib
@@ -48,6 +49,50 @@ _resolved_image_model = None
 # ---------------------------------------------------------------------------
 # Logic
 # ---------------------------------------------------------------------------
+
+def get_image_prompt(frontmatter):
+    """Support both legacy and hyphenated frontmatter keys."""
+    return (frontmatter.get("image_prompt") or frontmatter.get("image-prompt") or "").strip()
+
+
+def sniff_image_mime(img_bytes):
+    """Infer MIME type from common image signatures."""
+    if img_bytes.startswith(b"RIFF") and img_bytes[8:12] == b"WEBP":
+        return "image/webp"
+    if img_bytes.startswith(b"\x89PNG\r\n\x1a\n"):
+        return "image/png"
+    if img_bytes.startswith(b"\xff\xd8\xff"):
+        return "image/jpeg"
+    return "application/octet-stream"
+
+
+def extension_for_mime(mime_type):
+    if mime_type == "image/png":
+        return ".png"
+    if mime_type == "image/jpeg":
+        return ".jpg"
+    return ".webp"
+
+
+def convert_to_webp(img_bytes, mime_type):
+    """Convert provider output to real WebP bytes using Pillow."""
+    if mime_type == "image/webp":
+        return img_bytes
+
+    try:
+        from PIL import Image
+    except ImportError as exc:
+        raise RuntimeError(
+            "WebP conversion requires Pillow. Install it with './.venv/bin/pip install Pillow'."
+        ) from exc
+
+    with Image.open(io.BytesIO(img_bytes)) as image:
+        if image.mode not in ("RGB", "RGBA"):
+            image = image.convert("RGBA" if "A" in image.getbands() else "RGB")
+
+        output = io.BytesIO()
+        image.save(output, format="WEBP", quality=90, method=6)
+        return output.getvalue()
 
 def discover_image_model():
     """
@@ -153,11 +198,49 @@ def generate_image_via_api(prompt):
     return None
 
 
+def review_image_prompt(prompt):
+    """Review the image prompt before the first paid generation call."""
+    review_prompt = f"""Review this image-generation prompt for srvrlss.dev before any image is generated.
+
+Original Prompt: {prompt}
+
+Audit criteria:
+1. The image should feel minimalist and abstract.
+2. No faces, people, or logos should appear.
+3. The palette should use a warm off-white base with restrained accents from forest, coral, oceanic, plum, slate, gold, eucalyptus, sienna, mulberry, and bronze.
+4. The composition should work as a landscape-oriented blog hero image.
+5. The prompt should be specific enough to reduce retries while staying visually clean.
+
+Return JSON only:
+{{
+  "pass": true|false,
+  "feedback": "1-2 sentences explaining what is missing if pass is false",
+  "updated_prompt": "Either the original prompt if pass is true, or a revised prompt that better matches the criteria"
+}}"""
+
+    try:
+        text = ca.call_gemini(review_prompt, temperature=0.2, max_tokens=900)
+        match = re.search(r"\{[\s\S]*\}", text)
+        if match:
+            result = json.loads(match.group())
+            updated_prompt = (result.get("updated_prompt") or prompt).strip()
+            return {
+                "pass": bool(result.get("pass", True)),
+                "feedback": (result.get("feedback") or "Prompt review passed.").strip(),
+                "updated_prompt": updated_prompt or prompt,
+            }
+    except Exception as e:
+        print(f"[WARN] Prompt review failed: {e}", file=sys.stderr)
+
+    return {"pass": True, "feedback": "Prompt review unavailable.", "updated_prompt": prompt}
+
+
 def critique_image(img_bytes, prompt):
     """
     Use Gemini Vision to critique the generated image.
     """
     b64_img = base64.b64encode(img_bytes).decode("utf-8")
+    mime_type = sniff_image_mime(img_bytes)
     
     critique_prompt = f"""Evaluate this generated image against the following prompt.
 
@@ -166,8 +249,11 @@ Original Prompt: {prompt}
 Audit criteria (srvrlss.dev aesthetic):
 1. Does it feel minimalist and abstract?
 2. Are there any faces, people, or logos? (Strictly forbidden: FAIL if present).
-3. Does it use the requested color palette (warm off-white, forest green, coral nodes)?
-4. Is it landscape orientation?
+3. Does it use the srvrlss.dev palette in a restrained, intentional way:
+   warm off-white base, plus accents drawn from forest, coral, oceanic, plum,
+   slate, gold, eucalyptus, sienna, mulberry, and bronze?
+4. Do the colors feel distinct, balanced, and brand-aligned rather than generic or muddy?
+5. Is it landscape orientation?
 
 Return JSON only:
 {{
@@ -185,7 +271,7 @@ Return JSON only:
         "contents": [{
             "parts": [
                 {"text": critique_prompt},
-                {"inline_data": {"mime_type": "image/webp", "data": b64_img}}
+                {"inlineData": {"mimeType": mime_type, "data": b64_img}}
             ]
         }]
     }
@@ -216,15 +302,23 @@ def run_image_generation(posts):
             content = post_path.read_text(encoding="utf-8")
             fm, body = ca.parse_frontmatter(content)
             
-            image_prompt = (fm.get("image_prompt") or "").strip()
+            image_prompt = get_image_prompt(fm)
             if not image_prompt:
-                print(f"[SKIP] No image_prompt in {post_path.name}")
+                print(f"[SKIP] No image_prompt/image-prompt in {post_path.name}")
                 continue
 
             slug = fm.get("slug") or post_path.stem
             img_dir = project_root / "static" / "images" / "posts"
             img_dir.mkdir(parents=True, exist_ok=True)
-            img_path = img_dir / f"{slug}.webp"
+
+            print("[INFO] Reviewing image prompt before Shot 1...")
+            prompt_review = review_image_prompt(image_prompt)
+            reviewed_prompt = prompt_review["updated_prompt"]
+            if prompt_review["pass"]:
+                print("[OK] Prompt review passed.")
+            else:
+                print(f"[REVIEW] Prompt updated before Shot 1: {prompt_review['feedback']}")
+                image_prompt = reviewed_prompt
 
             print(f"[INFO] Prompt: {image_prompt[:60]}...")
             
@@ -252,12 +346,16 @@ def run_image_generation(posts):
                 else:
                     print("[WARN] Shot 2 failed, using Shot 1 fallback.")
 
-            # Save
+            # Save as WebP regardless of the provider's native output format.
+            mime_type = sniff_image_mime(img_bytes)
+            img_bytes = convert_to_webp(img_bytes, mime_type)
+            extension = ".webp"
+            img_path = img_dir / f"{slug}{extension}"
             img_path.write_bytes(img_bytes)
             print(f"[SUCCESS] Image saved to {img_path}")
             
             # Update Frontmatter
-            fm["image"] = f"/images/posts/{slug}.webp"
+            fm["image"] = f"/images/posts/{slug}{extension}"
             ca.write_frontmatter_atomic(post_path, fm, body)
             print(f"[SUCCESS] Updated frontmatter for {post_path.name}")
 

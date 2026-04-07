@@ -5,16 +5,20 @@ Generate high-quality, brand-aligned hero images for blog posts using a multi-sh
 
 ## Workflow
 1.  **Extract Context**: Parse blog post frontmatter for `image_prompt`.
-2.  **Model Discovery**: Identify the best available image generation model (Gemini-3-Pro-Image-Preview, Imagen-4, Imagen-3, etc.).
-3.  **Initial Generation (Shot 1)**: Request an image from the API using the provided prompt.
-4.  **Critique (Vision Loop)**:
+2.  **Prompt Review (Preflight)**:
+    -   Review the `image_prompt` with a lower-cost text model before any image is generated.
+    -   If the prompt does not match the brand or composition requirements, produce an updated prompt before Shot 1.
+3.  **Model Discovery**: Identify the best available image generation model (Gemini-3-Pro-Image-Preview, Imagen-4, Imagen-3, etc.).
+4.  **Initial Generation (Shot 1)**: Request an image from the API using the reviewed prompt.
+5.  **Critique (Vision Loop)**:
     -   Provide the generated image and initial prompt to Gemini Pro Vision.
-    -   Evaluate against brand aesthetic: "Calm Signal", minimalist, fine linework, textured gradients, muted earth tones.
+    -   Evaluate against brand aesthetic: "Calm Signal", minimalist, fine linework, textured gradients, and a restrained use of the srvrlss.dev palette.
+    -   Check whether color usage feels intentional and distinct, with a warm off-white base and accents drawn from forest, coral, oceanic, plum, slate, gold, eucalyptus, sienna, mulberry, and bronze.
     -   Check for strict exclusions: No people, no faces, no logos.
-5.  **Refine & Regenerate (Shot 2)**:
+6.  **Refine & Regenerate (Shot 2)**:
     -   If the critique is negative, refine the prompt with specific feedback.
     -   Regenerate the image.
-6.  **Finalize**:
+7.  **Finalize**:
     -   Save the final image as WebP to `static/images/posts/<slug>.webp`.
     -   Update post frontmatter with `image: "/images/posts/<slug>.webp"`.
 
@@ -30,5 +34,5 @@ Generate high-quality, brand-aligned hero images for blog posts using a multi-sh
 ## Brand Aesthetic
 - **Core**: Reflective-vulnerable, urgently excited.
 - **Visuals**: Modern minimalist abstract, high-contrast textures.
-- **Colors**: Warm off-white, deep forest green, subtle coral accents.
+- **Colors**: Warm off-white foundation with restrained accents from forest, coral, oceanic, plum, slate, gold, eucalyptus, sienna, mulberry, and bronze.
 - **Style**: Linework, textured gradients, professional blog header style.

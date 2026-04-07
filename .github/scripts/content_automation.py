@@ -70,9 +70,7 @@ Brand voice rules (srvrlss.dev by Alexandre Brisebois):
   extremely, robust, additionally, furthermore, moreover.
 - NEVER open with "In this article..." or "Let's dive into...".
 - NEVER use consulting-deck tone. NEVER fake enthusiasm.
-- Multi-cloud by default: GCP, AWS, Azure as peers.
-- Microsoft is origin story, not current identity.
-- Current pivot: AI enthusiast and builder. Lead with AI-native perspective, cloud is the substrate.
+- Current Focus: AI enthusiast and builder. Lead with AI-native perspective, cloud is the substrate.
 """
 
 # ---------------------------------------------------------------------------
