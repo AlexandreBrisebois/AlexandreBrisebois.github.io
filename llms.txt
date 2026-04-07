@@ -6,11 +6,12 @@
 # Full content available at: https://srvrlss.dev/llms-full.txt
 
 
-## Why AI Assistants Lose Context, and How to Work Around It
-URL: https://srvrlss.dev/posts/why-ai-assistants-lose-context/
-Date: 2026-04-03
-TLDR: I hit the token wall and felt the sting of my AI forgetting our progress, proving that context is a fragile, finite resource. We must master session hygiene to stop the drift and keep our models sharp.
-Tags: AI engineering, prompting, context windows, developer tools, session management
+## The New Waste in AI Engineering: When Assumptions Age Faster Than Code
+URL: https://srvrlss.dev/posts/assumptions-age-faster-than-code/
+Date: 2026-04-07
+Description: In AI engineering, assumptions now age faster than code. Learn why skipping validation is the new technical debt and how to build smarter, not just faster.
+TLDR: The costliest mistake in AI today is acting on stale assumptions. Validate before you build! Your workflow (and sanity) depend on it.
+Tags: lesson-learned, ai-engineering, assumptions, validation, technical-debt, ollama, mlx-lm
 
 
 ## Cutting Through the Noise
