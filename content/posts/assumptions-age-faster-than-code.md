@@ -21,7 +21,7 @@ tags:
 - mlx-lm
 tldr: The costliest mistake in AI today is acting on stale assumptions. Validate before
   you build! Your workflow (and sanity) depend on it.
-social_posts:
+social_blurbs:
   linkedin: 'In AI, the real waste isn’t failed code: it’s acting on assumptions that
     aged out overnight. Here’s how I learned to validate before building. #AIEngineering
     #Workflow'
@@ -29,14 +29,10 @@ social_posts:
     build before you check. #AI #TechDebt'
   bluesky: 'The fastest way to waste time in AI? Building on yesterday’s assumptions.
     Validate first, build second. #AIEngineering'
+social_posts:
+  linkedin: ""
 image: /images/posts/assumptions-age-faster-than-code.webp
 ---
-
-
-
-
-
-
 
 ## The Bottom Line: The New Waste Is Skipping Research & Planning
 
@@ -62,7 +58,7 @@ What if Ollama had caught up? A quick search showed that not only did Ollama sup
 The release of Ollama 0.19 (March 30, 2026) marked a pivot from llama.cpp to Apple’s MLX framework as the primary backend for Apple Silicon. This transition is specifically designed to leverage the M5 chip's GPU Neural Accelerators and Unified Memory Architecture (UMA) without requiring manual user flags.
 {{< /callout >}}
 
-My custom patch was obsolete before it shipped. I deleted my code, updated Ollama, and started over. The official path was smoother, faster, and maintained by someone else!
+**My custom patch was obsolete before it shipped.** I deleted my code, updated Ollama, and started over. The official path was smoother, faster, and maintained by someone else!
 
 > When the official path is one install and one run command away, custom wrappers need a higher bar.
 

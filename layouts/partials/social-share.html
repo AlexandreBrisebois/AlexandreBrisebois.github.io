@@ -1,9 +1,15 @@
+{{ $shareBlurbs := .Params.social_blurbs }}
+{{ if not $shareBlurbs }}{{ $shareBlurbs = .Params.social_blubs }}{{ end }}
+{{ $shareX := .Title }}
+{{ with $shareBlurbs.x }}{{ $shareX = . }}{{ end }}
+{{ $shareBluesky := .Title }}
+{{ with $shareBlurbs.bluesky }}{{ $shareBluesky = . }}{{ end }}
 <div class="social-share" aria-label="Social sharing options">
   <span class="share-label" aria-hidden="true">Share</span>
-  <a href="https://twitter.com/intent/tweet?url={{ .Permalink | urlquery }}&text={{ .Title | urlquery }}" target="_blank" rel="noopener noreferrer" aria-label="Share on X">X</a>
+  <a href="https://twitter.com/intent/tweet?url={{ .Permalink | urlquery }}&text={{ $shareX | urlquery }}" target="_blank" rel="noopener noreferrer" aria-label="Share on X">X</a>
   <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ .Permalink | urlquery }}" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn">LinkedIn</a>
   <a href="https://www.reddit.com/submit?url={{ .Permalink | urlquery }}&title={{ .Title | urlquery }}" target="_blank" rel="noopener noreferrer" aria-label="Share on Reddit">Reddit</a>
-  <a href="https://bsky.app/intent/compose?text={{ .Title | urlquery }}%20{{ .Permalink | urlquery }}" target="_blank" rel="noopener noreferrer" aria-label="Share on Bluesky">Bluesky</a>
+  <a href="https://bsky.app/intent/compose?text={{ $shareBluesky | urlquery }}%20{{ .Permalink | urlquery }}" target="_blank" rel="noopener noreferrer" aria-label="Share on Bluesky">Bluesky</a>
   <button
     class="copy-link"
     data-url="{{ .Permalink }}"

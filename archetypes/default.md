@@ -7,10 +7,12 @@ tags: []
 draft: true
 slug: ""
 tldr: ""
-social_posts:
+social_blurbs:
   linkedin: ""
   x: ""
   bluesky: ""
+social_posts:
+  linkedin: ""
 related_posts: []
 mentioned_in: []
 image_prompt: ""
