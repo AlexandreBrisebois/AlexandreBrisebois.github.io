@@ -1,10 +1,4 @@
 
-
-
-
-
-
-
 ## The Bottom Line: The New Waste Is Skipping Research & Planning
 
 I'm sharing this because I want to help you skip to the good parts!
@@ -29,7 +23,7 @@ What if Ollama had caught up? A quick search showed that not only did Ollama sup
 The release of Ollama 0.19 (March 30, 2026) marked a pivot from llama.cpp to Apple’s MLX framework as the primary backend for Apple Silicon. This transition is specifically designed to leverage the M5 chip's GPU Neural Accelerators and Unified Memory Architecture (UMA) without requiring manual user flags.
 {{< /callout >}}
 
-My custom patch was obsolete before it shipped. I deleted my code, updated Ollama, and started over. The official path was smoother, faster, and maintained by someone else!
+**My custom patch was obsolete before it shipped.** I deleted my code, updated Ollama, and started over. The official path was smoother, faster, and maintained by someone else!
 
 > When the official path is one install and one run command away, custom wrappers need a higher bar.
 

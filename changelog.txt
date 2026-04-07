@@ -1,1 +1,1 @@
-- `533265c` `2026-04-07T20:15:30Z` — fix: update description for clarity on assumptions in AI engineering
+- `1c212d4` `2026-04-07T20:37:46Z` — refactor: rename social_posts to social_blurbs for consistency and update sharing links
