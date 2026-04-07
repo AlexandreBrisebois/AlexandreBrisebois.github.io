@@ -1,1 +1,1 @@
-- `21640ae` `2026-04-07T12:33:25Z` — feat: enhance OpenGraph and Twitter metadata with canonical URLs, article tags, and improved image handling
+- `fc3439f` `2026-04-07T12:47:34Z` — feat: add og:image:width and og:image:height meta tags to OpenGraph metadata
