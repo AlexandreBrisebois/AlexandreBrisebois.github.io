@@ -13,12 +13,12 @@
 
   {{ $tags := slice }}
   {{ range .Site.Taxonomies.tags.ByCount }}
-  {{ if lt (len $tags) 7 }}{{ $tags = $tags | append .Page.Title }}{{ end }}
+  {{ if lt (len $tags) 6 }}{{ $tags = $tags | append .Page.Title }}{{ end }}
   {{ end }}
   {{ if $tags }}
   <nav class="tag-strip">
     {{ range $tags }}
-    <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}/" class="tag-chip">{{ . }}</a>
+    <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}/" class="tag-chip">{{ . | lower }}</a>
     {{ end }}
   </nav>
   {{ end }}
