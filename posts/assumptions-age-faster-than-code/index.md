@@ -1,18 +1,3 @@
-# srvrlss.dev — Full Content for LLM Consumption
-# Author: Alexandre Brisebois
-# Website: https://srvrlss.dev/
-# Updated: 2026-04-08
-# Description: Thinking out loud and building in public to empower the curious!
-
-
----
-# The New Waste in AI Engineering: When Assumptions Age Faster Than Code
-URL: https://srvrlss.dev/posts/assumptions-age-faster-than-code/
-Date: 2026-04-06
-Description: In AI engineering, knowledge decays faster than code. I spent a morning building a custom MLX-LM integration only to find Ollama had already shipped the solution. Here is why the only defensible moat is a workflow that prioritizes validation over momentum.
-TLDR: The deepest technical skill in 2026 isn't coding speed, it is the humility to check the landscape before every build. I lost a morning wiring a custom MLX integration only to find that Ollama had already shipped the solution. When assumptions age faster than code, efficiency is a trap. Prioritize the 10-minute research over momentum.
-Tags: lesson-learned, ai-engineering, assumptions, technical-debt, gemma-4, ollama, mlx-lm
-
 
 ## The New Waste Is Skipping Research & Planning
 
@@ -53,33 +38,4 @@ I spent a morning on effort fueled by a stale assumption and it cost me the oppo
 The only thing cheaper than building is a ten-minute search.
 
 > How much of your current workflow is built on assumptions that were true last week, but not today?
-
-
-
----
-# Cutting Through the Noise
-URL: https://srvrlss.dev/about/
-Date: 2026-04-03
-Description: Alexandre Brisebois — Cutting through the noise
-
-
-What if the real risk isn’t falling behind, but drowning in the noise?
-
-Every week, I watch another framework trend, another paradigm shift dressed up as a must-read. My curiosity is real, but so is the overwhelm. I know I can’t learn it all.
-
-Now I am exploring hyperscalers, AI-native companies, and open-source builders, not as a comparison exercise, but because the collisions between them are where the interesting questions live.
-
-The hard part isn’t finding what to learn. It’s knowing what to ignore. I don’t have a perfect filter—just the instinct to ask better questions, and the willingness to get lost on purpose.
-
-> Curiosity is a compass, not a map. The only way forward is to keep asking better questions.
-
-A cycle that used to take years now takes weeks. That pace would have terrified me five years ago. Now it energizes me.
-
-This blog is my workshop for that process. I’ll share what I’m learning, where I’m stuck, and the patterns I’m still trying to see. I hope you’ll challenge my thinking, share your own blind spots, and help me cut through the noise.
-
-**I am eager. I am overwhelmed. I am starting anyway!**
-
-Find me on [LinkedIn](https://www.linkedin.com/in/alexandrebrisebois/) for the conversation, and on [GitHub](https://github.com/AlexandreBrisebois) for the work.
-
-
 

@@ -1,1 +1,1 @@
-- `733e81b` `2026-04-08T14:42:42Z` — fix: adjust tag limit and ensure tag display is lowercase in index layout
+- `6796e09` `2026-04-08T14:56:44Z` — fix: correct draft status from 'true' to 'false' in assumptions post metadata
