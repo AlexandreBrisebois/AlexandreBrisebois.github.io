@@ -3,7 +3,7 @@ title: 'The New Waste in AI Engineering: When Assumptions Age Faster Than Code'
 slug: assumptions-age-faster-than-code
 date: 2026-04-06
 lastmod: 2026-04-08
-draft: true
+draft: fasle
 image_prompt: A minimalist illustration of a clock with its hands spinning rapidly,
   overlaid on a fading blueprint or code grid. In the foreground, a single bold question mark hovers, symbolizing doubt and validation. The palette is soft blues, muted grays, and a single accent of brand orange. The style is flat, clean, and uncluttered, evoking clarity and calm.
 description: 'In AI engineering, knowledge decays faster than code. I spent a morning building a custom MLX-LM integration only to find Ollama had already shipped the solution. Here is why the only defensible moat is a workflow that prioritizes validation over momentum.'
