@@ -1,1 +1,1 @@
-- `6796e09` `2026-04-08T14:56:44Z` — fix: correct draft status from 'true' to 'false' in assumptions post metadata
+- `50e4bbb` `2026-04-08T21:09:20Z` — fix: simplify description in config.yaml for clarity
