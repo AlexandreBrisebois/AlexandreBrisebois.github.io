@@ -1,1 +1,1 @@
-- `21b3acd` `2026-04-07T22:41:46Z` — fix: improve clarity in assumptions section by rephrasing a sentence
+- `733e81b` `2026-04-08T14:42:42Z` — fix: adjust tag limit and ensure tag display is lowercase in index layout
