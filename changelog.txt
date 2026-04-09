@@ -1,1 +1,1 @@
-- `50e4bbb` `2026-04-08T21:09:20Z` — fix: simplify description in config.yaml for clarity
+- `a50993d` `2026-04-09T12:42:54Z` — feat: add v2 blog build prompt and remove v1 prompt
