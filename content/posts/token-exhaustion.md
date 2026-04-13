@@ -34,7 +34,7 @@ readability: 68.2
 I use [GitHub Copilot](https://github.com/features/copilot). Curiosity pulled me toward [Antigravity](https://antigravity.google/) and [Claude Code](https://claude.com/product/claude-code). I had a few experiments in mind. This was the perfect chance. My plan was simple: I would jump from one tool to the next and experience their workflows firsthand. **The token wall blindsided me.**
 
 {{<callout type="warning">}}
-**Token Wall**: You run out of credits or reached the productivity window usage limit.
+**Token Wall**: You run out of credits or have reached the productivity window usage limit.
 {{</callout>}}
 
 ## The Token Wall: A Week of Surprises
@@ -43,17 +43,17 @@ First, GitHub Copilot. Next, Antigravity, with my Gemini Pro subscription. Final
 
 > I didn't run out of tokens because the tools were bad. I ran out because I was using them wrong. That's the conclusion. Everything else is the evidence.
 
-By the time I ran out of tokens with Antigravity, I had a [prompt](https://github.com/AlexandreBrisebois/AlexandreBrisebois.github.io/blob/main/.claude/blog-build-prompt-v2.md) ready. My goal was to run a long session that would produce a new [blog](https://srvrlss.dev), with GitHub Actions and GenAI features.
+By the time I ran out of tokens with Antigravity, I had a [prompt](https://github.com/AlexandreBrisebois/AlexandreBrisebois.github.io/blob/main/.claude/blog-build-prompt-v2.md) ready. My goal was to run a long session that would produce a new [blog](https://srvrlss.dev), including it's GitHub Actions and GenAI features.
 
 Fifty minutes later, Claude Code delivered. I was amazed. Then I checked my token budget. My subscription was already past the 10% mark. That was the first time I stopped and thought, **this can't be right**.
 
 ## Context, Cost, and Flow
 
-Session context never stays flat. Every exchange makes it grow. Each file attached, each tool running in the background, adds to the load. I stayed in long sessions, convinced depth meant productivity. I missed the real cost: heavy context sessions burn more tokens.
+The session context never stays flat. Every exchange makes it grow. Each file attached, each tool running in the background, adds tokens to the conext. I worked in long lived sessions, convinced depth meant productivity. I missed the real cost: heavy context sessions burn more tokens.
 
 When I hit the wall for the third time, I still didn't have that framing. I just had an empty balance and a half-finished project.
 
-I tried to understand where I went wrong and soon realized I wasn’t alone. Others spoke up about hitting the token wall. That week Anthropic enforced five-hour productivity windows. [Sessions during peak hours used more tokens than during quiet hours](https://x.com/trq212/status/2037254607001559305).
+I tried to understand where I went wrong and soon realized I wasn’t alone. Others spoke up about hitting the token wall. That week, Anthropic enforced five-hour productivity windows and [sessions during peak hours used more tokens than during quiet hours](https://x.com/trq212/status/2037254607001559305).
 
 I wasn't finished. I felt productive. I was in flow. So I enabled Claude's extended usage and watched a second, then a third round of tokens melt away.
 
@@ -63,7 +63,7 @@ I wasn't finished. I felt productive. I was in flow. So I enabled Claude's exten
 
 The token wall was not bad luck. It happened because of how I worked. I had built a machine tuned for rich context and I kept feeding it. I called it productivity. The bill called it wasteful.
 
-**I wondered how full-time developers avoid hitting the token wall.** It felt like I had done something wrong and spent my tokens carelessly. Looking back, I had. And I had done it with the best intentions. My [assumptions](/posts/assumptions-age-faster-than-code/) needed to be reevaluated.
+**I wondered how full-time developers avoided hitting the token wall.** It felt like I had done something wrong and spent my tokens carelessly. Looking back, I had. And I had done it with the best intentions. My assumptions needed to be reevaluated.
 
 What was I doing in those sessions that made them so expensive? That question had answers. The answers changed everything I did next.
 
@@ -73,25 +73,25 @@ What was I doing in those sessions that made them so expensive? That question ha
 
 I had been experimenting with Claude Agents. I was using AI coding agents to optimize their agent.md files. I couldn't put my finger on it. Even after reviewing their instructions, I couldn’t explain why behaviors I had removed would sometimes reappear. It wasn’t consistent. Something was off.
 
-The real culprit was invisible: a week earlier, I had loaded my writing profile as global agent instructions across GitHub Copilot, Gemini, and Claude... I wanted them to sound like me. It felt like a smart move. It was not. 
+The real culprit was invisible: a week earlier, I had loaded my writing profile as global agent instructions across GitHub Copilot, Gemini, and Claude... I wanted them to sound like me. It felt like a smart move. It wasn't... 
 
 {{<callout type="note">}}
-**Instruction** files provide persistent context and constraints that guide AI coding agents to align with specific project standards and personal workflows. They effectively act as a "source of truth" for the AI, allowing it to operate autonomously within the guardrails of your existing codebase.
+**Instructions** are files that provide persistent context and constraints that guide AI coding agents to align with specific project standards and personal workflows. They effectively act as a "source of truth" for the AI, allowing it to operate autonomously within the guardrails of your existing codebase.
 {{</callout>}}
 
-**I created a ghost in the machine.** The instructions quietly shaped every session. The global instructions conflicted with my agents, my prompts and my edits. The model got confused. I was at a loss!
+**I created a ghost in the machine.** The instructions quietly shaped every session and added a token tax. The global instructions conflicted with my agents, my prompts and my edits. The model got confused. I was at a loss!
 
 The fix was simple. I stripped the global instructions. The ghost was gone.
 
-> Keep instructions minimal, structured, and high‑signal; push detail into reference docs the agent can pull on demand. 
+> Keep instructions minimal, structured, and high‑signal; push detail into reference docs that agents can read on demand. 
 
 Instructions are powerful. They are the defaults and are applied to every session. Keep them lean because they count towards your token budget.
 
 ## Getting The Most Out of Each Session
 
-**A session's context grows with every exchange**. The use of reasoning frameworks like Chain of Thought (CoT) and Tree of Thought (ToT) adds to the load. Every file you attach and every tool you enable, including MCP servers and plugins, increases it further. The bottomline is that everything you add to a session consumes more tokens. Strategically structuring a session maximizes its effectiveness.
+**A session's context grows with every exchange**. The use of reasoning frameworks like Chain of Thought (CoT) and Tree of Thought (ToT) adds tokens to the context. Every file you attach and every tool you enable, including MCP servers and plugins, also contribute more tokens. The bottomline is that everything you add to a session consumes more tokens. Strategically structuring a session maximizes its effectiveness.
 
-**Front load the constraints, reference materials and instructions.** Refer back to them in your prompts to keep the session focused and avoid repetition.
+Start by **front loading the constraints, reference materials and instructions.** Refer back to them in your prompts to keep the session focused and avoid repetition.
 
 **Spend time curating the context.** Only include what is necessary for the specific task at hand. Be specific about the success criteria, the output format and constraints.
 
@@ -117,7 +117,7 @@ Respond to this prompt with 'understood' to confirm you
 have internalized these constraints.
 ```
 
-**Keep deep-dive exploration and planning sessions separate from execution sessions.** Brainstorming noise causes the context to drift. The agent gets distracted. **Focus on building a strong, focused prompt.** Then use a new session to get the work done.
+**Keep deep-dive exploration and planning sessions separate from sessions where you get work done.** Brainstorming noise causes the context to drift. The agents gets distracted. **Spend time building a strong, focused prompt.** Then use it in a new session to get the work done.
 
 **Searching the web from AI Assistants is expensive**, and must me used strategically. It adds large amounts of information, some of which can be irrelevant and causes the models to lose focus.
 
@@ -204,4 +204,6 @@ The biggest shift I made wasn’t just in my tools, it was in how I approached e
 
 Now, I focus on giving each agent a clear target, breaking work into smaller composable pieces, and sharing only what matters for the task at hand. These changes didn’t just save tokens, they made every session more intentional and effective.
 
-If you’re burning tokens, ask yourself: What invisible habits are driving your costs? What’s the first thing you’ll change to get more value from every session?
+If you’re burning tokens, ask yourself: What invisible habits are driving your costs? 
+
+What’s the first thing you’ll change to get more value from every session?
