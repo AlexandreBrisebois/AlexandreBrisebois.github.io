@@ -18,6 +18,9 @@
 
 <meta name="description" content="{{ $description }}">
 <meta name="author" content="{{ .Site.Params.author }}">
+
+<!-- Copy-to-clipboard script for code blocks -->
+<script src="{{ "/js/copy-code.js" | relURL }}" defer></script>
 {{ $canonicalURL := printf "%s/" (strings.TrimSuffix "/" .Permalink) }}
 <link rel="canonical" href="{{ $canonicalURL }}">
 

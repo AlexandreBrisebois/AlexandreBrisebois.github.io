@@ -193,6 +193,36 @@ def write_frontmatter_atomic(filepath: pathlib.Path, fm: dict, body: str) -> Non
     tmp.replace(filepath)
 
 
+def extract_readability_text(body: str) -> str:
+    text = re.sub(r"```.*?```", " ", body, flags=re.DOTALL)
+    text = re.sub(r"`[^`]*`", " ", text)
+    text = re.sub(r"!\[[^\]]*\]\([^\)]*\)", " ", text)
+    text = re.sub(r"\[([^\]]+)\]\([^\)]*\)", r"\1", text)
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = re.sub(r"^#{1,6}\s*", "", text, flags=re.MULTILINE)
+    text = re.sub(r"^\s{0,3}>\s?", "", text, flags=re.MULTILINE)
+    text = re.sub(r"[*_~]", "", text)
+    text = re.sub(r"\s+", " ", text)
+    return text.strip()
+
+
+def compute_readability_metrics(body: str) -> tuple[float, float] | None:
+    try:
+        import textstat
+    except ImportError as exc:
+        raise RuntimeError(
+            "textstat is required for readability metrics. Install it with 'pip install textstat'."
+        ) from exc
+
+    text = extract_readability_text(body)
+    if not text:
+        return None
+
+    gradelevel = round(float(textstat.flesch_kincaid_grade(text)), 1)
+    readability = round(float(textstat.flesch_reading_ease(text)), 1)
+    return gradelevel, readability
+
+
 # ---------------------------------------------------------------------------
 # Git helpers
 # ---------------------------------------------------------------------------
@@ -285,15 +315,6 @@ Content: {body[:1000]}"""
 
 
 def run_pr_automation() -> None:
-    if not GEMINI_API_KEY:
-        post_pr_comment("## Content Automation — Skipped\n\n`GEMINI_API_KEY` is not set.")
-        open_github_issue(
-            title=f"Automation Script Failure: {_now_str()}",
-            body="**Cause:** `GEMINI_API_KEY` not found in secrets.",
-            labels=["automation", "configuration"],
-        )
-        return
-
     posts = get_changed_posts()
     if not posts: return
 
@@ -311,22 +332,39 @@ def run_pr_automation() -> None:
 
             comment_sections.append(f"### {title}\n")
 
-            if not fm.get("tldr"):
+            readability_metrics = compute_readability_metrics(body)
+            if readability_metrics:
+                gradelevel, readability = readability_metrics
+                if fm.get("gradelevel") != gradelevel:
+                    fm["gradelevel"] = gradelevel
+                    fm_updated = True
+                if fm.get("readability") != readability:
+                    fm["readability"] = readability
+                    fm_updated = True
+                comment_sections.append(
+                    f"**Readability:** grade {gradelevel} · score {readability}\n\n"
+                )
+
+            if GEMINI_API_KEY and not fm.get("tldr"):
                 tldr = gen_tldr(title, body)
                 fm["tldr"] = tldr
                 fm_updated = True
                 comment_sections.append(f"**Generated TLDR:**\n> {tldr}\n\n")
-            else:
+            elif fm.get("tldr"):
                 comment_sections.append("ℹ️ **TLDR already present** — skipping.\n\n")
+            else:
+                comment_sections.append("ℹ️ **TLDR skipped** — `GEMINI_API_KEY` not set.\n\n")
 
-            if not fm.get("tags"):
+            if GEMINI_API_KEY and not fm.get("tags"):
                 tags = gen_tags(title, body)
                 if tags:
                     fm["tags"] = tags
                     fm_updated = True
                     comment_sections.append(f"**Generated Tags:** {' '.join(f'`#{t}`' for t in tags)}\n\n")
-            else:
+            elif fm.get("tags"):
                 comment_sections.append("ℹ️ **Tags already present** — skipping.\n\n")
+            else:
+                comment_sections.append("ℹ️ **Tags skipped** — `GEMINI_API_KEY` not set.\n\n")
 
             if fm_updated:
                 write_frontmatter_atomic(post_path, fm, body)

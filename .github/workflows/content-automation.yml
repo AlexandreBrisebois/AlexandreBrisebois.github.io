@@ -42,7 +42,7 @@ jobs:
           python-version: '3.14'
 
       - name: Install dependencies
-        run: pip install pyyaml==6.0.3
+        run: pip install pyyaml==6.0.3 textstat==0.7.10
 
       - name: Run content automation
         env:

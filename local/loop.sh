@@ -30,6 +30,20 @@ else
     PYTHON_CMD="python3"
 fi
 
+get_lan_ip() {
+    local default_iface
+
+    default_iface=$(route get default 2>/dev/null | awk '/interface:/{print $2; exit}')
+    if [ -n "$default_iface" ]; then
+        ipconfig getifaddr "$default_iface" 2>/dev/null && return 0
+    fi
+
+    ipconfig getifaddr en0 2>/dev/null && return 0
+    ipconfig getifaddr en1 2>/dev/null && return 0
+
+    return 1
+}
+
 show_menu() {
     echo -e "\n${BLUE}--- srvrlss.dev Dev Suite ---${NC}"
     echo "1) Start Hugo Server (Drafts enabled)"
@@ -68,8 +82,14 @@ while true; do
     read -r opt
     case $opt in
         1)
-            echo -e "${GREEN}Starting Hugo Server...${NC}"
-            hugo server -D
+            LAN_IP=$(get_lan_ip)
+            if [ -n "$LAN_IP" ]; then
+                echo -e "${GREEN}Starting Hugo Server on http://${LAN_IP}:1313/${NC}"
+                hugo server -D --bind 0.0.0.0 --baseURL "http://${LAN_IP}:1313"
+            else
+                echo -e "${YELLOW}! Could not detect LAN IP, starting Hugo Server on localhost only${NC}"
+                hugo server -D
+            fi
             ;;
         2)
             run_automation "pr" "false"

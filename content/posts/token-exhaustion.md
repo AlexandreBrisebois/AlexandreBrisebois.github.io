@@ -2,42 +2,26 @@
 title: 'Token Exhaustion: What Three AI Coding Agents Taught Me in a Single Week'
 slug: token-exhaustion
 date: 2026-04-10
-lastmod: 2026-04-10
+lastmod: 2026-04-13
 draft: true
-description: What if running out of tokens isn’t a tech failure, but a sign your workflow
-  is broken? After a week with three AI coding agents, I discovered how my own habits
-  drained my token budget and limited what I could build. This post shows why rethinking
-  your approach, not just your tools, can unlock real progress.
-tldr: If you’re running out of tokens, it’s not the tool. It’s your workflow. My week
-  with three AI coding agents showed me how my habits drained my tokens and limited
-  what I could build. Rethink your approach, or you’ll waste your budget before you
-  see real progress.
+description: "What if running out of tokens isn’t a tech failure, but a sign your workflow is broken? After a week with three AI coding agents, I discovered how my own habits drained my token budget and limited what I could build. This post shows why rethinking your approach, not just your tools, can unlock real progress."
+tldr: "If you’re running out of tokens, it’s not the tool. It’s your workflow. My week with three AI coding agents showed me how my habits drained my tokens and limited what I could build. Rethink your approach, or you’ll waste your budget before you see real progress."
 tags:
 - quick-win
 - lesson-learned
 - ai-fluency
 - prompt-engineering
 - context-engineering
-image_prompt: 'Token exhaustion, abstracted as a minimalist architectural diagram:
+image_prompt: "Token exhaustion, abstracted as a minimalist architectural diagram:
   a sparse, high-contrast flow of muted earth-tone geometric shapes converging on
-  a central barrier or ''wall''. One dominant focal point, wide negative space, asymmetric
+  a central barrier or 'wall'. One dominant focal point, wide negative space, asymmetric
   balance. No humans, no logos. Calm Signal palette: warm off-white, calm green, calibrated
   coral, oceanic deep blue, shadow plum, ink slate. Editorial, precise, quietly urgent
-  lighting.'
+  lighting."
 social_blurbs:
-  linkedin: 'If you’re running out of tokens with AI coding agents, it’s probably
-    not the tool, it’s your workflow. After a week with three AI coding agents, I
-    realized my habits were draining my tokens and limited what I could actually build.
-    Rethink your approach, or you’ll waste your budget before you see real progress.
-    #AI #workflow #dev'
-  x: 'If you’re running out of tokens, it’s not the tool,it’s your workflow. My week
-    with three AI coding agents showed me how my habits drained my tokens and limited
-    what I could build. Rethink your approach, or you’ll waste your budget before
-    you see real progress. #AI #workflow #dev'
-  bluesky: 'Ran out of tokens with three AI coding agents in one week, not because
-    of the tools, but because my workflow was broken. My habits drained my budget
-    and limited what I could build. Rethink your approach, or you’ll hit the same
-    wall. #AI #workflow #dev'
+  linkedin: 'If you’re running out of tokens with AI coding agents, it’s probably not the tool, it’s your workflow. After a week with three AI coding agents, I realized my habits were draining my tokens and limited what I could actually build. Rethink your approach, or you’ll waste your budget before you see real progress. #AI #workflow #dev'
+  x: 'If you’re running out of tokens, it’s not the tool,it’s your workflow. My week with three AI coding agents showed me how my habits drained my tokens and limited what I could build. Rethink your approach, or you’ll waste your budget before you see real progress. #AI #workflow #dev'
+  bluesky: 'Ran out of tokens with three AI coding agents in one week, not because of the tools, but because my workflow was broken. My habits drained my budget and limited what I could build. Rethink your approach, or you’ll hit the same wall. #AI #workflow #dev'
 social_posts:
   linkedin: ''
 related_posts: []
@@ -46,7 +30,6 @@ image: /images/posts/token-wall.webp
 gradelevel: 6.3
 readability: 68.2
 ---
-
 
 I use [GitHub Copilot](https://github.com/features/copilot). Curiosity pulled me toward [Antigravity](https://antigravity.google/) and [Claude Code](https://claude.com/product/claude-code). I had a few experiments in mind. This was the perfect chance. My plan was simple: I would jump from one tool to the next and experience their workflows firsthand. **The token wall blindsided me.**
 

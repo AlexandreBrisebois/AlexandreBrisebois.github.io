@@ -1,4 +1,4 @@
-{{ with .Site.Data.hero }}{{ with .current_focus }}# Current Focus
+{{ with hugo.Data.hero }}{{ with .current_focus }}# Current Focus
 {{ . }}
 
 {{ end }}{{ end }}# srvrlss.dev — LLM-Optimized Index

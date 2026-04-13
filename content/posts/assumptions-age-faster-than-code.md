@@ -5,8 +5,14 @@ date: 2026-04-06
 lastmod: 2026-04-08
 draft: fasle
 image_prompt: A minimalist illustration of a clock with its hands spinning rapidly,
-  overlaid on a fading blueprint or code grid. In the foreground, a single bold question mark hovers, symbolizing doubt and validation. The palette is soft blues, muted grays, and a single accent of brand orange. The style is flat, clean, and uncluttered, evoking clarity and calm.
-description: 'In AI engineering, knowledge decays faster than code. I spent a morning building a custom MLX-LM integration only to find Ollama had already shipped the solution. Here is why the only defensible moat is a workflow that prioritizes validation over momentum.'
+  overlaid on a fading blueprint or code grid. In the foreground, a single bold question
+  mark hovers, symbolizing doubt and validation. The palette is soft blues, muted
+  grays, and a single accent of brand orange. The style is flat, clean, and uncluttered,
+  evoking clarity and calm.
+description: In AI engineering, knowledge decays faster than code. I spent a morning
+  building a custom MLX-LM integration only to find Ollama had already shipped the
+  solution. Here is why the only defensible moat is a workflow that prioritizes validation
+  over momentum.
 tags:
 - lesson-learned
 - ai-engineering
@@ -15,15 +21,25 @@ tags:
 - gemma-4
 - ollama
 - mlx-lm
-tldr: The deepest technical skill in 2026 isn't coding speed, it is the humility to check the landscape before every build. I lost a morning wiring a custom MLX integration only to find that Ollama had already shipped the solution. When assumptions age faster than code, efficiency is a trap. Prioritize the 10-minute research over momentum.
+tldr: The deepest technical skill in 2026 isn't coding speed, it is the humility to
+  check the landscape before every build. I lost a morning wiring a custom MLX integration
+  only to find that Ollama had already shipped the solution. When assumptions age
+  faster than code, efficiency is a trap. Prioritize the 10-minute research over momentum.
 social_blurbs:
-  linkedin: 'In AI engineering, the real waste isn’t failed code: it’s acting on assumptions that aged out overnight. Here’s what I changed in my approach before building. #AI #Engineering #TechDebt'
-  x: 'Assumptions now age faster than code. The new waste? Skipping validation. Don’t build before you check. #AI #TechDebt'
-  bluesky: 'The fastest way to waste time in AI? Building on yesterday’s assumptions. Validate first, build second. #AIEngineering'
+  linkedin: 'In AI engineering, the real waste isn’t failed code: it’s acting on assumptions
+    that aged out overnight. Here’s what I changed in my approach before building.
+    #AI #Engineering #TechDebt'
+  x: 'Assumptions now age faster than code. The new waste? Skipping validation. Don’t
+    build before you check. #AI #TechDebt'
+  bluesky: 'The fastest way to waste time in AI? Building on yesterday’s assumptions.
+    Validate first, build second. #AIEngineering'
 social_posts:
-  linkedin: ""
+  linkedin: ''
 image: /images/posts/assumptions-age-faster-than-code.webp
+gradelevel: 7.7
+readability: 61.1
 ---
+
 
 ## The New Waste Is Skipping Research & Planning
 

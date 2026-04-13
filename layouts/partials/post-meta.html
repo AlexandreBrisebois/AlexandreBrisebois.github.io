@@ -1,22 +1,35 @@
 <div class="post-meta">
-  {{ $isLesson := or (in (default slice .Params.tags) "lesson-learned") (in (default slice .Params.tags) "retrospective") }}
+  {{ $isFeatured := in (default slice .Params.tags) "featured" }}
+  {{ $isLesson := in (default slice .Params.tags) "lesson-learned" }}
   {{ $isExperiment := or (in (default slice .Params.tags) "experiment") (in .Title "Experiment") }}
   {{ $isQuickWin := in (default slice .Params.tags) "quick-win" }}
   {{ $isDeepDive := in (default slice .Params.tags) "deep-dive" }}
   {{ $isBlueprint := in (default slice .Params.tags) "blueprint" }}
+  {{ $displayDate := .Date }}
+  {{ if gt .Lastmod.Unix .Date.Unix }}{{ $displayDate = .Lastmod }}{{ end }}
   
   <div class="post-hero-badges" style="margin-bottom: 0.75rem;">
-    {{ if $isLesson }}<span class="pill-badge lesson">Lesson Learned</span>{{ end }}
-    {{ if $isExperiment }}<span class="pill-badge experiment">Experiment</span>{{ end }}
+    {{ if $isFeatured }}<span class="pill-badge featured">Featured</span>{{ end }}
     {{ if $isQuickWin }}<span class="pill-badge quickwin">Quick Win</span>{{ end }}
-    {{ if $isDeepDive }}<span class="pill-badge deepdive">Deep Dive</span>{{ end }}
+    {{ if $isLesson }}<span class="pill-badge lesson">Lesson Learned</span>{{ end }}
     {{ if $isBlueprint }}<span class="pill-badge blueprint">Blueprint</span>{{ end }}
+    {{ if $isDeepDive }}<span class="pill-badge deepdive">Deep Dive</span>{{ end }}
+    {{ if $isExperiment }}<span class="pill-badge experiment">Experiment</span>{{ end }}
   </div>
   <h1 class="post-title">{{ .Title }}</h1>
   {{ if or (not .Params.hide_date) .Params.tags }}
   <div class="post-info">
     {{ if not .Params.hide_date }}
-    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+    <span class="post-date-meta">
+      <span class="post-meta-glyph" aria-hidden="true">&#128197;</span>
+      <time datetime="{{ $displayDate.Format "2006-01-02" }}">{{ $displayDate.Format "January 2, 2006" }}</time>
+    </span>
+    {{ end }}
+    {{ if gt .ReadingTime 0 }}
+    <span class="post-date-meta">
+      <span class="post-meta-glyph" aria-hidden="true">&#128339;</span>
+      <span>{{ .ReadingTime }} min read</span>
+    </span>
     {{ end }}
     {{ with .Params.tags }}
     <ul class="post-tags" aria-label="Post tags">
