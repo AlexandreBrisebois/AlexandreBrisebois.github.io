@@ -1,1 +1,1 @@
-- `adb3ff5` `2026-04-13T20:16:41Z` — Add copy-to-clipboard functionality for code blocks
+- `2e2bcb7` `2026-04-13T20:22:33Z` — fix: remove unnecessary word for clarity in token-exhaustion.md
