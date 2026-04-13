@@ -1,4 +1,5 @@
 
+
 ## The New Waste Is Skipping Research & Planning
 
 **In 2026, the most expensive mistake in AI engineering is treating a fast-moving assumption like a stable fact.**

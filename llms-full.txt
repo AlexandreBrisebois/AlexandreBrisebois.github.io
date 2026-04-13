@@ -14,6 +14,7 @@ TLDR: The deepest technical skill in 2026 isn't coding speed, it is the humility
 Tags: lesson-learned, ai-engineering, assumptions, technical-debt, gemma-4, ollama, mlx-lm
 
 
+
 ## The New Waste Is Skipping Research & Planning
 
 **In 2026, the most expensive mistake in AI engineering is treating a fast-moving assumption like a stable fact.**
