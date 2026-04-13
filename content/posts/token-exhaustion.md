@@ -188,7 +188,7 @@ Follow this schema and fill it with project‑specific content:
 
 ## Changing My Defaults Gave Me More Mileage
 
-> I made many mistakes! I was well intentioned and I had a lot to learn!
+> I made mistakes! I was well intentioned and I had a lot to learn!
 
 Use the right model for the task. Don’t default to the most powerful model. Start with the one designed for your task’s actual complexity. As of April 2026, my new defaults are Gemini 3 Flash, GPT-5.4 mini on GitHub Copilot, and Claude Haiku 4.6. I use the more powerful models only for specific tasks that require them. I don’t default to them anymore.
 
