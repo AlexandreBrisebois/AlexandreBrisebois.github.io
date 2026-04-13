@@ -1,1 +1,1 @@
-- `a50993d` `2026-04-09T12:42:54Z` — feat: add v2 blog build prompt and remove v1 prompt
+- `cfb4fde` `2026-04-13T20:14:50Z` — [automation] Update frontmatter for token-exhaustion.md

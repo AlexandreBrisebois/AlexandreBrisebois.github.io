@@ -1,7 +1,7 @@
 # srvrlss.dev — LLM-Optimized Index
 # Author: Alexandre Brisebois
 # Website: https://srvrlss.dev/
-# Updated: 2026-04-09
+# Updated: 2026-04-13
 # Description: Thinking out loud and building in public to empower the curious!
 # Full content available at: https://srvrlss.dev/llms-full.txt
 
