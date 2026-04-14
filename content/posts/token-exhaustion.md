@@ -5,7 +5,7 @@ date: 2026-04-10
 lastmod: 2026-04-13
 draft: true
 description: "What if running out of tokens isn’t a tech failure, but a sign your workflow is broken? After a week with three AI coding agents, I discovered how my own habits drained my token budget and limited what I could build. This post shows why rethinking your approach, not just your tools, can unlock real progress."
-tldr: "If you’re running out of tokens, it’s not the tool. It’s your workflow. My week with three AI coding agents showed me how my habits drained my tokens and limited what I could build. Rethink your approach, or you’ll waste your budget before you see real progress."
+tldr: "If you’re running out of tokens, it’s often not just the tool. It could be your workflow. My week with three AI coding agents showed me how my habits drained my tokens and limited what I could build. Rethink your approach, or you’ll waste your budget before you see real progress."
 tags:
 - quick-win
 - lesson-learned
@@ -27,8 +27,8 @@ social_posts:
 related_posts: []
 mentioned_in: []
 image: /images/posts/token-wall.webp
-gradelevel: 6.3
-readability: 68.2
+gradelevel: 5.3
+readability: 74.0
 ---
 
 I use [GitHub Copilot](https://github.com/features/copilot). Curiosity pulled me toward [Antigravity](https://antigravity.google/) and [Claude Code](https://claude.com/product/claude-code). I had a few experiments in mind. This was the perfect chance. My plan was simple: I would jump from one tool to the next and experience their workflows firsthand. **The token wall blindsided me.**
@@ -43,7 +43,7 @@ First, GitHub Copilot. Next, Antigravity, with my Gemini Pro subscription. Final
 
 > I didn't run out of tokens because the tools were bad. I ran out because I was using them wrong. That's the conclusion. Everything else is the evidence.
 
-By the time I ran out of tokens with Antigravity, I had a [prompt](https://github.com/AlexandreBrisebois/AlexandreBrisebois.github.io/blob/main/.claude/blog-build-prompt-v2.md) ready. My goal was to run a long session that would produce a new [blog](https://srvrlss.dev), including it's GitHub Actions and GenAI features.
+By the time I ran out of tokens with Antigravity, I had a [prompt](https://github.com/AlexandreBrisebois/AlexandreBrisebois.github.io/blob/main/.claude/blog-build-prompt-v2.md) ready. My goal was to run a long session that would produce a new [blog](https://srvrlss.dev), including GitHub Actions and GenAI features.
 
 Fifty minutes later, Claude Code delivered. I was amazed. Then I checked my token budget. My subscription was already past the 10% mark. That was the first time I stopped and thought, **this can't be right**.
 
@@ -63,7 +63,7 @@ I wasn't finished. I felt productive. I was in flow. So I enabled Claude's exten
 
 The token wall was not bad luck. It happened because of how I worked. I had built a machine tuned for rich context and I kept feeding it. I called it productivity. The bill called it wasteful.
 
-**I wondered how full-time developers avoided hitting the token wall.** It felt like I had done something wrong and spent my tokens carelessly. Looking back, I had. And I had done it with the best intentions. My assumptions needed to be reevaluated.
+**I wondered how full-time developers avoid hitting the token wall.** It felt like I had done something wrong and spent my tokens carelessly. Looking back, I had. And I had done it with the best intentions. My assumptions needed to be reevaluated.
 
 What was I doing in those sessions that made them so expensive? That question had answers. The answers changed everything I did next.
 
@@ -76,14 +76,14 @@ I had been experimenting with Claude Agents. I was using AI coding agents to opt
 The real culprit was invisible: a week earlier, I had loaded my writing profile as global agent instructions across GitHub Copilot, Gemini, and Claude... I wanted them to sound like me. It felt like a smart move. It wasn't... 
 
 {{<callout type="note">}}
-**Instructions** are files that provide persistent context and constraints that guide AI coding agents to align with specific project standards and personal workflows. They effectively act as a "source of truth" for the AI, allowing it to operate autonomously within the guardrails of your existing codebase.
+**Instruction** are files that provide persistent context and constraints that guide AI coding agents to align with specific project standards and personal workflows. They effectively act as a "source of truth" for the AI, allowing it to operate autonomously within the guardrails of your existing codebase.
 {{</callout>}}
 
-**I created a ghost in the machine.** The instructions quietly shaped every session and added a token tax. The global instructions conflicted with my agents, my prompts and my edits. The model got confused. I was at a loss!
+**I created a ghost in the machine.** The instructions quietly shaped every sessionand added a token tax. The global instructions conflicted with my agents, my prompts and my edits. The model got confused. I was at a loss!
 
 The fix was simple. I stripped the global instructions. The ghost was gone.
 
-> Keep instructions minimal, structured, and high‑signal; push detail into reference docs that agents can read on demand. 
+> Keep instructions minimal, structured, and high‑signal; push detail into reference docs that the agents can read on demand. 
 
 Instructions are powerful. They are the defaults and are applied to every session. Keep them lean because they count towards your token budget.
 
@@ -133,7 +133,7 @@ Avoid trying to do too much at once. **Keep sessions focused on a single task or
 
 Ask the agent to summarize key points, decisions, and next steps. Start your next session with a new, self-contained prompt. This technique helps you maintain your flow and keep a clean, focused context.
 
-Here is an exhaustive example from which you can draw inspiration for your own continuation prompts:
+If you want to experiment with your own continuation prompts, here’s a detailed example I’ve found useful, you can adapt or borrow from it as you see fit:
 
 ```
 You are a **Continuation‑Prompt Constructor**.  
@@ -190,9 +190,35 @@ Follow this schema and fill it with project‑specific content:
 
 > I made mistakes! I was well intentioned and I had a lot to learn!
 
-Use the right model for the task. Don’t default to the most powerful model. Start with the one designed for your task’s actual complexity. As of April 2026, my new defaults are Gemini 3 Flash, GPT-5.4 mini on GitHub Copilot, and Claude Haiku 4.6. I use the more powerful models only for specific tasks that require them. I don’t default to them anymore.
+Jumping into execution with just a vague idea always cost me more tokens and left me with weaker results. I thought I was being productive by brainstorming and building as I went, but the session would drift and my intent would blur. 
 
-I now ask models to review my prompts and recommend the best model for each task. While their suggestions aren’t perfect, they reveal patterns that help me choose more effectively.
+**The real aha moment came when I treated planning as a separate activity, crystallizing what I wanted before I ever hit “run.”** Planning forced me to get specific and precise about my goals. When I gave vague instructions, I spent the rest of the session steering the agent and burning tokens.
+
+> Clarity up front meant fewer corrections, less drift, and better results.
+
+Antigravity’s solid plan-first approach pushed me to structure my thoughts, identify clear outcomes, and define success. I found myself iterating, refining, and building a clear goal for the agent.
+
+Claude Code in VS Code also has a planning feature. Like Antigravity, I could provide feedback by selecting text and leaving comments, or by giving global feedback. Claude would revise and adjust the plan, but the separation between planning and execution wasn’t as clear cut as in Antigravity. 
+
+Anthropic released [ultraplan](https://code.claude.com/docs/en/ultraplan) this week. This new experience is a leap forward from the VS Code extension. Start `/ultraplan [what you want to get done]` from your CLI, and you're pulled to Claude Code on the web to draft your plan. Once you're ready, you can execute it remotely or back in your terminal.
+
+Antigravity still has the upper hand, and **I expect this space will evolve rapidly**. Ultraplan, at the time of writing, feels like a fast-forward through planning and into execution. I felt rushed, and kept pushing back to keep iterating on my plan. I found myself gravitating back to Antigravity for planning sessions.
+
+> The more powerful the tool, the more it tempts me to use it for everything
+
+Don't get caught by the **AI Paradox**: The more powerful and engaging the tool, the more it tempts me to use it for everything, even when it’s not the best choice. 
+
+When I’m in flow, it feels good to delegate even the smallest tasks to an agent (eg. merging a branch or searching & replacing a string). But that satisfaction is deceptive, because I end up burning precious tokens on actions that are faster and cheaper if I do them myself. 
+
+**Years of habits vanished, eclipsed by the novelty and thrill of AI.** The cost? Tokens spent on activities that, on their own, don’t add significant value. 
+
+The accumulation of these small, unnecessary delegations greatly contributed to my token consumption. Build on your hard-won habits. Use shortcuts, built-in tools, and the full power of your IDE for what they do best. **Let AI amplify your intent, not replace it.**
+
+> Challenge your defaults
+
+Use the right model for the task. Don’t always reach for the most powerful model. Start with the one designed for your task’s actual complexity. As of April 2026, my new go-to choices are Gemini 3 Flash, GPT-5.4 mini on GitHub Copilot, and Claude Haiku 4.6. I reserve the more powerful models only for specific tasks that require them.
+
+Now, I ask models to review my prompts and recommend the best model for each task. While their suggestions aren’t perfect, they reveal patterns that help me make better choices.
 
 ## Forging a Head Towards AI Fluency
 
