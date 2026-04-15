@@ -23,7 +23,7 @@ social_blurbs:
   x: 'If you’re running out of tokens, it’s not the tool,it’s your workflow. My week with three AI coding agents showed me how my habits drained my tokens and limited what I could build. Rethink your approach, or you’ll waste your budget before you see real progress. #AI #workflow #dev'
   bluesky: 'Ran out of tokens with three AI coding agents in one week, not because of the tools, but because my workflow was broken. My habits drained my budget and limited what I could build. Rethink your approach, or you’ll hit the same wall. #AI #workflow #dev'
 social_posts:
-  linkedin: ''
+  linkedin: 'https://www.linkedin.com/posts/alexandrebrisebois_token-exhaustion-what-three-ai-coding-agents-activity-7450136147541897216-Er7z/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAEsTG8BGzDymbcZlTIFnj-W0HyD65bOaXg'
 related_posts: []
 mentioned_in: []
 image: /images/posts/token-wall.webp
