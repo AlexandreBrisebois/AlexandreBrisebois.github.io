@@ -1,1 +1,1 @@
-- `2b5cfc2` `2026-04-15T14:50:43Z` — fix: add LinkedIn link to social_posts in token-exhaustion.md
+- `276678c` `2026-04-15T15:27:51Z` — fix: add AI disclaimer for educational context in post-meta.html
