@@ -1,9 +1,17 @@
 # srvrlss.dev — LLM-Optimized Index
 # Author: Alexandre Brisebois
 # Website: https://srvrlss.dev/
-# Updated: 2026-04-14
+# Updated: 2026-04-15
 # Description: Thinking out loud and building in public to empower the curious!
 # Full content available at: https://srvrlss.dev/llms-full.txt
+
+
+## Token Exhaustion: What Three AI Coding Agents Taught Me in a Single Week
+URL: https://srvrlss.dev/posts/token-exhaustion/
+Date: 2026-04-10
+Description: What if running out of tokens isn’t a tech failure, but a sign your workflow is broken? After a week with three AI coding agents, I discovered how my own habits drained my token budget and limited what I could build. This post shows why rethinking your approach, not just your tools, can unlock real progress.
+TLDR: If you’re running out of tokens, it’s often not just the tool. It could be your workflow. My week with three AI coding agents showed me how my habits drained my tokens and limited what I could build. Rethink your approach, or you’ll waste your budget before you see real progress.
+Tags: quick-win, lesson-learned, ai-fluency, prompt-engineering, context-engineering
 
 
 ## The New Waste in AI Engineering: When Assumptions Age Faster Than Code

@@ -1,1 +1,1 @@
-- `4bc897b` `2026-04-14T15:35:02Z` — fix: enhance clarity and readability in token-exhaustion.md
+- `301984f` `2026-04-15T10:26:02Z` — fix: publish token-exhaustion.md by setting draft to false
