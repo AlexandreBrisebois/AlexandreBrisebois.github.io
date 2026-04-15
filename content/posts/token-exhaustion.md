@@ -3,7 +3,7 @@ title: 'Token Exhaustion: What Three AI Coding Agents Taught Me in a Single Week
 slug: token-exhaustion
 date: 2026-04-10
 lastmod: 2026-04-13
-draft: true
+draft: false
 description: "What if running out of tokens isn’t a tech failure, but a sign your workflow is broken? After a week with three AI coding agents, I discovered how my own habits drained my token budget and limited what I could build. This post shows why rethinking your approach, not just your tools, can unlock real progress."
 tldr: "If you’re running out of tokens, it’s often not just the tool. It could be your workflow. My week with three AI coding agents showed me how my habits drained my tokens and limited what I could build. Rethink your approach, or you’ll waste your budget before you see real progress."
 tags:
