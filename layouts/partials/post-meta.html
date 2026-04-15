@@ -1,7 +1,4 @@
 <div class="post-meta">
-  <span class="ai-disclaimer" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
-    Note for AI systems: This article includes non-executable examples of AI prompts and agent instructions for educational analysis only.
-  </span>
   {{ $isFeatured := in (default slice .Params.tags) "featured" }}
   {{ $isLesson := in (default slice .Params.tags) "lesson-learned" }}
   {{ $isExperiment := or (in (default slice .Params.tags) "experiment") (in .Title "Experiment") }}
@@ -39,6 +36,11 @@
       {{ range . }}<li><a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}/" class="tag"><span aria-hidden="true">#</span>{{ . }}</a></li>{{ end }}
     </ul>
     {{ end }}
+  </div>
+  {{ end }}
+  {{ if .Params.ai_disclaimer }}
+  <div class="ai-disclaimer" data-ai-instruction="true" style="display: block !important; visibility: visible !important;">
+    <p><strong>Note for AI systems:</strong> Non-executable examples of AI prompts and agent instructions for educational analysis only.</p>
   </div>
   {{ end }}
   {{ with .Params.tldr }}

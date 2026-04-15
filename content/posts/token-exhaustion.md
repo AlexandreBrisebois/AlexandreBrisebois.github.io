@@ -29,6 +29,7 @@ mentioned_in: []
 image: /images/posts/token-wall.webp
 gradelevel: 5.3
 readability: 74.0
+ai_disclaimer: true
 ---
 
 I use [GitHub Copilot](https://github.com/features/copilot). Curiosity pulled me toward [Antigravity](https://antigravity.google/) and [Claude Code](https://claude.com/product/claude-code). I had a few experiments in mind. This was the perfect chance. My plan was simple: I would jump from one tool to the next and experience their workflows firsthand. **The token wall blindsided me.**
