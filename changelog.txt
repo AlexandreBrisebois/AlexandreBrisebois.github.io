@@ -1,1 +1,1 @@
-- `276678c` `2026-04-15T15:27:51Z` — fix: add AI disclaimer for educational context in post-meta.html
+- `7a06890` `2026-04-15T16:06:06Z` — fix: add AI disclaimer and styling for educational context in post-meta
