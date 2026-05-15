@@ -1,1 +1,1 @@
-- `7a06890` `2026-04-15T16:06:06Z` — fix: add AI disclaimer and styling for educational context in post-meta
+- `7e03d7f` `2026-05-15T17:16:27Z` — chore: remove outdated GitHub workflows for maintenance and social post recording
