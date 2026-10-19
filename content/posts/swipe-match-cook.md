@@ -1,24 +1,29 @@
 ---
-title: "Swipe, Match, Cook!"
+title: Swipe, Match, Cook!
 date: 2026-10-18
-description: "How What's for Supper became part of our family's week, from choosing meals to shopping and cooking with recipes we already know."
+description: How What's for Supper became part of our family's week, from choosing
+  meals to shopping and cooking with recipes we already know.
 tags:
-  - building in public
-  - What's for Supper
-  - family
+- building in public
+- What's for Supper
+- family
 draft: true
-slug: "swipe-match-cook"
-tldr: "Our family uses What's for Supper to vote on recipes, plan the week, shop from a shared list, and cook from our own collection."
+slug: swipe-match-cook
+tldr: Our family uses What's for Supper to vote on recipes, plan the week, shop from
+  a shared list, and cook from our own collection.
 social_posts:
-  linkedin: ""
-  x: ""
-  bluesky: ""
+  linkedin: ''
+  x: ''
+  bluesky: ''
 related_posts: []
 mentioned_in: []
-image: "/images/posts/swipe-match-cook.webp"
-cover_alt: "What’s For Supper? Swipe, Match, Cook."
-image_prompt: ""
+image: /images/posts/swipe-match-cook.webp
+cover_alt: What’s For Supper? Swipe, Match, Cook.
+image_prompt: ''
+gradelevel: 5.6
+readability: 75.8
 ---
+
 
 Turn “What’s for supper?” from the daily dreaded question into a fun family activity where kids actually want to help decide.
 
