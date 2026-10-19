@@ -1,16 +1,14 @@
 ---
 title: Swipe, Match, Cook!
 date: 2026-10-18
-description: How What's for Supper became part of our family's week, from choosing
-  meals to shopping and cooking with recipes we already know.
+description: "Meet What’s for Supper: a family recipe collection that turns choosing meals into something everyone can help with."
 tags:
 - building in public
 - What's for Supper
 - family
 draft: true
 slug: swipe-match-cook
-tldr: Our family uses What's for Supper to vote on recipes, plan the week, shop from
-  a shared list, and cook from our own collection.
+tldr: "What’s for Supper helps our family choose meals together, shop and cook from our own collection. From a stack of recipe cards to a friend’s handwritten recipe captured in a photo, it’s a collection that grows with our family."
 social_posts:
   linkedin: ''
   x: ''
