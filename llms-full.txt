@@ -9,7 +9,7 @@
 # Swipe, Match, Cook!
 URL: https://srvrlss.dev/posts/swipe-match-cook/
 Date: 2026-10-18
-Description: Meet What’s for Supper: a family recipe collection that turns choosing meals into something everyone can help with.
+Description: What’s for Supper brings the family together to choose the week’s meals, with recipes they love and a shared grocery list.
 TLDR: What’s for Supper turns choosing meals into something the whole family can take part in. Swipe through your recipes, build the week’s meal plan together, and head to the store with a shared grocery list. Less time deciding. More time cooking meals you’re excited to share.
 Tags: experiment, building in public, whats for supper
 
