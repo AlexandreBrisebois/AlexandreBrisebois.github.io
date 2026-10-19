@@ -22,9 +22,10 @@ mentioned_in: []
 image: /images/posts/swipe-match-cook.webp
 cover_alt: What’s For Supper? Swipe, Match, Cook.
 image_prompt: ''
-gradelevel: 5.5
-readability: 76.6
+gradelevel: 5.4
+readability: 77.0
 ---
+
 
 
 
