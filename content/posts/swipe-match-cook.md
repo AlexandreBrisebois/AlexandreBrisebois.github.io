@@ -18,44 +18,24 @@ mentioned_in: []
 image_prompt: ""
 ---
 
-We had a stack of recipe cards from months of meal boxes, including Goodfood and HelloFresh, and plenty of suppers worth making again.
+Turn “What’s for supper?” from the daily dreaded question into a fun family activity where kids actually want to help decide.
 
-Since April 2026, we haven't gone back to that stack.
+That’s why I built What’s for Supper. The kids swipe through our recipes and vote for what they’d like to eat. On Sunday afternoons, Mom and the kids can nail down the week’s meal plan while I’m driving.
 
-Those recipes are still part of our week, but now we use them in **What's for Supper?**, the app I've been building for our household.
+Once we choose the meals, their ingredients become a shared grocery list. We use it every week when we shop. The kids now check the app to see what’s for supper instead of asking us. When it’s time to cook, we follow Cook’s Mode or open the original digital recipe card on a phone or iPad.
 
-## A week we choose together
+Our collection started with months of recipe cards from meal boxes like Goodfood and HelloFresh. They had become a thick stack on top of a binder, alongside our cookbooks.
 
-The kids swipe through recipes and vote for what they'd like to eat.
+> Since April 2026, we haven’t gone back to the paper stack.
 
-They've been doing it every week.
+But capturing new recipes is one of the things I enjoy most.
 
-Those votes help us choose meals for the weekly plan, and the kids open the app to see what's for supper instead of asking us.
+After supper at a friend’s house, I asked for his recipe. He pulled out a handwritten cue card. I snapped a photo with What’s for Supper. The app read his handwriting, generated an image of the cooked dish, and made the recipe available for the family to vote on. All I had to do was take the photo.
 
-A match helps us see where our tastes overlap; we still decide what goes on the plan.
+I could also have left a note about where it came from or what our family thought of it, right there at the table.
 
-From there, the planned recipes become a shared grocery list, which we use every week to buy what we need for our suppers.
+To me, this is the next version of my mom’s recipe binder or my grandma’s box of cards. It’s self-hosted, with a collection built by your home, for your home. Not someone else’s catalogue.
 
-The choices carry through from the vote to the plan to the shopping trip.
+Love Grandma’s carrot cake or her special holiday dinner? Ask to take a photo of the recipe. Bring it home, cook it together, and pass the tradition on.
 
-## The recipes we already know
-
-When it's time to cook, we can use Cook's Mode to follow the recipe one step at a time.
-
-Or we open the saved original recipe card on a phone or iPad, just as we would have reached for the paper version.
-
-That's part of what I want to keep: the recipes we've collected, in a form that fits how we use them now.
-
-What's for Supper is self-hosted, meaning each household runs its own app on its own server and builds its own recipe collection rather than choosing from a provider's catalogue.
-
-Our collection can grow with us, with recipes saved from photos or links.
-
-## Still building, already part of home
-
-The app has changed a lot over the past few months, and there's more to come.
-
-For now, this is what we're using at home: the kids helping choose, a plan everyone can see, and our recipes with us when we shop and cook.
-
-The public Synology installation is still being prepared and isn't available yet.
-
-If this sounds like something you'd like to follow, [explore What's for Supper on GitHub](https://github.com/AlexandreBrisebois/whats-for-supper).
+You can already [try What’s for Supper on your Synology](https://github.com/AlexandreBrisebois/whats-for-supper/blob/main/release-template/synology/README.md). I’m still working through a few last issues before calling it V1. All feedback is welcome!
