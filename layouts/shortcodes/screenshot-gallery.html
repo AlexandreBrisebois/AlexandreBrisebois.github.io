@@ -1,4 +1,4 @@
-<div class="screenshot-gallery" role="group" aria-label="App screenshots">
+<div class="screenshot-gallery" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(0.35rem,2vw,1rem);width:100%;max-width:540px;margin:1.5rem auto;align-items:start" role="group" aria-label="App screenshots">
   {{- range $i := seq 3 }}
     {{- with $.Get (printf "src%d" $i) }}
     <figure class="screenshot-gallery__item">
