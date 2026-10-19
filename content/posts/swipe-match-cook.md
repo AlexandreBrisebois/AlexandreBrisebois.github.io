@@ -9,7 +9,10 @@ tags:
 - whats for supper
 draft: true
 slug: swipe-match-cook
-tldr: "What’s for Supper turns choosing meals into something the whole family can take part in. Swipe through your recipes, build the week’s meal plan together, and head to the store with a shared grocery list. Less time deciding. More time cooking meals you’re excited to share."
+tldr: What’s for Supper turns choosing meals into something the whole family can take
+  part in. Swipe through your recipes, build the week’s meal plan together, and head
+  to the store with a shared grocery list. Less time deciding. More time cooking meals
+  you’re excited to share.
 social_posts:
   linkedin: ''
   x: ''
@@ -20,8 +23,9 @@ image: /images/posts/swipe-match-cook.webp
 cover_alt: What’s For Supper? Swipe, Match, Cook.
 image_prompt: ''
 gradelevel: 5.5
-readability: 76.4
+readability: 76.6
 ---
+
 
 
 
