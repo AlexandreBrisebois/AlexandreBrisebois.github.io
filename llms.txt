@@ -1,9 +1,17 @@
 # srvrlss.dev — LLM-Optimized Index
 # Author: Alexandre Brisebois
 # Website: https://srvrlss.dev/
-# Updated: 2026-05-15
+# Updated: 2026-10-19
 # Description: Thinking out loud and building in public to empower the curious!
 # Full content available at: https://srvrlss.dev/llms-full.txt
+
+
+## Swipe, Match, Cook!
+URL: https://srvrlss.dev/posts/swipe-match-cook/
+Date: 2026-10-18
+Description: Meet What’s for Supper: a family recipe collection that turns choosing meals into something everyone can help with.
+TLDR: What’s for Supper turns choosing meals into something the whole family can take part in. Swipe through your recipes, build the week’s meal plan together, and head to the store with a shared grocery list. Less time deciding. More time cooking meals you’re excited to share.
+Tags: experiment, building in public, whats for supper
 
 
 ## Token Exhaustion: What Three AI Coding Agents Taught Me in a Single Week
