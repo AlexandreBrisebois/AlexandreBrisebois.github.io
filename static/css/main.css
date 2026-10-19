@@ -943,3 +943,28 @@ body {
   }
 }
 
+
+/* Compact three-image story, side by side at every screen size. */
+.post-body .screenshot-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.35rem, 2vw, 1rem);
+  width: 100%;
+  max-width: 540px;
+  margin: 1.5rem auto;
+  align-items: start;
+}
+.post-body .screenshot-gallery__item { margin: 0; min-width: 0; }
+.post-body .screenshot-gallery__item a { display: block; }
+.post-body .screenshot-gallery__item a:focus-visible {
+  outline: 3px solid var(--color-forest);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+.post-body .screenshot-gallery__item img { width: 100%; height: auto; margin: 0; }
+.post-body .screenshot-gallery__item figcaption {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+  font-weight: 600;
+}
