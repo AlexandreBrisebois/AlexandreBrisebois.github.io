@@ -7,7 +7,7 @@ tags:
 - experiment
 - building in public
 - whats for supper
-draft: true
+draft: false
 slug: swipe-match-cook
 tldr: What’s for Supper turns choosing meals into something the whole family can take
   part in. Swipe through your recipes, build the week’s meal plan together, and head
