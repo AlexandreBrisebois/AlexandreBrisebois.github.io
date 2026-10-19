@@ -3,7 +3,13 @@
   {{ partial "post-meta.html" . }}
   {{ with .Params.image }}
   <div class="post-cover">
-    <img src="{{ . | absURL }}" alt="{{ $.Title }}" loading="eager" decoding="async">
+    {{ $alt := $.Title }}
+    {{ if (isset $.Params "cover_alt") }}{{ $alt = $.Params.cover_alt }}{{ end }}
+    <img src="{{ . | absURL }}" 
+      alt="{{ $alt }}"
+      {{ if (eq $alt "") }}aria-hidden="true"{{ end }}
+      loading="eager" decoding="async">
+    {{ with $.Params.cover_description }}<span class="sr-only">{{ . }}</span>{{ end }}
   </div>
   {{ end }}
   <div class="post-body">

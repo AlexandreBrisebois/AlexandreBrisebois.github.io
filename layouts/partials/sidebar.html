@@ -1,0 +1,13 @@
+<aside class="sidebar">
+  {{ if .Site.Params.author_avatar }}
+  <div class="author-avatar">
+    <img src="{{ .Site.Params.author_avatar | absURL }}" 
+         alt="{{ .Site.Params.author }}" 
+         loading="lazy" 
+         decoding="async">
+  </div>
+  {{ end }}
+  <div class="author-bio">
+    <p>{{ .Site.Params.description }}</p>
+  </div>
+</aside>

@@ -1,9 +1,12 @@
 ---
-title: "Alexandre Brisebois — Cutting through the noise"
-date: 2026-03-26T00:00:00+00:00
+title: "Cutting Through the Noise"
 description: "Alexandre Brisebois — Cutting through the noise"
+date: 2026-04-03
 draft: false
 image: "/images/about.webp"
+cover_alt: ""
+cover_description: "Agentic AI, AI Accelerated Learning, GenAI"
+hide_date: true
 ---
 
 What if the real risk isn’t falling behind, but drowning in the noise?

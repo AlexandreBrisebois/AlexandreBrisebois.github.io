@@ -4,37 +4,71 @@
   {{ if fileExists "static/images/hero.webp" }}
   <div class="hero-image">
     <img src="/images/hero.webp"
-      alt="srvrlss.dev &mdash; Alexandre Brisebois &mdash; Thinking out loud and building in public to empower the curious. &mdash; I am eager. I am overwhelmed. I am starting anyway!"
+      alt=""
+      aria-hidden="true"
       loading="eager" decoding="async">
+    <span class="sr-only">srvrlss.dev by Alexandre Brisebois &mdash; Agentic AI, AI Accelerated Learning, GenAI</span>
   </div>
   {{ end }}
 
   {{ $tags := slice }}
   {{ range .Site.Taxonomies.tags.ByCount }}
-  {{ if lt (len $tags) 7 }}{{ $tags = $tags | append .Page.Title }}{{ end }}
+  {{ if lt (len $tags) 6 }}{{ $tags = $tags | append .Page.Title }}{{ end }}
   {{ end }}
   {{ if $tags }}
   <nav class="tag-strip">
     {{ range $tags }}
-    <a href="{{ " /tags/" | relLangURL }}{{ . | urlize }}/" class="tag-chip">{{ . }}</a>
+    <a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}/" class="tag-chip">{{ . | lower }}</a>
     {{ end }}
   </nav>
   {{ end }}
 
   <section class="post-list">
-    {{ $pages := (where .Site.RegularPages "Section" "posts").ByDate.Reverse }}
+    {{ $allPosts := (where .Site.RegularPages "Section" "posts").ByDate.Reverse }}
+    {{ $featured := where $allPosts "Params.tags" "intersect" (slice "featured") }}
+    {{ $regular := $allPosts | complement $featured }}
+    {{ $pages := $featured | append $regular }}
     {{ range $i, $p := $pages }}
-    <article class="post-card{{ if eq $i 0 }} post-card--latest{{ end }}">
-      {{ $isRetro := or (in (default slice .Params.tags) "retrospective") (in .Title "Retrospective") }}
-      {{ $title := .Title }}
-      {{ if $isRetro }}
-      {{ $title = replace .Title "Retrospective" "Lessons Learned" }}
+    {{ $isFeatured := in (default slice .Params.tags) "featured" }}
+    {{ $displayDate := .Date }}
+    {{ if gt .Lastmod.Unix .Date.Unix }}{{ $displayDate = .Lastmod }}{{ end }}
+    <article class="post-card {{ if $isFeatured }}post-card--featured{{ end }}">
+      {{ $isLesson := in (default slice .Params.tags) "lesson-learned" }}
+      {{ $isExperiment := or (in (default slice .Params.tags) "experiment") (in .Title "Experiment") }}
+      {{ $isQuickWin := in (default slice .Params.tags) "quick-win" }}
+      {{ $isDeepDive := in (default slice .Params.tags) "deep-dive" }}
+      {{ $isBlueprint := in (default slice .Params.tags) "blueprint" }}
+      {{ $pillClass := "" }}
+      {{ $pillLabel := "" }}
+      {{ if $isFeatured }}
+      {{ $pillClass = "featured" }}
+      {{ $pillLabel = "Featured" }}
+      {{ else if $isQuickWin }}
+      {{ $pillClass = "quickwin" }}
+      {{ $pillLabel = "Quick Win" }}
+      {{ else if $isLesson }}
+      {{ $pillClass = "lesson" }}
+      {{ $pillLabel = "Lesson Learned" }}
+      {{ else if $isBlueprint }}
+      {{ $pillClass = "blueprint" }}
+      {{ $pillLabel = "Blueprint" }}
+      {{ else if $isDeepDive }}
+      {{ $pillClass = "deepdive" }}
+      {{ $pillLabel = "Deep Dive" }}
+      {{ else if $isExperiment }}
+      {{ $pillClass = "experiment" }}
+      {{ $pillLabel = "Experiment" }}
       {{ end }}
+      {{ $title := .Title }}
       <h2>
-        {{ if $isRetro }}<span class="lessons-badge">Lessons Learned</span>{{ end }}
+        {{ if $pillLabel }}<span class="pill-badge {{ $pillClass }}">{{ $pillLabel }}</span>{{ end }}
         <a href="{{ .RelPermalink }}">{{ $title }}</a>
       </h2>
-      <time datetime="{{ .Date.Format " 2006-01-02" }}">{{ .Date.Format "January 2, 2006" }}</time>
+      {{ with .Params.tags }}
+      <ul class="post-tags" aria-label="Post tags">
+        {{ range . }}<li><a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}/" class="tag"><span aria-hidden="true">#</span>{{ . }}</a></li>{{ end }}
+      </ul>
+      {{ end }}
       {{ with .Description }}<p>{{ . }}</p>{{ end }}
     </article>
     {{ end }}

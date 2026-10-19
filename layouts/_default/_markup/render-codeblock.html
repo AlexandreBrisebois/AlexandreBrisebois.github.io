@@ -1,0 +1,11 @@
+{{ $code := .Inner | safeHTML }}
+<div class="codeblock-wrapper" style="position:relative;">
+  <button class="copy-code-btn" type="button" aria-label="Copy code" title="Copy code" style="position:absolute;top:8px;right:8px;padding:4px;background:transparent;border:none;cursor:pointer;z-index:2;">
+    <!-- Copy icon: two overlapping rectangles -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 20 20">
+      <rect x="6" y="6" width="9" height="9" rx="2" fill="#888"/>
+      <rect x="3" y="3" width="9" height="9" rx="2" fill="#bbb"/>
+    </svg>
+  </button>
+  <pre><code>{{ $code }}</code></pre>
+</div>

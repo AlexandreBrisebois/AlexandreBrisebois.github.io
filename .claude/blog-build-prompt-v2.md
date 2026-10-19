@@ -72,13 +72,13 @@ Now, apply the aesthetic. **REQUIRED**: Refer to [specs/design.md](file://.claud
 
 ### 2.1 Design Specs: "Calm Signal"
 *   **Typography**: `Instrument Serif` (600) for headings, `Source Serif 4` (400) for body.
-*   **Color Palette**: Implement the system-aware dark mode as specified in the original design tokens (Light: `#F7F5F0`, Dark: `#0D1117`).
+*   **Color Palette**: Implement the system-aware dark mode using the live design tokens and signal colors: Light `#F7F5F0`, Dark `#0D1117`, plus `--color-forest`, `--color-coral`, `--color-oceanic`, `--color-plum`, `--color-slate`, `--color-gold`, `--color-eucalyptus`, `--color-sienna`, `--color-mulberry`, and `--color-bronze`.
 *   **Glassmorphism**: Use `backdrop-filter` for callouts and code blocks.
 *   **Contrast**: `github-dark` syntax highlighting. Ensure sharp contrast in Light mode.
 
 ### 2.2 Visual Feedback Loop
 *   After implementing the CSS, use the browser tool to capture screenshots of the site in both mobile and desktop views.
-*   **CRITIQUE**: Compare your results against the "Calm Signal" principles AND the "Lessons Learned Pivot" requirements in `specs/design.md`.
+*   **CRITIQUE**: Compare your results against the "Calm Signal" principles AND the "Lessons Learned Pivot" requirements in `specs/design.md`. Explicitly assess whether the new named palette reads correctly in context: forest, coral, oceanic, plum, slate, gold, eucalyptus, sienna, mulberry, and bronze, including whether each accent feels intentional, distinct, and accessible in both light and dark mode.
 *   **STOP & WAIT**: Present your critique and screenshots to the user. Wait for approval before starting Phase 3.
 
 ---
