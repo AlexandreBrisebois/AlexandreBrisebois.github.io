@@ -943,3 +943,29 @@ body {
   }
 }
 
+
+/* Three-image story: desktop row, readable mobile stack. */
+.post-body .screenshot-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+  align-items: start;
+}
+.post-body .screenshot-gallery__item { margin: 0; min-width: 0; }
+.post-body .screenshot-gallery__item a { display: block; }
+.post-body .screenshot-gallery__item a:focus-visible {
+  outline: 3px solid var(--color-forest);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+.post-body .screenshot-gallery__item img { width: 100%; height: auto; margin: 0; }
+.post-body .screenshot-gallery__item figcaption {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+@media (max-width: 600px) {
+  .post-body .screenshot-gallery { grid-template-columns: minmax(0, 1fr); }
+}

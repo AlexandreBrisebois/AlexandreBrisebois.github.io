@@ -1,0 +1,12 @@
+<div class="screenshot-gallery" role="group" aria-label="App screenshots">
+  {{- range $i := seq 3 }}
+    {{- with $.Get (printf "src%d" $i) }}
+    <figure class="screenshot-gallery__item">
+      <a href="{{ . | relURL }}" aria-label="{{ printf "View full-size screenshot: %s" ($.Get (printf "caption%d" $i)) }}">
+        <img src="{{ . | relURL }}" alt="{{ $.Get (printf "alt%d" $i) }}" loading="lazy" decoding="async">
+      </a>
+      <figcaption>{{ $.Get (printf "caption%d" $i) }}</figcaption>
+    </figure>
+    {{- end }}
+  {{- end }}
+</div>
