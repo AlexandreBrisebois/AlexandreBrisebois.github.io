@@ -4,14 +4,12 @@ date: 2026-10-18
 description: 'Meet What’s for Supper: a family recipe collection that turns choosing
   meals into something everyone can help with.'
 tags:
+- experiment
 - building in public
-- What's for Supper
-- family
+- whats for supper
 draft: true
 slug: swipe-match-cook
-tldr: What’s for Supper helps our family choose meals together, shop and cook from
-  our own collection. From a stack of recipe cards to a friend’s handwritten recipe
-  captured in a photo, it’s a collection that grows with our family.
+tldr: "What’s for Supper turns choosing meals into something the whole family can take part in. Swipe through your recipes, build the week’s meal plan together, and head to the store with a shared grocery list. Less time deciding. More time cooking meals you’re excited to share."
 social_posts:
   linkedin: ''
   x: ''
@@ -33,11 +31,11 @@ The goal is not to build another recipe app. It’s to involve the whole family 
 
 Once we choose the meals, their ingredients become a shared grocery list. We use it every week when we shop. When it’s time to cook, we follow Cook’s Mode or open the original digital recipe card on a phone or iPad.
 
-Our collection started with months’ worth of recipe cards from meal boxes like Goodfood and HelloFresh. They became a thick stack on top of a binder, alongside our many cookbooks. And that’s before counting all the recipes we found online!
+Our collection started with months’ worth of recipe cards from meal boxes like Goodfood and HelloFresh. Before long, we had a thick stack on top of a binder, alongside our many cookbooks. And that’s not counting all the recipes we found online!
 
 > Since April 2026, we haven’t gone back to the paper stack.
 
-Capturing new recipes is one of the things I enjoy most.
+Capturing new recipes is one of my favorite things to do.
 
 After supper at a friend’s house, I asked for his recipe. He pulled out a handwritten cue card. I snapped a photo with What’s for Supper. The app read his handwriting, generated an image of the cooked dish, and made the recipe available for the family to vote on.
 
