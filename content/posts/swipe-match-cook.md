@@ -22,22 +22,24 @@ image_prompt: ""
 
 Turn “What’s for supper?” from the daily dreaded question into a fun family activity where kids actually want to help decide.
 
-The goal is not to build another recipe app. It’s to engage the whole family in the process of deciding What’s for Supper. The kids swipe through our recipes and vote for what they’d like to eat. On Sunday afternoons, Mom and the kids can nail down the week’s meal plan while I’m driving.
+The goal is not to build another recipe app. It’s to involve the whole family in choosing what’s for supper. The kids swipe through our recipes and vote for what they’d like to eat. On Sunday afternoons, Mom and the kids can nail down the week’s meal plan while I’m driving.
 
-Once we choose the meals, their ingredients become a shared grocery list. We use it every week when we shop. The kids now check the app to see what’s for supper instead of asking us. When it’s time to cook, we follow Cook’s Mode or open the original digital recipe card on a phone or iPad.
+Once we choose the meals, their ingredients become a shared grocery list. We use it every week when we shop. When it’s time to cook, we follow Cook’s Mode or open the original digital recipe card on a phone or iPad.
 
-Our collection started with months of recipe cards from meal boxes like Goodfood and HelloFresh. They had become a thick stack on top of a binder, alongside our cookbooks.
+Our collection started with months’ worth of recipe cards from meal boxes like Goodfood and HelloFresh. They became a thick stack on top of a binder, alongside our many cookbooks. And that’s before counting all the recipes we found online!
 
 > Since April 2026, we haven’t gone back to the paper stack.
 
-But capturing new recipes is one of the things I enjoy most.
+Capturing new recipes is one of the things I enjoy most.
 
-After supper at a friend’s house, I asked for his recipe. He pulled out a handwritten cue card. I snapped a photo with What’s for Supper. The app read his handwriting, generated an image of the cooked dish, and made the recipe available for the family to vote on. All I had to do was take the photo.
+After supper at a friend’s house, I asked for his recipe. He pulled out a handwritten cue card. I snapped a photo with What’s for Supper. The app read his handwriting, generated an image of the cooked dish, and made the recipe available for the family to vote on.
 
-I could also have left a note about where it came from or what our family thought of it, right there at the table.
+> All I had to do was snap a photo!
 
-To me, this is the next version of my mom’s recipe binder or my grandma’s box of cards. It’s self-hosted, with a collection built by your home, for your home. Not someone else’s catalogue.
+Right then and there, without leaving the table or missing a beat, I added a note and tagged the recipe as loved by the family.
 
-Love Grandma’s carrot cake or her special holiday dinner? Ask to take a photo of the recipe. Bring it home, cook it together, and pass the tradition on.
+To me, this is the next version of my mom’s recipe binder and grandma’s box of cards. It’s self-hosted, with a collection **built by your home, for your home.** Not someone else’s catalogue.
 
-You can already [try What’s for Supper on your Synology](https://github.com/AlexandreBrisebois/whats-for-supper/blob/main/release-template/synology/README.md). I’m still working through a few last issues before calling it V1. All feedback is welcome!
+**Love Grandma’s carrot cake or her special holiday dinner?** Ask to take a photo of the recipe. Bring it home, cook it together, and pass the tradition on.
+
+You can already [try What’s for Supper in your home](https://github.com/AlexandreBrisebois/whats-for-supper/blob/main/release-template/synology/README.md). I’m still working through a few last issues before calling it V1. All feedback is welcome!
