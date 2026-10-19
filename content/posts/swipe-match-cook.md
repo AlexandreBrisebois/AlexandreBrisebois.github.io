@@ -1,8 +1,7 @@
 ---
 title: Swipe, Match, Cook!
 date: 2026-10-18
-description: 'Meet What’s for Supper: a family recipe collection that turns choosing
-  meals into something everyone can help with.'
+description: "What’s for Supper brings the family together to choose the week’s meals, with recipes they love and a shared grocery list."
 tags:
 - experiment
 - building in public
