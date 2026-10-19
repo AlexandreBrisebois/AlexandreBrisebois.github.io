@@ -15,6 +15,8 @@ social_posts:
   bluesky: ""
 related_posts: []
 mentioned_in: []
+image: "/images/posts/swipe-match-cook.webp"
+cover_alt: "What’s For Supper? Swipe, Match, Cook."
 image_prompt: ""
 ---
 
