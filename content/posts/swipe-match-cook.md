@@ -45,4 +45,6 @@ To me, this is the next version of my mom’s recipe binder and grandma’s box 
 
 **Love Grandma’s carrot cake or her special holiday dinner?** Ask to take a photo of the recipe. Bring it home, cook it together, and pass the tradition on.
 
+Want to try it first? [Open the What’s for Supper demo](https://dm.srvrlss.dev) and use the family passphrase `welcome-demo`.
+
 You can already [try What’s for Supper in your home](https://github.com/AlexandreBrisebois/whats-for-supper/blob/main/release-template/synology/README.md). I’m still working through a few last issues before calling it V1. All feedback is welcome!
