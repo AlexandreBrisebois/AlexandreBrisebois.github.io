@@ -20,7 +20,7 @@ image_prompt: ""
 
 Turn “What’s for supper?” from the daily dreaded question into a fun family activity where kids actually want to help decide.
 
-That’s why I built What’s for Supper. The kids swipe through our recipes and vote for what they’d like to eat. On Sunday afternoons, Mom and the kids can nail down the week’s meal plan while I’m driving.
+The goal is not to build another recipe app. It’s to engage the whole family in the process of deciding What’s for Supper. The kids swipe through our recipes and vote for what they’d like to eat. On Sunday afternoons, Mom and the kids can nail down the week’s meal plan while I’m driving.
 
 Once we choose the meals, their ingredients become a shared grocery list. We use it every week when we shop. The kids now check the app to see what’s for supper instead of asking us. When it’s time to cook, we follow Cook’s Mode or open the original digital recipe card on a phone or iPad.
 
