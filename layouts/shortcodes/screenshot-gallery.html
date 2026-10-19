@@ -5,7 +5,7 @@
       <a href="{{ . | relURL }}" aria-label="{{ printf "View full-size screenshot: %s" ($.Get (printf "caption%d" $i)) }}">
         <img src="{{ . | relURL }}" alt="{{ $.Get (printf "alt%d" $i) }}" loading="lazy" decoding="async">
       </a>
-      <figcaption>{{ $.Get (printf "caption%d" $i) }}</figcaption>
+      <figcaption style="text-align:center">{{ $.Get (printf "caption%d" $i) }}</figcaption>
     </figure>
     {{- end }}
   {{- end }}
