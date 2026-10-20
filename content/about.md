@@ -26,3 +26,7 @@ This blog is my workshop for that process. I’ll share what I’m learning, whe
 **I am eager. I am overwhelmed. I am starting anyway!**
 
 Find me on [LinkedIn](https://www.linkedin.com/in/alexandrebrisebois/) for the conversation, and on [GitHub](https://github.com/AlexandreBrisebois) for the work.
+
+## Disclaimer
+
+I work at Amazon Web Services (AWS). This is my personal blog. The views and opinions expressed here are my own and do not necessarily reflect those of AWS or Amazon.
