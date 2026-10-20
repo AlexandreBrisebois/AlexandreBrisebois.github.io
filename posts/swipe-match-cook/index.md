@@ -5,7 +5,7 @@
 
 Turn “What’s for supper?” from the daily dreaded question into a fun family activity where kids actually want to help decide.
 
-The goal is not to build another recipe app. It’s to involve the whole family in choosing what’s for supper. The kids swipe through our recipes and vote for what they’d like to eat. On Sunday afternoons, Mom and the kids can nail down the week’s meal plan while I’m driving.
+The goal is not to build another recipe app. It’s to involve the whole family in choosing what’s for supper. The kids swipe through our recipes and vote for what they’d like to eat. On Sunday afternoons, we can figure out the week's meal plan together as a family, even when we're on the go.
 
 Once we choose the meals, their ingredients become a shared grocery list. We use it every week when we shop. When it’s time to cook, we follow Cook’s Mode or open the original digital recipe card on a phone or iPad.
 
@@ -34,6 +34,8 @@ After supper at a friend’s house, I asked for his recipe. He pulled out a hand
 Right then and there, without leaving the table or missing a beat, I added a note and tagged the recipe as loved by the family.
 
 To me, this is the next version of my mom’s recipe binder and grandma’s box of cards. It’s self-hosted, with a collection **built by your home, for your home.** Not someone else’s catalogue.
+
+Every household's collection will look different. Vegetarian favourites, food intolerances, a tight grocery budget, or simply different tastes. What matters is that the collection reflects the people around your table, including the recipes and traditions passed down through generations.
 
 **Love Grandma’s carrot cake or her special holiday dinner?** Ask to take a photo of the recipe. Bring it home, cook it together, and pass the tradition on.
 
